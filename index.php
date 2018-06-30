@@ -41,7 +41,7 @@ require_once('db.php');
             }
             $output = $bbcode->Parse($content);
 
-            $posts .="<div><h2><a href='view_post.php?pid=$id'>$title</a></h2><p>$date</p><h6>$output</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
+            $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date</p><h6>$output</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
         
         }
         
@@ -60,7 +60,14 @@ require_once('db.php');
 if (!isset($_SESSION['id'])) {
     echo "<br><br><a href='login.php' class='btn waves-effect waves-light blue darken-2'>Login</a>";
 }
+
 if (isset($_SESSION['id'])) {
+$userid = $_SESSION['id'];
+$uid = "SELECT * FROM users WHERE id=$userid";
+}
+
+if (isset($_SESSION['id'])) {
+        echo "<br><br><a href='post.php' class='btn waves-effect waves-light blue darken-2'>New Post</a>";
         echo "<br><br><a href='edit_userdata.php?uid=$uid' class='btn waves-effect waves-light yellow darken-2'>Edit User Data</a>";
         echo "<br><br><a href='admin.php' class='btn waves-effect waves-light yellow darken-2'>Admin</a><br><br>";
         echo "<a href='logout.php' class='btn waves-effect waves-light red darken-2'>Logout</a>";
