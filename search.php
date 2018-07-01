@@ -37,7 +37,7 @@ require_once('db.php');
     }
 
     if(isset($_POST['searchbtn'])) {
-        $sql = "SELECT * FROM posts WHERE title LIKE '%$searchtxt%' ORDER BY id DESC";
+        $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') ORDER BY id DESC";
         $result = mysqli_query($con, $sql) or die(mysqli_error());
     
         $posts = "";

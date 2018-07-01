@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <form action="login.php" method="post" enctype="multipart/form-data">
+    <div class="materialContainer">
+
+
+<div class="box">
+
+   <div class="title">LOGIN</div>
 <?php
 session_start();
 
@@ -21,6 +39,7 @@ if(isset($_POST['login'])) {
     $id = $row['id'];
     $db_password = $row['password'];
     $admin = $row['admin'];
+    $email = $row['email'];
 
     if($password == $db_password) {
         $_SESSION['username'] = $username;
@@ -31,28 +50,10 @@ if(isset($_POST['login'])) {
         }
         header('Location: index.php');
     } else {
-        echo "You didn't enter correct details!";
+        echo "<br><br><br><h3>Incorrect details!</h3>";
     }
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <form action="login.php" method="post" enctype="multipart/form-data">
-    <div class="materialContainer">
-
-
-<div class="box">
-
-   <div class="title">LOGIN</div>
 
    <div class="input">
       <input type="text" name="username" placeholder="Username">
@@ -65,7 +66,7 @@ if(isset($_POST['login'])) {
    </div>
 
    <div class="button login">
-      <button type="submit" name="login"><span>GO</span> <i class="fa fa-check"></i></button>
+      <button type="submit" name="login"><span>LOGIN</span> <i class="fa fa-check"></i></button>
    </div>
 
    <a href="" class="pass-forgot">Forgot your password?</a>
