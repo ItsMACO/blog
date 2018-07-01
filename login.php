@@ -22,7 +22,7 @@ if(isset($_POST['login'])) {
     $db_password = $row['password'];
     $admin = $row['admin'];
 
-    if($password = $db_password) {
+    if($password == $db_password) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
 

@@ -10,19 +10,23 @@
         header('Location: index.php');
     }
 
-        $uid = $_GET['uid'];
+    $uid = $_SESSION['id'];
 
     if(isset($_POST['update_data'])) {
         $username = strip_tags($_POST['username']);
         $password = strip_tags($_POST['password']);
+        $email = strip_tags($_POST['email']);
 
         $username = mysqli_real_escape_string($con, $username);
         $password = mysqli_real_escape_string($con, $password);
+        $email = mysqli_real_escape_string($con, $email);
 
-        $sql = "UPDATE users SET username='$username', password='$password'' WHERE id=$uid";
+        $password = md5($password);
 
-        if($username == "" || $password == "") {
-            echo "Please complete your post!";
+        $sql = "UPDATE users SET username='$username', password='$password', email='$email' WHERE id=$uid";
+
+        if($username == "" || $password == "" || $email == "") {
+            echo "Please fill in your data!";
             return;
         }
 
@@ -51,10 +55,12 @@ if(mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $username = $row['username'];
         $password = $row['password'];
+        $email = $row['email'];
 
         echo "<form action='edit_userdata.php?uid=$uid' method='post' enctype='multipart/form-data'>";
         echo "<input placeholder='Username' name='username' type='text' value='$username' autofocus size='48'><br><br>";
         echo "<input placeholder='Password' name='password' type='password' autofocus size='48'><br><br>";
+        echo "<input placeholder='Email' name='email' type='text' value='$email'><br><br>";
 
 
     }
