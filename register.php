@@ -71,14 +71,31 @@ if(isset($_POST['register'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
+
 </head>
-<body>
+<body style="background: white !important;">
+<div class="container-fluid">
+<div class="row">
+<div class="col s3">
+<?php
+include('sidebar.php');
+?>
+</div>
+<div class="col s8">
+<br><br><br><br>
     <form action="register.php" method="post" enctype="multipart/form-data">
     <input placeholder="Username" name="username" type="text" autofocus>
     <input placeholder="Password" name="password" type="password">
     <input placeholder="Confirm Password" name="password_confirm" type="password">
     <input placeholder="Email address" name="email" type="text">
-    <button name="register" type="submit" class="btn waves-effect waves-light blue darken-2">Register</button>
+    <div class="button login">
+      <button type="submit" name="register"><span>REGISTER</span></button>
+    </div>
     </form>
+    </div>
+    <div class="col s1"></div>
+    </div>
+    </div>
 </body>
 </html>

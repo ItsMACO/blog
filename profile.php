@@ -18,33 +18,52 @@ include_once('db.php');
 <body>
 <div class="container-fluid">
 <div class="row">
-<div class="col s1">
-<br><br><a href="index.php" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">arrow_back</i>Back</a>
+<div class="col s3">
+<?php
+include('sidebar.php');
+?>
 </div>
-<div class="col s9">
+<div class="col s8">
     <?php
-    if(isset($_SESSION['username'])) {
-        require_once('nbbc/nbbc.php');
-        $bbcode = new BBCode;
 
-        $user = $_SESSION['id'];
-        $sql = "SELECT * FROM users WHERE id=$user LIMIT 1";
+    
+    require_once('nbbc/nbbc.php');
+    $bbcode = new BBCode;   
+    $sql_profile = "SELECT * FROM users";
+    $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error());
 
-        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        if(mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-            $id = $row['id'];
+    if (mysqli_num_rows($result_profile) > 0) {
+        while ($row = mysqli_fetch_assoc($result_profile)) {
+            $userid = $row['id'];
             $username = $row['username'];
-            $isadmin = $row['admin'];
-            }
-            echo "<div><h2>$username</h2><h6>$isadmin</h6></div>";
+            $email = $row['email'];
+            $isAdmin = $row['admin'];
         }
+        echo "<div><h2>Profile of $username</h2></div>";
     } else {
-        header('Location: login.php');
+        echo "User not found";
+    }
+
+    $sql = "SELECT * FROM posts WHERE author='$username' ORDER BY id DESC";
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+
+    $posts = "";
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $title = $row['title'];
+            $content = $row['content'];
+            $date = $row['date'];
+            $author = $row['author'];
+        
+        $posts .="<div><h4><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h4><br></div>";
+    }
+        echo "<div><h3>Author of:<br>$posts</h3></div><br>";
     }
     ?>
-<div class="col s2"></div>
+<div class="col s1"></div>
 </div>
 </div>
 </div>

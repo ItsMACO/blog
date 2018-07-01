@@ -13,21 +13,27 @@ require_once('db.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css"></link>
 </head>
-<body>
+<body style="background: white;">
 <div class="container-fluid">
     <div class="row">
-        <div class="col s1"></div>
-        <div class="col s9">
-
+        <div class="col s3">
+        <?php
+        include('sidebar.php');
+        ?>
+        </div>
+        <div class="col s8">
+<br><br><br><br>
 <form action="search.php" method="post">
 <input type="text" name="searchtxt">
-<input type="submit" name="searchbtn" value="Search">
+<div class="button login">
+      <button type="submit" name="searchbtn"><span>SEARCH</span></button>
+   </div>
 </form>
 
 
     <?php
-    
     require_once('nbbc/nbbc.php');
 
     $bbcode = new BBCode;
@@ -53,26 +59,26 @@ require_once('db.php');
                 }
                 $output = $bbcode->Parse($content);
     
-                $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date</p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
+                $posts .="<br><div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date</p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
             
             }
 
             if(mysqli_num_rows($result) > 1) {
-            echo "<br>Found ".mysqli_num_rows($result)." results.";
+            echo "<br><br><br><br><br><br><br><br>Found ".mysqli_num_rows($result)." results.";
             }
             if(mysqli_num_rows($result) == 1) {
-                echo "<br>Found ".mysqli_num_rows($result)." result.";
+                echo "<br><br><br><br><br><br><br><br>Found ".mysqli_num_rows($result)." result.";
             }
             
             echo $posts;
             
         } else {
-            echo "No posts found!";
+            echo "<br><br><br><br><br><br><br><br>No posts found!";
         }
     }
 
     ?>
 </div>
-<div class="col s2 center-align">
+<div class="col s1">
 </body>
 </html>

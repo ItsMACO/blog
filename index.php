@@ -17,9 +17,26 @@ require_once('db.php');
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col s1"></div>
-        <div class="col s9">
+        <div class="col s3">
+        <?php
+        include('sidebar.php');
+        ?>
+        </div>
+        <div class="col s8">
     <?php
+
+    
+
+$sql_profile = "SELECT * FROM users";
+$result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error());
+
+if (mysqli_num_rows($result_profile) > 0) {
+    while ($row = mysqli_fetch_assoc($result_profile)) {
+        $userid = $row['id'];
+        $username = $row['username'];
+        $email = $row['email'];
+    }
+}
     
     require_once('nbbc/nbbc.php');
 
@@ -36,12 +53,11 @@ require_once('db.php');
             $title = $row['title'];
             $content = $row['content'];
             $date = $row['date'];
+            $author = $row['author'];
             
-            if (isset($_SESSION['id'])) {
-            }
             $output = $bbcode->Parse($content);
 
-            $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date</p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
+            $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
         
         }
         
@@ -50,32 +66,11 @@ require_once('db.php');
     } else {
         echo "There are no posts to display!";
     }
+
     ?>
 
 </div>
-<div class="col s2 center-align">
-<br>
-<?php
-
-if (!isset($_SESSION['id'])) {
-    echo "<br><br><a href='login.php' class='btn waves-effect waves-light blue darken-2'>Login</a>";
-    echo "<br><br><a href='search.php' class='btn waves-effect waves-light yellow darken-2'>Search</a>";
-}
-
-if (isset($_SESSION['id'])) {
-$userid = $_SESSION['id'];
-$uid = "SELECT * FROM users WHERE id=$userid";
-}
-
-if (isset($_SESSION['id'])) {
-        echo "<br><br><a href='post.php' class='btn waves-effect waves-light blue darken-2'>New Post</a>";
-        echo "<br><br><a href='search.php' class='btn waves-effect waves-light yellow darken-2'>Search</a>";
-        echo "<br><br><a href='edit_userdata.php?uid=$uid' class='btn waves-effect waves-light yellow darken-2'>Edit User Data</a>";
-        echo "<br><br><a href='admin.php' class='btn waves-effect waves-light yellow darken-2'>Admin</a>";
-        echo "<br><br><a href='logout.php' class='btn waves-effect waves-light red darken-2'>Logout</a>";
-}
-?>
-</div>
+<div class="col s1"></div>
 <!--DIV ROW -->
 </div>
 <!--DIV CONTAINER FLUID -->
