@@ -5,17 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <script src="materialize/js/materialize.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background-image: url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png);">
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col s3">
+                <?php
+                include('sidebar.php');
+                ?>
+            </div>
+            <div class="col s8">
+                <br><br><br><br>
     <form action="login.php" method="post" enctype="multipart/form-data">
-    <div class="materialContainer">
-
-
-<div class="box">
-
-   <div class="title">LOGIN</div>
 <?php
 session_start();
 
@@ -55,25 +60,14 @@ if(isset($_POST['login'])) {
 }
 ?>
 
-   <div class="input">
       <input type="text" name="username" placeholder="Username">
-      <span class="spin"></span>
-   </div>
-
-   <div class="input">
       <input type="password" name="password" placeholder="Password">
-      <span class="spin"></span>
-   </div>
-
-   <div class="button login">
-      <button type="submit" name="login"><span>LOGIN</span> <i class="fa fa-check"></i></button>
-   </div>
-
-   <a href="" class="pass-forgot">Forgot your password?</a>
-
-</div>
-
+      <button type="submit" name="login" class="button button2">LOGIN</button>
     </form>
+</div>
+<div class="col s1"></div>
+</div>
+</div>
 
 </body>
 </html>

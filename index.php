@@ -10,11 +10,12 @@ require_once('db.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
-<body>
+<body style="background: white !important">
 <div class="container-fluid">
     <div class="row">
         <div class="col s3">
@@ -58,7 +59,13 @@ require_once('db.php');
 
             $output = $bbcode->Parse($content);
 
-            $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
+            $posts .="<div>
+            <h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
+            <h6>".substr($output, 0, 360)."...</h6><br>
+            <a href='view_post?pid=$id'>READ MORE</a><br>
+            </div><br><br><br><br><br><br>
+            <div class='divider'></div><br>";
         }
         
         echo $posts;
