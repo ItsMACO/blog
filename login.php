@@ -1,3 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <script src="materialize/js/materialize.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col s3">
+                <?php
+                include('sidebar.php');
+                ?>
+            </div>
+            <div class="col s8">
+                <br><br><br><br>
+    <form action="login.php" method="post" enctype="multipart/form-data">
 <?php
 session_start();
 
@@ -21,6 +44,7 @@ if(isset($_POST['login'])) {
     $id = $row['id'];
     $db_password = $row['password'];
     $admin = $row['admin'];
+    $email = $row['email'];
 
     if($password == $db_password) {
         $_SESSION['username'] = $username;
@@ -31,48 +55,19 @@ if(isset($_POST['login'])) {
         }
         header('Location: index.php');
     } else {
-        echo "You didn't enter correct details!";
+        echo "<br><br><br><h3>Incorrect details!</h3>";
     }
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <form action="login.php" method="post" enctype="multipart/form-data">
-    <div class="materialContainer">
 
-
-<div class="box">
-
-   <div class="title">LOGIN</div>
-
-   <div class="input">
       <input type="text" name="username" placeholder="Username">
-      <span class="spin"></span>
-   </div>
-
-   <div class="input">
       <input type="password" name="password" placeholder="Password">
-      <span class="spin"></span>
-   </div>
-
-   <div class="button login">
-      <button type="submit" name="login"><span>GO</span> <i class="fa fa-check"></i></button>
-   </div>
-
-   <a href="" class="pass-forgot">Forgot your password?</a>
-
-</div>
-
+      <button type="submit" name="login" class="button button2">LOGIN</button>
     </form>
+</div>
+<div class="col s1"></div>
+</div>
+</div>
 
 </body>
 </html>

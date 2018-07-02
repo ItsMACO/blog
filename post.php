@@ -10,8 +10,9 @@
         $content = mysqli_real_escape_string($con, $content);
     
         $date = date('l jS \of F Y h:i:s A');
+        $author = $_SESSION['username'];
 
-        $sql = "INSERT into posts (title, content, date) VALUES ('$title', '$content', '$date')";
+        $sql = "INSERT into posts (title, content, date, author) VALUES ('$title', '$content', '$date', '$author')";
 
         if($title == "" || $content == "") {
             echo "Please complete your post!";
@@ -30,16 +31,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog - Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <script src="materialize/js/materialize.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 </head>
-<body>
+<body style="background: white !important;">
+<div class="container-fluid">
+<div class="row">
+<div class="col s3">
+<?php
+include('sidebar.php');
+?>
+</div>
+<div class="col s8">
+<br><br><br><br>
     <form action="post.php" method="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48"><br><br>
-    <textarea placeholder="Content" name="content" rows="20" cols="50"></textarea><br>
-    <input name="post" type="submit" value="Post">
+    <textarea placeholder="Content" name="content" rows="20" cols="50" class="materialize-textarea"></textarea><br>
+    <div class="button login">
+      <button type="submit" name="post"><span>POST</span></button>
+    </div>
     </form>
+    </div>
+    </div>
+    </div>
+    <div class="col s1"></div>
 </body>
 </html>

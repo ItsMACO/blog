@@ -42,11 +42,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog - Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
-<body>
+<body style="background: white !important;">
+<div class="container-fluid">
+<div class="row">
+<div class="col s3">
+<?php
+include('sidebar.php');
+?>
+</div>
+<div class="col s8"><br><br><br><br>
 <?php
 $sql_get = "SELECT * FROM users WHERE id=$uid LIMIT 1";
 $result = mysqli_query($con, $sql_get);
@@ -66,7 +75,13 @@ if(mysqli_num_rows($result) > 0) {
     }
 }
 ?>
-    <input name="update_data" type="submit" value="Update Data">
+<div class="button login">
+      <button type="submit" name="update_data"><span>UPDATE DATA</span></button>
+   </div>
     </form>
+    </div>
+    </div>
+    </div>
+<div class="col s1"></div>
 </body>
 </html>
