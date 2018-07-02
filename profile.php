@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once('db.php');
+if (isset($_SESSION['id'])) {
+    $uid = $_SESSION['id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,11 +29,14 @@ include('sidebar.php');
 <div class="col s8">
     <?php
 
-    
+    $current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";    
+    $rid = substr($current_link, -5);
+
     require_once('nbbc/nbbc.php');
     $bbcode = new BBCode;   
-    $sql_profile = "SELECT * FROM users";
-    $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error());
+    
+    $sql_profile = "SELECT * FROM users WHERE id=$rid";
+    $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
 
 
     if (mysqli_num_rows($result_profile) > 0) {
@@ -39,8 +45,13 @@ include('sidebar.php');
             $username = $row['username'];
             $email = $row['email'];
             $isAdmin = $row['admin'];
+            $karma = $row['karma'];
         }
         echo "<div><h2>Profile of $username</h2></div>";
+        //echo "<p>Current Karma - $karma</p>";
+    if ($uid == $rid) {
+    echo "<a href='edit_userdata.php?uid=$uid' name='edit_userdata'>EDIT USER DATA</a>";
+    }
     } else {
         echo "User not found";
     }
@@ -58,11 +69,12 @@ include('sidebar.php');
             $date = $row['date'];
             $author = $row['author'];
         
-        $posts .="<div><h4><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h4><br></div>";
-    }
+        $posts .="<div><h5><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h5><br></div>";
+        }
         echo "<div><h3>Author of:<br>$posts</h3></div><br>";
     }
     ?>
+
 <div class="col s1"></div>
 </div>
 </div>

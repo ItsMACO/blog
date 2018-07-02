@@ -30,10 +30,13 @@ $pid = $_GET['pid'];
 <body>
 <div class="container-fluid">
 <div class="row">
-<div class="col s1">
-<br><br><a href="index.php" class="waves-effect waves-light btn blue darken-2"><i class="material-icons left">arrow_back</i>Back</a>
+<div class="col s3">
+<?php
+include('sidebar.php');
+?>
 </div>
-<div class="col s9">
+<div class="col s8">
+<br><br><br><br>
     <?php
     require_once('nbbc/nbbc.php');
     $bbcode = new BBCode;
@@ -75,7 +78,7 @@ $pid = $_GET['pid'];
         echo "<p>There are no posts to display!</p>";
     }
     ?>
-<div class="col s2"></div>
+<div class="col s1"></div>
 </div>
 </div>
 </div>

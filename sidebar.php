@@ -37,13 +37,17 @@
     <?php
     if (isset($_SESSION['id'])) {
         $uid = $_SESSION['id'];
-      echo "<li><a href='index.php'><i class='small material-icons'>home</i>Home</a></li>";
-      echo "<li class='blue darken-2'><a href='post.php' class='white-text'><i class='small material-icons'>add</i>New Post</a></li>";
-      echo "<li><a href='search.php'><i class='small material-icons'>search</i>Search</a></li>";
-      echo "<li><a href='edit_userdata?uid=$uid'><i class='small material-icons'>account_box</i>Edit User Data</a></li>";
-      echo "<li><a href='admin.php'><i class='small material-icons'>adb</i>Admin</a></li>";
-      echo "<li class='red darken-2'><a href='logout.php' class='white-text'><i class='small material-icons'>cancel</i>Logout</a></li>";
+        echo "<li><a href='index.php'><i class='small material-icons'>home</i>Home</a></li>";
+        echo "<li class='blue darken-2'><a href='post.php' class='white-text'><i class='small material-icons'>add</i>New Post</a></li>";
+        echo "<li><a href='search.php'><i class='small material-icons'>search</i>Search</a></li>";
+        echo "<li><a href='profile?id=$uid'><i class='small material-icons'>account_box</i>Profile</a></li>";
+        echo "<li><a href='admin.php'><i class='small material-icons'>adb</i>Admin</a></li>";
+        echo "<li class='red darken-2'><a href='logout.php' class='white-text'><i class='small material-icons'>cancel</i>Logout</a></li>";
+        ?>
+          
+        <?php
     } else {
+        echo "<li><a href='index.php'><i class='small material-icons'>home</i>Home</a></li>";
         echo "<li><a href='login.php'><i class='small material-icons'>arrow_forward</i>Login</a></li>";
         echo "<li><a href='register.php'><i class='small material-icons'>add_circle_outline</i>Register</a></li>";
         echo "<li><a href='search.php'><i class='small material-icons'>search</i>Search</a></li>";

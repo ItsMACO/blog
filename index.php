@@ -27,16 +27,7 @@ require_once('db.php');
 
     
 
-$sql_profile = "SELECT * FROM users";
-$result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error());
 
-if (mysqli_num_rows($result_profile) > 0) {
-    while ($row = mysqli_fetch_assoc($result_profile)) {
-        $userid = $row['id'];
-        $username = $row['username'];
-        $email = $row['email'];
-    }
-}
     
     require_once('nbbc/nbbc.php');
 
@@ -55,10 +46,19 @@ if (mysqli_num_rows($result_profile) > 0) {
             $date = $row['date'];
             $author = $row['author'];
             
+            $sql_profile = "SELECT * FROM users WHERE username='$author'";
+            $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+            if (mysqli_num_rows($result_profile) > 0) {
+                while ($row = mysqli_fetch_assoc($result_profile)) {
+                    $userid = $row['id'];
+                    $username = $row['username'];
+                    $email = $row['email'];
+                }
+            }
+
             $output = $bbcode->Parse($content);
 
             $posts .="<div><h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p><h6>".substr($output, 0, 360)."...</h6><br><a href='view_post.php?pid=$id' class='btn waves-effect waves-light blue darken-2'>Read more</a><br></div><br><div class='divider'></div>";
-        
         }
         
         echo $posts;
