@@ -43,16 +43,7 @@ include('sidebar.php');
 
     $pid = $_GET['pid'];
 
-    $sql_profile = "SELECT * FROM users ORDER BY id DESC";
-    $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error());
 
-    if (mysqli_num_rows($result_profile) > 0) {
-        while ($row = mysqli_fetch_assoc($result_profile)) {
-            $userid = $row['id'];
-            $username = $row['username'];
-            $email = $row['email'];
-        }
-    }
 
     $sql = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
     $result = mysqli_query($con, $sql) or die(mysqli_error());
@@ -64,6 +55,16 @@ include('sidebar.php');
             $date = $row['date'];
             $content = $row['content'];
             $author = $row['author'];
+
+            $sql_profile = "SELECT * FROM users WHERE username='$author'";
+            $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+            if (mysqli_num_rows($result_profile) > 0) {
+                while ($row = mysqli_fetch_assoc($result_profile)) {
+                    $userid = $row['id'];
+                    $username = $row['username'];
+                    $email = $row['email'];
+                }
+            }
 
             if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
             $admin = "<div><a href='edit_post.php?pid=$id>Edit</a><a href='del_post.php?pid=$id>Delete</a></div>";

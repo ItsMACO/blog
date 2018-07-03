@@ -13,9 +13,9 @@ require_once('db.php');
     <link rel="stylesheet" href="materialize/css/materialize.min.css">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background: white !important">
+<body>
 <div class="container-fluid">
     <div class="row">
         <div class="col s3">
@@ -24,12 +24,8 @@ require_once('db.php');
         ?>
         </div>
         <div class="col s8">
-    <?php
-
-    
-
-
-    
+            <br><br>
+    <?php    
     require_once('nbbc/nbbc.php');
 
     $bbcode = new BBCode;
@@ -60,14 +56,18 @@ require_once('db.php');
 
             $output = $bbcode->Parse($content);
 
-            $posts .="<div>
+            $posts .="<div class='row'>
+            <div class='col s8'>
             <h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <h6>".substr($output, 0, 360)."...</h6><br>
-            <img src='$image' height='200' width='200'><br>
-            <a href='view_post?pid=$id'>READ MORE</a><br>
-            </div><br><br><br><br><br><br>
+            <a href='view_post?pid=$id' class='button button1'>READ MORE</a><br>
+            </div>
+            <div class='4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+            
+            </div>
             <div class='divider'></div><br>";
+
         }
         
         echo $posts;

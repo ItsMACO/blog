@@ -42,10 +42,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog - Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
-    <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body style="background: white !important;">
 <div class="container-fluid">
@@ -67,17 +65,15 @@ if(mysqli_num_rows($result) > 0) {
         $email = $row['email'];
 
         echo "<form action='edit_userdata.php?uid=$uid' method='post' enctype='multipart/form-data'>";
-        echo "<input placeholder='Username' name='username' type='text' value='$username' autofocus size='48'><br><br>";
-        echo "<input placeholder='Password' name='password' type='password' autofocus size='48'><br><br>";
-        echo "<input placeholder='Email' name='email' type='text' value='$email'><br><br>";
+        echo "<input placeholder='Username' name='username' type='text' value='$username' class='text-input' autofocus size='48'><br><br>";
+        echo "<input placeholder='Password' name='password' type='password' class='text-input' autofocus size='48'><br><br>";
+        echo "<input placeholder='Email' name='email' type='text' class='text-input' autofocus size='48' value='$email'><br><br>";
 
 
     }
 }
 ?>
-<div class="button login">
-      <button type="submit" name="update_data"><span>UPDATE DATA</span></button>
-   </div>
+    <button type="submit" name="update_data" class="button button1"><span>UPDATE DATA</span></button>
     </form>
     </div>
     </div>

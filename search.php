@@ -26,8 +26,8 @@ require_once('db.php');
         <div class="col s8">
 <br><br><br><br>
 <form action="search.php" method="post">
-<input type="text" name="searchtxt">
-      <button type="submit" class="button button2" name="searchbtn"><span>SEARCH</span></button>
+<input type="text" name="searchtxt"><br><br>
+      <button type="submit" class="button button1" name="searchbtn"><span>SEARCH</span></button>
 </form>
 
 
@@ -62,16 +62,16 @@ require_once('db.php');
             }
 
             if(mysqli_num_rows($result) > 1) {
-            echo "<br><br><br><br><br><br><br><br>Found ".mysqli_num_rows($result)." results.";
+            echo "<br><br>Found ".mysqli_num_rows($result)." results.";
             }
             if(mysqli_num_rows($result) == 1) {
-                echo "<br><br><br><br><br><br><br><br>Found ".mysqli_num_rows($result)." result.";
+                echo "<br><br>Found ".mysqli_num_rows($result)." result.";
             }
             
             echo $posts;
             
         } else {
-            echo "<br><br><br><br><br><br><br><br>No posts found!";
+            echo "<br><br>No posts found!";
         }
     }
 

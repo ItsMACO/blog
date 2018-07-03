@@ -77,7 +77,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="materialize/css/materialize.min.css">
     <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     <script src="main.js"></script>
 </head>
 <body style="background: white !important;">
@@ -93,10 +93,8 @@ include('sidebar.php');
     <form action="post.php" method="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48"><br><br>
     <textarea placeholder="Content" name="content" rows="20" cols="50" class="materialize-textarea"></textarea><br>
-    <input name="image" type="file" autofocus size="48"><br>
-    <div class="button login">
-      <button type="submit" name="post"><span>POST</span></button>
-    </div>
+    <input name="image" type="file" autofocus size="48" class="button button2"><br><br>
+      <button type="submit" name="post" class="button button1">POST</button>
     </form>
     </div>
     </div>

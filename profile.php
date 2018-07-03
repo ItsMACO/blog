@@ -48,7 +48,7 @@ include('sidebar.php');
             $karma = $row['karma'];
         }
         echo "<div><h2>Profile of $username</h2></div>";
-        //echo "<p>Current Karma - $karma</p>";
+        echo "<p>Current Karma - $karma</p>";
     if ($uid == $rid) {
     echo "<a href='edit_userdata.php?uid=$uid' name='edit_userdata'>EDIT USER DATA</a>";
     }
@@ -69,9 +69,9 @@ include('sidebar.php');
             $date = $row['date'];
             $author = $row['author'];
         
-        $posts .="<div><h5><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h5><br></div>";
+        $posts .="<div><h5><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h5></div>";
         }
-        echo "<div><h3>Author of:<br>$posts</h3></div><br>";
+        echo "<div><h4>Author of:<br>$posts</h4></div><br>";
     }
     ?>
 

@@ -1,5 +1,5 @@
 .button {
-    background-color: #4CAF50; /* Green */
+    border-radius: 25px;
     border: none;
     color: white;
     padding: 16px 32px;
@@ -7,17 +7,31 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
 }
-.button2 {
+.button1 {
     background-color: white; 
-    color: black; 
-    border: 2px solid #008CBA;
+    color: #1976d2; 
+    border: 2px solid #1976d2;
 }
 
-.button2:hover {
-    background-color: #008CBA;
+.button1:hover {
+    background-color: #1976d2;
     color: white;
+}
+.button2 {
+  background-color: white;
+  color: #f57c00;
+  border: 2px solid #f57c00;
+}
+.button2:hover {
+  background-color: #f57c00;
+  color: white;
+}
+.text-input {
+  border: 1px solid #1976d2;
+  border-radius: 25px;
+  padding: 15px;
 }
