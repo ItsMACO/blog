@@ -46,6 +46,7 @@ require_once('db.php');
             $content = $row['content'];
             $date = $row['date'];
             $author = $row['author'];
+            $image = $row['image'];
             
             $sql_profile = "SELECT * FROM users WHERE username='$author'";
             $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -63,6 +64,7 @@ require_once('db.php');
             <h2><a href='view_post.php?pid=$id' class='blue-text darken-2'>$title</a></h2>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <h6>".substr($output, 0, 360)."...</h6><br>
+            <img src='$image' height='200' width='200'><br>
             <a href='view_post?pid=$id'>READ MORE</a><br>
             </div><br><br><br><br><br><br>
             <div class='divider'></div><br>";
