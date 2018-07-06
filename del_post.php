@@ -10,7 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="materialize/css/materialize.min.css">
     <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     <script src="main.js"></script>
 </head>
 <body style="background: white !important">
@@ -18,39 +18,36 @@ session_start();
 <div class="row">
 <div class="col s3">
 </div>
-<div class="col s6">
+<div class="col s8">
     <?php
-    include_once('db.php');
+include_once 'db.php';
 
-    if(!isset($_SESSION['username'])) {
-        header('Location: login.php');
-        return;
-    }
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    return;
+}
 
-    if(!isset($_GET['pid'])) {
-        header('Location: admin.php');
-    } else {?>
+if (!isset($_GET['pid'])) {
+    header('Location: admin.php');
+} else {?>
     <br><br><br><br>
         <form action="" method="post">
-        <h3>Do you really want to delete this post?</h3>
-        <div class="button login">
-        <button type="submit" name="delete"><span>DELETE</span></button>
-        </div>
+        <h3>Do you really want to delete this post?</h3><br>
+        <button type="submit" name="delete" class="button button3" style="position: absolute; top: 30%; left: 49%;">DELETE</button>
         </form>
         <?php
-        if (isset($_POST['delete'])) {
-            $pid = $_GET['pid'];
-            $sql = "DELETE FROM posts WHERE id=$pid";
-            mysqli_query($con, $sql);
-            header('Location: admin.php');
-    
-        }
-    }
+if (isset($_POST['delete'])) {
+    $pid = $_GET['pid'];
+    $sql = "DELETE FROM posts WHERE id=$pid";
+    mysqli_query($con, $sql);
+    header('Location: admin.php');
 
+}
+}
 
-    ?>
+?>
 </div>
-<div class="col s3"></div>
+<div class="col s1"></div>
 </div>
 </body>
 </html>

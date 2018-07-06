@@ -1,8 +1,8 @@
 <?php
-session_start();
-include_once('db.php');
+include 'sidebar.php';
+include_once 'db.php';
 
-if(!isset($_SESSION['admin']) && $_SESSION['admin'] != 1) {
+if (!isset($_SESSION['admin']) && $_SESSION['admin'] != 1) {
     header('Location: login.php');
 
 }
@@ -15,49 +15,57 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != 1) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div class="col s3">
-        <?php
-        include('sidebar.php');
-        ?>
         </div>
         <div class="col s8">
+        <br>
     <?php
 
-    $sql = "SELECT * FROM posts ORDER BY id DESC";
-    $result = mysqli_query($con, $sql) or die(mysqli_error());
+$sql = "SELECT * FROM posts ORDER BY id DESC";
+$result = mysqli_query($con, $sql) or die(mysqli_error());
 
-    $posts = "";
+$posts = "";
 
-    if(mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            $id = $row['id'];
-            $title = $row['title'];
-            $date = $row['date'];
-            $author = $row['author'];
-            
-            if(isset($_SESSION['id'])) {
-            $admin = "<div><a href='edit_post.php?pid=$id' class='btn waves-effect waves-light yellow darken-2'>Edit</a>&nbsp;<a href='del_post.php?pid=$id' class='btn waves-effect waves-light red darken-2'>Delete</a></div>";
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+        $title = $row['title'];
+        $date = $row['date'];
+        $author = $row['author'];
+
+        $sql_profile = "SELECT * FROM users WHERE username='$author'";
+        $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+        if (mysqli_num_rows($result_profile) > 0) {
+            while ($row = mysqli_fetch_assoc($result_profile)) {
+                $userid = $row['id'];
+                $username = $row['username'];
+                $email = $row['email'];
             }
-
-            $posts .="<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2><p>$date by $author</p><br>$admin</div><br><div class='divider'></div>";
         }
 
-        echo $posts;
-        
-    } else {
-        echo "There are no posts to display!";
+        if (isset($_SESSION['id'])) {
+            $admin = "<div><a href='edit_post.php?pid=$id' class='button button2'>EDIT</a>&nbsp;<a href='del_post.php?pid=$id' class='button button3'>DELETE</a></div>";
+        }
+
+        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p>$admin</div><br><div class='divider'></div>";
     }
 
-    ?>
+    echo $posts;
+
+} else {
+    echo "There are no posts to display!";
+}
+
+?>
 </div>
 <div class="col s1">
 </div>

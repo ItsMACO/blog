@@ -1,0 +1,55 @@
+<?php
+include 'sidebar.php';
+require_once 'db.php';
+
+if (isset($_POST['bug_submit'])) {
+    $bug_title = strip_tags($_POST['bug_title']);
+    $bug_page = strip_tags($_POST['bug_page']);
+    $bug_more_info = strip_tags($_POST['bug_more_info']);
+
+    $bug_title = stripslashes($bug_title);
+    $bug_page = stripslashes($bug_page);
+    $bug_more_info = stripslashes($bug_more_info);
+
+    $bug_title = mysqli_real_escape_string($con, $bug_title);
+    $bug_page = mysqli_real_escape_string($con, $bug_page);
+    $bug_more_info = mysqli_real_escape_string($con, $bug_more_info);
+
+    $bug_userid = $_SESSION['id'];
+    $bug_store = "INSERT INTO bug_reports (bug_title, bug_page, bug_more_info, userid) VALUES ('$bug_title', '$bug_page', '$bug_more_info', '$bug_userid')";
+
+    mysqli_query($con, $bug_store);
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bug Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <script src="materialize/js/materialize.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+<div class="col s3">
+</div>
+<div class="col s8">
+<br><br><br><br>
+<form action="bug_report.php" method="post">
+<input type="text" name="bug_title" size="48" placeholder="Your bug report title" class="text-input"><br><br>
+<input type="text" name="bug_page" size="48" placeholder="On what page did it happen?" class="text-input"><br><br>
+<textarea name="bug_more_info" class="text-input" placeholder="Additional information" rows="2" cols="48"></textarea><br>
+<p>If you're logged in, you may receive some Karma for your service.</p>
+<button type="submit" name="bug_submit" class="button button1">SUBMIT</button>
+</form>
+</div>
+<div class="col s1"></div>
+</div>
+</div>
+</body>
+</html>

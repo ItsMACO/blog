@@ -1,16 +1,16 @@
 <?php
-if(isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) {
     header('Location: index.php');
 }
 
-if(isset($_POST['register'])) {
-    include_once('db.php');
+if (isset($_POST['register'])) {
+    include_once 'db.php';
 
     $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
     $password_confirm = strip_tags($_POST['password_confirm']);
     $email = strip_tags($_POST['email']);
-    
+
     $username = stripslashes($username);
     $password = stripslashes($password);
     $password_confirm = stripslashes($password_confirm);
@@ -31,27 +31,27 @@ if(isset($_POST['register'])) {
     $query_username = mysqli_query($con, $sql_fetch_username);
     $query_email = mysqli_query($con, $sql_fetch_email);
 
-    if(mysqli_num_rows($query_username)) {
+    if (mysqli_num_rows($query_username)) {
         echo "There is already a user with that name.";
         return;
     }
-    if($username == "") {
+    if ($username == "") {
         echo "Please insert a username.";
         return;
     }
-    if($password == "" || $password_confirm == "") {
+    if ($password == "" || $password_confirm == "") {
         echo "Please insert a password.";
     }
-    if($password != $password_confirm) {
+    if ($password != $password_confirm) {
         echo "The passwords do not match!";
         return;
     }
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL) || $email =="") {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $email == "") {
         echo "This email is not valid.";
         return;
     }
-    if(mysqli_num_rows($query_email)) {
+    if (mysqli_num_rows($query_email)) {
         echo "This email is already in use.";
         return;
     }
@@ -79,7 +79,7 @@ if(isset($_POST['register'])) {
 <div class="row">
 <div class="col s3">
 <?php
-include('sidebar.php');
+include 'sidebar.php';
 ?>
 </div>
 <div class="col s8">

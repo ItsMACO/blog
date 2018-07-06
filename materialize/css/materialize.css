@@ -2605,12 +2605,6 @@ ul:not(.browser-default) > li {
   list-style-type: none;
 }
 
-a {
-  color: #039be5;
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
 .valign-wrapper {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2678,11 +2672,6 @@ a {
           box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.divider {
-  height: 1px;
-  overflow: hidden;
-  background-color: #e0e0e0;
-}
 
 blockquote {
   margin: 20px 0;
@@ -5579,10 +5568,6 @@ button.btn-floating {
   outline: none;
 }
 
-.dropdown-content li.divider {
-  min-height: 0;
-  height: 1px;
-}
 
 .dropdown-content li > a, .dropdown-content li > span {
   font-size: 16px;
@@ -7572,9 +7557,6 @@ input[type=range]::-ms-thumb {
   color: rgba(0, 0, 0, 0.54);
 }
 
-.sidenav .divider {
-  margin: 8px 0 0 0;
-}
 
 .sidenav .subheader {
   cursor: initial;
@@ -7612,6 +7594,7 @@ input[type=range]::-ms-thumb {
   bottom: 0;
   left: 0;
   z-index: -1;
+  filter: blur(4px);
 }
 
 .sidenav .user-view .circle, .sidenav .user-view .name, .sidenav .user-view .email {

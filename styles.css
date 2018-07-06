@@ -21,6 +21,16 @@
     background-color: #1976d2;
     color: white;
 }
+.button1-reverse {
+  background-color: #1976d2;
+  color: white;
+}
+
+.button1-reverse:hover {
+  background-color: white; 
+  color: #1976d2; 
+  border: 2px solid #1976d2;
+}
 .button2 {
   background-color: white;
   color: #f57c00;
@@ -30,8 +40,34 @@
   background-color: #f57c00;
   color: white;
 }
+.button3 {
+  background-color: white;
+  color: #d32f2f;
+  border: 2px solid #d32f2f;
+}
+.button3:hover {
+  background-color: #d32f2f;
+  color: white;
+}
 .text-input {
   border: 1px solid #1976d2;
   border-radius: 25px;
   padding: 15px;
+}
+a {
+  color: #1976d2;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.sidenav .divider {
+  margin: 8px 0 0 0;
+}
+.divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+}
+.dropdown-content li.divider {
+  min-height: 0;
+  height: 1px;
 }
