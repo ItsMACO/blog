@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -58,8 +58,8 @@ if (isset($_POST['login'])) {
 }
 ?>
 
-      <input type="text" name="username" placeholder="Username">
-      <input type="password" name="password" placeholder="Password">
+      <input type="text" name="username" placeholder="Username" class="text-input"><br><br>
+      <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
       <button type="submit" name="login" class="button button1">LOGIN</button>
     </form>
 </div>

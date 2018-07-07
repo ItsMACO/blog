@@ -68,10 +68,10 @@ if (isset($_POST['register'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 <body style="background: white !important;">
@@ -79,19 +79,17 @@ if (isset($_POST['register'])) {
 <div class="row">
 <div class="col s3">
 <?php
-include 'sidebar.php';
+require 'sidebar.php';
 ?>
 </div>
 <div class="col s8">
 <br><br><br><br>
     <form action="register.php" method="post" enctype="multipart/form-data">
-    <input placeholder="Username" name="username" type="text" autofocus>
-    <input placeholder="Password" name="password" type="password">
-    <input placeholder="Confirm Password" name="password_confirm" type="password">
-    <input placeholder="Email address" name="email" type="text">
-    <div class="button login">
-      <button type="submit" name="register"><span>REGISTER</span></button>
-    </div>
+    <input placeholder="Username" name="username" type="text" class="text-input" autofocus><br><br>
+    <input placeholder="Password" name="password" type="password" class="text-input"><br><br>
+    <input placeholder="Confirm Password" name="password_confirm" type="password" class="text-input"><br><br>
+    <input placeholder="Email address" name="email" type="text" class="text-input"><br><br>
+      <button type="submit" name="register" class='button button1'>REGISTER</button>
     </form>
     </div>
     <div class="col s1"></div>
