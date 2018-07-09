@@ -1,3 +1,6 @@
+body {
+  background: white;
+}
 .button {
     border-radius: 25px;
     border: none;
@@ -70,4 +73,19 @@ a {
 .dropdown-content li.divider {
   min-height: 0;
   height: 1px;
+}
+.box {
+  background: #fafafa;
+  border-radius: 25px;
+  display: inline-block;
+}
+.box1 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.break-long-words {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
 }

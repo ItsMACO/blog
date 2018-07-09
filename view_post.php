@@ -4,7 +4,7 @@ require_once 'db.php';
 
 if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
-}
+} 
 
 $current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $pid = substr($current_link, -6);
@@ -132,22 +132,23 @@ if (mysqli_num_rows($result_comments) > 0) {
         $comment_time = $row['time'];
         $comment_content = $row['comment_content'];
 
-        $sql_comment_profile = "SELECT * FROM users WHERE id='$user'";
+        $sql_comment_profile = "SELECT * FROM users WHERE username='$comment_user_username'";
         $result_comment_profile = mysqli_query($con, $sql_comment_profile) or die(mysqli_error($con));
         if (mysqli_num_rows($result_comment_profile) > 0) {
             while ($row = mysqli_fetch_assoc($result_comment_profile)) {
                 $userid = $row['id'];
                 $username = $row['username'];
                 $email = $row['email'];
-
             }
         }
-        //converts unix time to normal datetime
-        $unix_converted = date('d-m-Y H:i:s', $comment_time);
-        //breaks the comment after 90 characters
-        $long_comment = chunk_split($comment_content, 90, "<br>\n");
-        $comments = "<div class='comment-box' style='background-color: #eeeeee; border: 1px solid #eeeeee; border-radius: 25px;'><h6 style='margin: 25px;'><a href='profile.php?id=$userid'>$comment_user_username</a><br>$unix_converted UTC<br>$long_comment\n</h6></div><br>";
-        echo $comments;
+                //converts unix time to normal datetime
+                $unix_converted = date('d-m-Y H:i:s', $comment_time);
+                //breaks the comment after 90 characters
+                $comments = "<div class='box box1'>
+                <h6 style='margin: 25px;' class='break-long-words'>
+                <a href='profile.php?id=$userid'>$comment_user_username</a>
+                <br>$unix_converted UTC<br>$comment_content</h6></div><br><br>";
+                echo $comments;
     }
 } else {
     echo "<div class='left-align'>There are no comments to display!</div>";
