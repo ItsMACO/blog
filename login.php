@@ -53,7 +53,7 @@ if (isset($_POST['login'])) {
         }
         header('Location: index.php');
     } else {
-        echo "<br><br><br><h3>Incorrect details!</h3>";
+        echo "<h6>Incorrect details!</h6>";
     }
 }
 ?>
@@ -61,7 +61,8 @@ if (isset($_POST['login'])) {
       <input type="text" name="username" placeholder="Username" class="text-input"><br><br>
       <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
       <button type="submit" name="login" class="button button1">LOGIN</button>
-    </form>
+    </form><br>
+    <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a>
 </div>
 <div class="col s1"></div>
 </div>

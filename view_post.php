@@ -121,6 +121,10 @@ $result_comments = mysqli_query($con, $sql_comments) or die(mysqli_error($con));
 $comments = "";
 
 if (mysqli_num_rows($result_comments) > 0) {
+
+    $result_comments_number = mysqli_num_rows($result_comments);
+    echo "<h5>".$result_comments_number." comments</h5><div class='divider'></div><br>";
+
     while ($row = mysqli_fetch_assoc($result_comments)) {
         $comment_id = $row['comment_id'];
         $comment_user_username = $row['user_username'];
@@ -138,8 +142,11 @@ if (mysqli_num_rows($result_comments) > 0) {
 
             }
         }
+        //converts unix time to normal datetime
         $unix_converted = date('d-m-Y H:i:s', $comment_time);
-        $comments = "<div class='comment'>$comment_user_username<br>$unix_converted<br>$comment_content</div><br><br>";
+        //breaks the comment after 90 characters
+        $long_comment = chunk_split($comment_content, 90, "<br>\n");
+        $comments = "<div class='comment-box' style='background-color: #eeeeee; border: 1px solid #eeeeee; border-radius: 25px;'><h6 style='margin: 25px;'><a href='profile.php?id=$userid'>$comment_user_username</a><br>$unix_converted UTC<br>$long_comment\n</h6></div><br>";
         echo $comments;
     }
 } else {

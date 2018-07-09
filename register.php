@@ -41,6 +41,7 @@ if (isset($_POST['register'])) {
     }
     if ($password == "" || $password_confirm == "") {
         echo "Please insert a password.";
+        return;
     }
     if ($password != $password_confirm) {
         echo "The passwords do not match!";

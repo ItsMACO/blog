@@ -82,7 +82,7 @@ if (isset($_SESSION['id'])) {
             if (mysqli_num_rows($result_profile) > 0) {
                 while ($row = mysqli_fetch_assoc($result_profile)) {
                     $userid = $row['id'];
-                    echo "<div class='center-align'><a href='profile.php?id=$userid'>" . $username . "</a></div>";
+                    echo "<div class='center-align'><a href='profile.php?id=$userid'>".$username."</a></div>";
                 }
             }
         }

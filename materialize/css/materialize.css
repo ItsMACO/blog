@@ -4429,7 +4429,7 @@ nav .input-field input {
   padding-left: 2rem;
 }
 
-nav .input-field input:focus, nav .input-field input[type=email]:valid, nav .input-field input[type=url]:valid, nav .input-field input[type=date]:valid {
+nav .input-field input:focus, nav .input-field input[type=url]:valid, nav .input-field input[type=date]:valid {
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -6107,7 +6107,6 @@ label {
 
 /* Text inputs */
 input:not([type]),
-input[type=email]:not(.browser-default),
 input[type=url]:not(.browser-default),
 input[type=time]:not(.browser-default),
 input[type=date]:not(.browser-default),
@@ -6138,8 +6137,6 @@ textarea.materialize-textarea {
 }
 
 input:not([type]):disabled, input:not([type])[readonly="readonly"],
-input[type=email]:not(.browser-default):disabled,
-input[type=email]:not(.browser-default)[readonly="readonly"],
 input[type=url]:not(.browser-default):disabled,
 input[type=url]:not(.browser-default)[readonly="readonly"],
 input[type=time]:not(.browser-default):disabled,
@@ -6164,8 +6161,6 @@ textarea.materialize-textarea[readonly="readonly"] {
 
 input:not([type]):disabled + label,
 input:not([type])[readonly="readonly"] + label,
-input[type=email]:not(.browser-default):disabled + label,
-input[type=email]:not(.browser-default)[readonly="readonly"] + label,
 input[type=url]:not(.browser-default):disabled + label,
 input[type=url]:not(.browser-default)[readonly="readonly"] + label,
 input[type=time]:not(.browser-default):disabled + label,
@@ -6188,7 +6183,6 @@ textarea.materialize-textarea[readonly="readonly"] + label {
 }
 
 input:not([type]):focus:not([readonly]),
-input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=url]:not(.browser-default):focus:not([readonly]),
 input[type=time]:not(.browser-default):focus:not([readonly]),
 input[type=date]:not(.browser-default):focus:not([readonly]),
@@ -6204,7 +6198,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 input:not([type]):focus:not([readonly]) + label,
-input[type=email]:not(.browser-default):focus:not([readonly]) + label,
 input[type=url]:not(.browser-default):focus:not([readonly]) + label,
 input[type=time]:not(.browser-default):focus:not([readonly]) + label,
 input[type=date]:not(.browser-default):focus:not([readonly]) + label,
@@ -6218,7 +6211,6 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 }
 
 input:not([type]):focus.valid ~ label,
-input[type=email]:not(.browser-default):focus.valid ~ label,
 input[type=url]:not(.browser-default):focus.valid ~ label,
 input[type=time]:not(.browser-default):focus.valid ~ label,
 input[type=date]:not(.browser-default):focus.valid ~ label,
@@ -6232,7 +6224,6 @@ textarea.materialize-textarea:focus.valid ~ label {
 }
 
 input:not([type]):focus.invalid ~ label,
-input[type=email]:not(.browser-default):focus.invalid ~ label,
 input[type=url]:not(.browser-default):focus.invalid ~ label,
 input[type=time]:not(.browser-default):focus.invalid ~ label,
 input[type=date]:not(.browser-default):focus.invalid ~ label,
@@ -6246,7 +6237,6 @@ textarea.materialize-textarea:focus.invalid ~ label {
 }
 
 input:not([type]).validate + label,
-input[type=email]:not(.browser-default).validate + label,
 input[type=url]:not(.browser-default).validate + label,
 input[type=time]:not(.browser-default).validate + label,
 input[type=date]:not(.browser-default).validate + label,
@@ -6261,8 +6251,6 @@ textarea.materialize-textarea.validate + label {
 
 /* Validation Sass Placeholders */
 input.valid:not([type]), input.valid:not([type]):focus,
-input.valid[type=email]:not(.browser-default),
-input.valid[type=email]:not(.browser-default):focus,
 input.valid[type=url]:not(.browser-default),
 input.valid[type=url]:not(.browser-default):focus,
 input.valid[type=time]:not(.browser-default),
@@ -6287,8 +6275,6 @@ textarea.materialize-textarea.valid:focus, .select-wrapper.valid > input.select-
 }
 
 input.invalid:not([type]), input.invalid:not([type]):focus,
-input.invalid[type=email]:not(.browser-default),
-input.invalid[type=email]:not(.browser-default):focus,
 input.invalid[type=url]:not(.browser-default),
 input.invalid[type=url]:not(.browser-default):focus,
 input.invalid[type=time]:not(.browser-default),
@@ -6317,10 +6303,6 @@ input:not([type]).valid ~ .helper-text[data-success],
 input:not([type]):focus.valid ~ .helper-text[data-success],
 input:not([type]).invalid ~ .helper-text[data-error],
 input:not([type]):focus.invalid ~ .helper-text[data-error],
-input[type=email]:not(.browser-default).valid ~ .helper-text[data-success],
-input[type=email]:not(.browser-default):focus.valid ~ .helper-text[data-success],
-input[type=email]:not(.browser-default).invalid ~ .helper-text[data-error],
-input[type=email]:not(.browser-default):focus.invalid ~ .helper-text[data-error],
 input[type=url]:not(.browser-default).valid ~ .helper-text[data-success],
 input[type=url]:not(.browser-default):focus.valid ~ .helper-text[data-success],
 input[type=url]:not(.browser-default).invalid ~ .helper-text[data-error],
@@ -6368,8 +6350,6 @@ textarea.materialize-textarea:focus.invalid ~ .helper-text[data-error], .select-
 
 input:not([type]).valid ~ .helper-text:after,
 input:not([type]):focus.valid ~ .helper-text:after,
-input[type=email]:not(.browser-default).valid ~ .helper-text:after,
-input[type=email]:not(.browser-default):focus.valid ~ .helper-text:after,
 input[type=url]:not(.browser-default).valid ~ .helper-text:after,
 input[type=url]:not(.browser-default):focus.valid ~ .helper-text:after,
 input[type=time]:not(.browser-default).valid ~ .helper-text:after,
@@ -6394,8 +6374,6 @@ textarea.materialize-textarea:focus.valid ~ .helper-text:after, .select-wrapper.
 
 input:not([type]).invalid ~ .helper-text:after,
 input:not([type]):focus.invalid ~ .helper-text:after,
-input[type=email]:not(.browser-default).invalid ~ .helper-text:after,
-input[type=email]:not(.browser-default):focus.invalid ~ .helper-text:after,
 input[type=url]:not(.browser-default).invalid ~ .helper-text:after,
 input[type=url]:not(.browser-default):focus.invalid ~ .helper-text:after,
 input[type=time]:not(.browser-default).invalid ~ .helper-text:after,
@@ -6419,7 +6397,6 @@ textarea.materialize-textarea:focus.invalid ~ .helper-text:after, .select-wrappe
 }
 
 input:not([type]) + label:after,
-input[type=email]:not(.browser-default) + label:after,
 input[type=url]:not(.browser-default) + label:after,
 input[type=time]:not(.browser-default) + label:after,
 input[type=date]:not(.browser-default) + label:after,
