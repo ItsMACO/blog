@@ -1,16 +1,17 @@
 <?php
-if(isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) {
     header('Location: index.php');
 }
+require 'sidebar_new.php';
+include_once 'db.php';
 
-if(isset($_POST['register'])) {
-    include_once('db.php');
+if (isset($_POST['register'])) {
 
     $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
     $password_confirm = strip_tags($_POST['password_confirm']);
     $email = strip_tags($_POST['email']);
-    
+
     $username = stripslashes($username);
     $password = stripslashes($password);
     $password_confirm = stripslashes($password_confirm);
@@ -31,27 +32,28 @@ if(isset($_POST['register'])) {
     $query_username = mysqli_query($con, $sql_fetch_username);
     $query_email = mysqli_query($con, $sql_fetch_email);
 
-    if(mysqli_num_rows($query_username)) {
+    if (mysqli_num_rows($query_username)) {
         echo "There is already a user with that name.";
         return;
     }
-    if($username == "") {
+    if ($username == "") {
         echo "Please insert a username.";
         return;
     }
-    if($password == "" || $password_confirm == "") {
+    if ($password == "" || $password_confirm == "") {
         echo "Please insert a password.";
+        return;
     }
-    if($password != $password_confirm) {
+    if ($password != $password_confirm) {
         echo "The passwords do not match!";
         return;
     }
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL) || $email =="") {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $email == "") {
         echo "This email is not valid.";
         return;
     }
-    if(mysqli_num_rows($query_email)) {
+    if (mysqli_num_rows($query_email)) {
         echo "This email is already in use.";
         return;
     }
@@ -68,33 +70,25 @@ if(isset($_POST['register'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 
 </head>
-<body style="background: white !important;">
+<body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-<?php
-include('sidebar.php');
-?>
-</div>
-<div class="col s8">
-<br><br><br><br>
+    <div class="wrap">
+        <div class="center-align">
+    <br><br>
     <form action="register.php" method="post" enctype="multipart/form-data">
-    <input placeholder="Username" name="username" type="text" autofocus>
-    <input placeholder="Password" name="password" type="password">
-    <input placeholder="Confirm Password" name="password_confirm" type="password">
-    <input placeholder="Email address" name="email" type="text">
-    <div class="button login">
-      <button type="submit" name="register"><span>REGISTER</span></button>
+    <input placeholder="Username" name="username" type="text" class="text-input" autofocus><br><br>
+    <input placeholder="Password" name="password" type="password" class="text-input"><br><br>
+    <input placeholder="Confirm Password" name="password_confirm" type="password" class="text-input"><br><br>
+    <input placeholder="Email address" name="email" type="text" class="text-input"><br><br>
+      <button type="submit" name="register" class='button button1'>REGISTER</button>
+    </form><br><br>
     </div>
-    </form>
-    </div>
-    <div class="col s1"></div>
     </div>
     </div>
 </body>

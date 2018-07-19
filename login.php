@@ -1,3 +1,7 @@
+<?php
+include 'sidebar_new.php';
+include_once 'db.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,31 +9,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col s3">
-                <?php
-                include('sidebar.php');
-                ?>
-            </div>
-            <div class="col s8">
-                <br><br><br><br>
+        <div class="wrap"><br><br>
+            <div class="center-align">
     <form action="login.php" method="post" enctype="multipart/form-data">
 <?php
-session_start();
 
-if(isset($_POST['login'])) {
-    include_once('db.php');
+if (isset($_POST['login'])) {
     $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
 
-    
     $username = stripslashes($username);
     $password = stripslashes($password);
 
@@ -46,28 +41,27 @@ if(isset($_POST['login'])) {
     $admin = $row['admin'];
     $email = $row['email'];
 
-    if($password == $db_password) {
+    if ($password == $db_password) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
 
-        if($admin == 1) {
+        if ($admin == 1) {
             $_SESSION['admin'] = 1;
         }
         header('Location: index.php');
     } else {
-        echo "<br><br><br><h3>Incorrect details!</h3>";
+        echo "<h6>Incorrect details!</h6>";
     }
 }
 ?>
 
-      <input type="text" name="username" placeholder="Username">
-      <input type="password" name="password" placeholder="Password">
-      <button type="submit" name="login" class="button button2">LOGIN</button>
-    </form>
+      <input type="text" name="username" placeholder="Username" class="text-input"><br><br>
+      <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
+      <button type="submit" name="login" class="button button1">LOGIN</button>
+    </form><br>
+    <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a><br><br>
 </div>
-<div class="col s1"></div>
 </div>
 </div>
-
 </body>
 </html>

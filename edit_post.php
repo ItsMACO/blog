@@ -1,6 +1,7 @@
 <?php
     session_start();
-    include_once('db.php');
+    require 'db.php';
+    require 'sidebar_new.php';
 
     if(!isset($_SESSION['username'])) {
         header('Location: login.php');
@@ -21,7 +22,7 @@
     
         $date = date('l jS \of F Y h:i:s A');
 
-        $sql = "UPDATE posts SET title='$title', content='$content', date='$date' WHERE id=$pid";
+        $sql = "UPDATE posts SET title='$title', content='$content', date='$date', image='$image' WHERE id=$pid";
 
         if($title == "" || $content == "") {
             echo "Please complete your post!";
@@ -40,20 +41,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog - Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
-<body style="background: white !important;">
+<body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-<?php
-include('sidebar.php');
-?>
-</div>
-<div class="col s8">
+<div class="wrap">
+<div class="center-align">
 <br><br><br><br>
 <?php
 $sql_get = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
@@ -65,19 +61,14 @@ if(mysqli_num_rows($result) > 0) {
         $content = $row['content'];
 
         echo "<form action='edit_post.php?pid=$pid' method='post' enctype='multipart/form-data'>";
-        echo "<input placeholder='Title' name='title' type='text' value='$title' autofocus size='48'><br><br>";
-        echo "<textarea placeholder='Content' name='content' rows='20' cols='50' class='materialize-textarea'>$content</textarea><br>";
-
-
+        echo "<input placeholder='Title' name='title' type='text' value='$title' autofocus size='48' class='text-input'><br><br>";
+        echo "<textarea placeholder='Content' name='content' rows='20' cols='50' class='text-input'>$content</textarea><br><br>";
     }
 }
 ?>
-    <div class="button login">
-      <button type="submit" name="update"><span>UPDATE</span></button>
-   </div>
-    </form>
+      <button type="submit" name="update" class="button button1">UPDATE</button>
+    </form><br><br>
     </div>
-    <div class="col s1"></div>
     </div>
     </div>
 </body>
