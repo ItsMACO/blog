@@ -1,5 +1,5 @@
 <?php
-include 'sidebar.php';
+include 'sidebar_new.php';
 require_once 'db.php';
 ?>
 
@@ -10,22 +10,20 @@ require_once 'db.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css"></link>
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>"></link>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col s3">
-        </div>
-        <div class="col s8">
-<br><br><br><br>
+    <div class="wrap">
+<br><br>
+<div class="center-align">
 <form action="search.php" method="post">
 <input type="text" name="searchtxt" class="text-input" size="48"><br><br>
       <button type="submit" class="button button1" name="searchbtn"><span>SEARCH</span></button>
-</form>
+</form><br><br>
 
 
     <?php
@@ -50,6 +48,7 @@ if (isset($_POST['searchbtn'])) {
             $content = $row['content'];
             $date = $row['date'];
             $author = $row['author'];
+            $image = $row['image'];
 
             $sql_profile = "SELECT * FROM users WHERE username='$author'";
             $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -65,15 +64,25 @@ if (isset($_POST['searchbtn'])) {
             }
             $output = $bbcode->Parse($content);
 
-            $posts .= "<br><div><h2><a href='view_post.php?pid=$id'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p><h6>" . substr($output, 0, 360) . "...</h6><br><a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br></div><br><div class='divider'></div>";
+            $posts .= "<div class='row'>
+            <div class='col s1'></div>
+            <div class='col s8'>
+            <h2><a href='view_post.php?pid=$id'>$title</a></h2>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
+            <h6>" . substr($output, 0, 360) . "...</h6><br>
+            <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>
+            </div>
+            <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+
+            </div><br>";
 
         }
 
         if (mysqli_num_rows($result) > 1) {
-            echo "<br><br>Found " . mysqli_num_rows($result) . " results.";
+            echo "Found " . mysqli_num_rows($result) . " results.</div>";
         }
         if (mysqli_num_rows($result) == 1) {
-            echo "<br><br>Found " . mysqli_num_rows($result) . " result.";
+            echo "Found " . mysqli_num_rows($result) . " result.</div>";
         }
 
         echo $posts;
@@ -85,6 +94,6 @@ if (isset($_POST['searchbtn'])) {
 
 ?>
 </div>
-<div class="col s1">
+</div>
 </body>
 </html>

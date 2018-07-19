@@ -1,5 +1,5 @@
 <?php
-include 'sidebar.php';
+include 'sidebar_new.php';
 include_once 'db.php';
 if (isset($_SESSION['id'])) {
     $uid = $_SESSION['id'];
@@ -13,18 +13,16 @@ if (isset($_SESSION['id'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="main.js"></script>
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-</div>
-<div class="col s8"><br>
+    <div class="wrap">
+        <div class="center-align">
     <?php
 
 $current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -76,8 +74,6 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
-
-<div class="col s1"></div>
 </div>
 </div>
 </div>

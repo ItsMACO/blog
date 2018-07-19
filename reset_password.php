@@ -1,6 +1,6 @@
 <?php
 require 'db.php';
-require 'sidebar.php';
+require 'sidebar_new.php';
 $current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $token = substr($current_link, -128);
 
@@ -15,23 +15,22 @@ if(isset($_SESSION['id'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Reset Password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css?<?php echo time(); ?>" />
     <script src="main.js"></script>
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3"></div>
-<div class="col s8">
+<div class="wrap">
+<div class="center-align">
     <br><br>
 <?php
     echo "<form action='reset_password.php?token=$token' method='post' enctype='multipart/form-data'>";
     echo "<input type='password' name='password' placeholder='Password' class='text-input'><br><br>";
     echo "<input type='password' name='password_confirm' placeholder='Confirm Password' class='text-input'><br><br>";
     echo "<button type='submit' name='reset_password' class='button button1'>RESET PASSWORD</button><br><br>";
-    echo "</form>";
+    echo "</form><br><br>";
 
 
     if(isset($_POST['reset_password'])) {
@@ -61,7 +60,6 @@ if(isset($_SESSION['id'])) {
     }
 ?>
 </div>
-<div class="col s1"></div>
 </div>
 </div>
 </body>

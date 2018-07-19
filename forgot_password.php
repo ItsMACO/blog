@@ -1,5 +1,5 @@
 <?php
-require 'sidebar.php';
+require 'sidebar_new.php';
 if(isset($_SESSION['id'])) {
     header('Location: index.php');
 }
@@ -24,20 +24,19 @@ $random_token = random_str(128);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Forgot password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css?<?php echo time(); ?>" />
     <script src="main.js"></script>
 <body>
 <div class='container-fluid'>
-<div class='row'>
-<div class='col s3'></div>
-<div class='col s8'>
+<div class='wrap'>
+<div class='center-align'>
 <br><br>
     <form action="forgot_password.php" method="post">
     <input type="text" name="forgot-email" placeholder="Your e-mail address" class="text-input"><br><br>
     <button type="submit" name="forgot-submit" class="button button1">SEND</button>
-    </form>
+    </form><br><br>
 
 <?php
 
@@ -71,7 +70,6 @@ if(isset($_POST['forgot-submit'])) {
 ?>
 
     </div>
-    <div class='col s1'></div>
     </div>
     </div>
 </body>

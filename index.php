@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php';
 include 'online_log.php';
-include 'sidebar.php';
+include 'sidebar_new.php';
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -14,19 +14,13 @@ if (!isset($_SESSION)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.min.css">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
+<div class="wrap">
 <div class="container-fluid">
-    <div class="row">
-        <div class="col s3">
-        <?php
-?>
-        </div>
-        <div class="col s8">
             <br><br>
     <?php
 require_once 'nbbc/nbbc.php';
@@ -60,16 +54,16 @@ if (mysqli_num_rows($result) > 0) {
         $output = $bbcode->Parse($content);
 
         $posts .= "<div class='row'>
+            <div class='col s1'></div>
             <div class='col s8'>
             <h2><a href='view_post.php?pid=$id'>$title</a></h2>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <h6>" . substr($output, 0, 360) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>
             </div>
-            <div class='4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+            <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
 
-            </div>
-            <div class='divider'></div><br>";
+            </div><br>";
 
     }
 
@@ -80,12 +74,9 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 ?>
-
-</div>
-<div class="col s1"></div>
-<!--DIV ROW -->
-</div>
 <!--DIV CONTAINER FLUID -->
+</div>
+<!--DIV WRAP -->
 </div>
 </body>
 </html>

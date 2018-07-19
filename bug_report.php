@@ -1,5 +1,5 @@
 <?php
-include 'sidebar.php';
+include 'sidebar_new.php';
 require_once 'db.php';
 
 if (isset($_POST['bug_submit'])) {
@@ -15,7 +15,11 @@ if (isset($_POST['bug_submit'])) {
     $bug_page = mysqli_real_escape_string($con, $bug_page);
     $bug_more_info = mysqli_real_escape_string($con, $bug_more_info);
 
-    $bug_userid = $_SESSION['id'];
+    if(isset($_SESSION['id'])) {
+        $bug_userid = $_SESSION['id'];
+    } else {
+        $bug_userid = 99999;
+    }
     $bug_store = "INSERT INTO bug_reports (bug_title, bug_page, bug_more_info, userid) VALUES ('$bug_title', '$bug_page', '$bug_more_info', '$bug_userid')";
 
     mysqli_query($con, $bug_store);
@@ -28,27 +32,24 @@ if (isset($_POST['bug_submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Bug Report</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-</div>
-<div class="col s8">
-<br><br><br><br>
+    <div class="wrap">
+        <div class="center-align">
+<br><br>
 <form action="bug_report.php" method="post">
 <input type="text" name="bug_title" size="48" placeholder="Your bug report title" class="text-input"><br><br>
 <input type="text" name="bug_page" size="48" placeholder="On what page did it happen?" class="text-input"><br><br>
 <textarea name="bug_more_info" class="text-input" placeholder="Additional information" rows="2" cols="48"></textarea><br>
 <p>If you're logged in, you may receive some Karma for your service.</p>
 <button type="submit" name="bug_submit" class="button button1">SUBMIT</button>
-</form>
+</form><br><br>
 </div>
-<div class="col s1"></div>
 </div>
 </div>
 </body>

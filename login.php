@@ -1,3 +1,7 @@
+<?php
+include 'sidebar_new.php';
+include_once 'db.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,26 +9,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col s3">
-                <?php
-include 'sidebar.php';
-?>
-            </div>
-            <div class="col s8">
-                <br><br><br><br>
+        <div class="wrap"><br><br>
+            <div class="center-align">
     <form action="login.php" method="post" enctype="multipart/form-data">
 <?php
 
 if (isset($_POST['login'])) {
-    include_once 'db.php';
     $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
 
@@ -62,11 +59,9 @@ if (isset($_POST['login'])) {
       <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
       <button type="submit" name="login" class="button button1">LOGIN</button>
     </form><br>
-    <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a>
-</div>
-<div class="col s1"></div>
+    <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a><br><br>
 </div>
 </div>
-
+</div>
 </body>
 </html>

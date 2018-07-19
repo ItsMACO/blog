@@ -2,9 +2,10 @@
 if (isset($_SESSION['id'])) {
     header('Location: index.php');
 }
+require 'sidebar_new.php';
+include_once 'db.php';
 
 if (isset($_POST['register'])) {
-    include_once 'db.php';
 
     $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
@@ -69,31 +70,25 @@ if (isset($_POST['register'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 
 </head>
-<body style="background: white !important;">
+<body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-<?php
-require 'sidebar.php';
-?>
-</div>
-<div class="col s8">
-<br><br><br><br>
+    <div class="wrap">
+        <div class="center-align">
+    <br><br>
     <form action="register.php" method="post" enctype="multipart/form-data">
     <input placeholder="Username" name="username" type="text" class="text-input" autofocus><br><br>
     <input placeholder="Password" name="password" type="password" class="text-input"><br><br>
     <input placeholder="Confirm Password" name="password_confirm" type="password" class="text-input"><br><br>
     <input placeholder="Email address" name="email" type="text" class="text-input"><br><br>
       <button type="submit" name="register" class='button button1'>REGISTER</button>
-    </form>
+    </form><br><br>
     </div>
-    <div class="col s1"></div>
     </div>
     </div>
 </body>

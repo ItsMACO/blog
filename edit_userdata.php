@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once 'db.php';
+include 'sidebar_new.php';
 
 if (!isset($_SESSION['username'])) {
     header('Location: login.php');
@@ -10,7 +11,7 @@ if (!isset($_GET['uid'])) {
     header('Location: index.php');
 }
 
-$uid = $_SESSION['id'];
+$user = $_SESSION['id'];
 
 if (isset($_POST['update_data'])) {
     $username = strip_tags($_POST['username']);
@@ -23,7 +24,7 @@ if (isset($_POST['update_data'])) {
 
     $password = md5($password);
 
-    $sql = "UPDATE users SET username='$username', password='$password', email='$email' WHERE id=$uid";
+    $sql = "UPDATE users SET username='$username', password='$password', email='$email' WHERE id=$user";
 
     if ($username == "" || $password == "" || $email == "") {
         echo "Please fill in your data!";
@@ -43,19 +44,14 @@ if (isset($_POST['update_data'])) {
     <title>Blog - Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
-<body style="background: white !important;">
+<body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
+<div class="wrap">
+<div class="center-align"><br><br>
 <?php
-include 'sidebar.php';
-?>
-</div>
-<div class="col s8"><br><br><br><br>
-<?php
-$sql_get = "SELECT * FROM users WHERE id=$uid LIMIT 1";
+$sql_get = "SELECT * FROM users WHERE id=$user LIMIT 1";
 $result = mysqli_query($con, $sql_get);
 
 if (mysqli_num_rows($result) > 0) {
@@ -64,8 +60,7 @@ if (mysqli_num_rows($result) > 0) {
         $password = $row['password'];
         $email = $row['email'];
 
-        echo "<form action='edit_userdata.php?uid=$uid' method='post' enctype='multipart/form-data'>";
-        echo "<input placeholder='Username' name='username' type='text' value='$username' class='text-input' autofocus size='48'><br><br>";
+        echo "<form action='edit_userdata.php?uid=$user' method='post' enctype='multipart/form-data'>";
         echo "<input placeholder='Password' name='password' type='password' class='text-input' autofocus size='48'><br><br>";
         echo "<input placeholder='Email' name='email' type='text' class='text-input' autofocus size='48' value='$email'><br><br>";
     }
@@ -75,7 +70,7 @@ if (mysqli_num_rows($result) > 0) {
     </form><br><br>
     <div class="divider"></div><br>
 <?php
-//insert image
+//insert profile image
 if (isset($_POST['profile_picture_submit'])) {
     $target_dir = "images/profile/";
     $target_upload = basename($_FILES["profile_picture_upload"]["name"]);
@@ -109,22 +104,21 @@ if (isset($_POST['profile_picture_submit'])) {
     } else {
         move_uploaded_file($_FILES['profile_picture_upload']['tmp_name'], $target_file);
         if ($target_upload == "" || !$target_upload) {
-            $sql_image = "UPDATE users SET profile_pic='images/profile/default.png' WHERE id=$uid";
+            $sql_image = "UPDATE users SET profile_pic='images/profile/default.png' WHERE id=$user";
             mysqli_query($con, $sql_image);
         } else {
-            $sql_image = "UPDATE users SET profile_pic='$target_file' WHERE id=$uid";
+            $sql_image = "UPDATE users SET profile_pic='$target_file' WHERE id=$user";
             mysqli_query($con, $sql_image);
         }
     }
 }
 ?>
-<form action="edit_userdata.php?uid=<?php echo $uid ?>" method="post" enctype="multipart/form-data">
+<form action="edit_userdata.php?uid=<?php echo $user ?>" method="post" enctype="multipart/form-data">
 <input name="profile_picture_upload" type="file" autofocus size="48" class="button button2"><br><br>
 <button type="submit" name="profile_picture_submit" class="button button1">UPLOAD IMAGE</button>
-</form>
+</form><br><br>
     </div>
     </div>
     </div>
-<div class="col s1"></div>
 </body>
 </html>

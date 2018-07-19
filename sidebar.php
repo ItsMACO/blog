@@ -14,8 +14,8 @@ $user = $_SESSION['id'];
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time();?>">
+    <link rel="stylesheet" href="styles.css?<?php echo time();?>">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -52,7 +52,7 @@ while ($row = mysqli_fetch_assoc($result_profile_pic)) {
       <span class="white-text name">
 <?php
 if (isset($_SESSION['id'])) {
-    echo "Welcome " . $_SESSION['username'] . "!";
+    echo "<p style='background-color: white; color: black;'>Welcome " . $_SESSION['username'] . "!</p>";
 }
 ?>
       </span>
@@ -91,10 +91,11 @@ if (isset($_SESSION['id'])) {
 
         <?php
 } else {
+    echo "<li><a href='login.php'><i class='small material-icons'>arrow_forward</i>Login</a></li>";
+    echo "<li><a href='register.php'><i class='small material-icons'>person_add</i>Register</a></li>";
+    echo "<div class='divider'></div>";
     echo "<li><a href='index.php'><i class='small material-icons'>home</i>Home</a></li>";
     echo "<li><a href='search.php'><i class='small material-icons'>search</i>Search</a></li>";
-    echo "<li><a href='login.php'><i class='small material-icons'>arrow_forward</i>Login</a></li>";
-    echo "<li><a href='register.php'><i class='small material-icons'>add_circle_outline</i>Register</a></li>";
     echo "<li><a href='bug_report.php'><i class='small material-icons'>bug_report</i>Report A Bug</a></li>";
     echo "<li><a href='feature_request.php'><i class='small material-icons'>playlist_add</i>Request A Feature</a></li>";
 }

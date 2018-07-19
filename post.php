@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once 'db.php';
+include 'sidebar_new.php';
 
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
@@ -11,9 +12,9 @@ if (isset($_POST['post'])) {
 
     $date = date('l jS \of F Y h:i:s A');
     $author = $_SESSION['username'];
+    $flair = $_POST['flair'];
 
     //insert image
-
     $target_dir = "images/";
     $target_upload = basename($_FILES["image"]["name"]);
     $target_file = $target_dir . $target_upload;
@@ -53,9 +54,9 @@ if (isset($_POST['post'])) {
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
     }
     if ($target_upload == "" || !$target_upload) {
-        $sql = "INSERT into posts (title, content, date, author, image) VALUES ('$title', '$content', '$date', '$author', 'images/default.png')";
+        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', 'images/default.png', '$flair')";
     } else {
-        $sql = "INSERT into posts (title, content, date, author, image) VALUES ('$title', '$content', '$date', '$author', '$target_file')";
+        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', '$target_file', '$flair')";
     }
 
     if ($title == "" || $content == "") {
@@ -73,32 +74,48 @@ if (isset($_POST['post'])) {
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Blog - Post</title>
+    <title>Create Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css?<?php echo time(); ?>" />
     <script src="main.js"></script>
 </head>
-<body style="background: white !important;">
+<body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-<?php
-include 'sidebar.php';
-?>
-</div>
-<div class="col s8">
-<br><br><br><br>
-    <form action="post.php" method="post" enctype="multipart/form-data">
+    <div class="wrap">
+        <div class="center-align">
+<br><br>
+    <form action="post.php" method="post" id="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input"><br><br>
     <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input"></textarea><br><br>
+    <div class="input-field col s12">
+    <select name="flair" id="flair">
+    <?php
+    $sql_flair = "SELECT * FROM flairs";
+    $result_flair = mysqli_query($con, $sql_flair) or die(mysqli_error($con));
+    if(mysqli_num_rows($result_flair) > 0) {
+        while($row = mysqli_fetch_assoc($result_flair)) {
+            $flairid = $row['flairid'];
+            $flairname = $row['flairname'];
+
+            echo "<option value='$flairname'>$flairname</option>";
+        }
+    }
+    ?>
+    </select>
+  </div>
     <input name="image" type="file" autofocus size="48" class="button button2"><br><br>
       <button type="submit" name="post" class="button button1">POST</button>
-    </form>
+    </form><br><br>
     </div>
     </div>
     </div>
-    <div class="col s1"></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, options);
+  });
+    </script>
 </body>
 </html>

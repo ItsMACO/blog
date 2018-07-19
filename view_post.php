@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require 'sidebar_new.php';
 
 if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
@@ -27,22 +28,17 @@ if (mysqli_num_rows($result) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo $pagetitle; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
-<div class="col s3">
-<?php
-require 'sidebar.php';
-?>
-</div>
-<div class="col s8">
-<br><br><br><br>
+    <div class="wrap">
+        <div class="wrap-content">
+<br><br>
 <?php
 require_once 'nbbc/nbbc.php';
 $bbcode = new BBCode;
@@ -87,7 +83,7 @@ if (mysqli_num_rows($result) > 0) {
                     echo "<div class='left-align'><h5>Liked!</h5></div>";
                 }
             } else {
-                echo "You have to log in to like posts.";
+                echo "You have to log in to like posts.<br>";
             }
         }
 
@@ -151,10 +147,9 @@ if (mysqli_num_rows($result_comments) > 0) {
                 echo $comments;
     }
 } else {
-    echo "<div class='left-align'>There are no comments to display!</div>";
+    echo "<div class='left-align'>There are no comments to display!</div><br>";
 }
 ?>
-<div class="col s1"></div>
 </div>
 </div>
 </div>
