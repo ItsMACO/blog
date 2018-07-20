@@ -88,7 +88,8 @@ if (mysqli_num_rows($result) > 0) {
             </form>
             <?php
             if(isset($_POST['set_admin'])){
-                $set_admin = $_POST['set_admin'];
+                $set_admin = strip_tags($_POST['set_admin']);
+                $set_admin = mysqli_real_escape_string($con, $set_admin);
                 if(isset($_POST['yes_no'])) {
                     $sql_set_admin = "UPDATE users SET admin=1 WHERE username='$set_admin'";
                     mysqli_query($con, $sql_set_admin);
@@ -120,8 +121,10 @@ if (mysqli_num_rows($result) > 0) {
             </form>
             <?php
             if(isset($_POST['set_karma_username']) && isset($_POST['set_karma'])){
-                $set_karma_username = $_POST['set_karma_username'];
-                $set_karma = $_POST['set_karma'];
+                $set_karma_username = strip_tags($_POST['set_karma_username']);
+                $set_karma_username = mysqli_real_escape_string($con, $set_karma_username);
+                $set_karma = strip_tags($_POST['set_karma']);
+                $set_karma = mysqli_real_escape_string($con, $set_karma);
                 if(isset($_POST['yes_no2'])) {
                     $sql_set_karma = "UPDATE users SET karma = karma + $set_karma WHERE username='$set_karma_username'";
                     mysqli_query($con, $sql_set_karma);
@@ -142,8 +145,9 @@ if (mysqli_num_rows($result) > 0) {
             <button type="submit" class="button button1">ADD</button>
             </form>
             <?php
-            if(isset($_POST['set_flair'])){
-                $set_flair = $_POST['set_flair'];
+            if(isset($_POST['set_flair'])) {
+                $set_flair = strip_tags($_POST['set_flair']);
+                $set_flair = mysqli_real_escape_string($con, $set_flair);
                 $sql_flair = "INSERT INTO flairs (flairname) VALUES ('$set_flair')";
                 mysqli_query($con, $sql_flair);
             }

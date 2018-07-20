@@ -49,6 +49,8 @@ $pid = substr($current_link, -6);
 $sql = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
+$post = "";
+
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
@@ -56,6 +58,7 @@ if (mysqli_num_rows($result) > 0) {
         $date = $row['date'];
         $content = $row['content'];
         $author = $row['author'];
+        $image = $row['image'];
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -68,7 +71,16 @@ if (mysqli_num_rows($result) > 0) {
         }
         $output = $bbcode->Parse($content);
 
-        echo "<div><h2>$title</h2><h6>$date by <a href='profile.php?id=$userid'>$author</a></h6><p>$output</p></div>";
+        $post .= "<div class='row'>
+            <div class='col s8'>
+            <h2>$title</h2>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
+            <h6>$output...</h6><br>
+            </div>
+            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+            </div><br>";
+
+        echo $post;
         echo "<div><form action='view_post.php?id=$pid' method='post'><button type='submit' name='like' class='button button1'>LIKE</button></form></div><br><br>";
         
         if (isset($_POST['like'])) {

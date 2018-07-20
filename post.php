@@ -6,13 +6,14 @@ include 'sidebar_new.php';
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
     $content = strip_tags($_POST['content']);
+    $flair = strip_tags($_POST['flair']);
 
     $title = mysqli_real_escape_string($con, $title);
     $content = mysqli_real_escape_string($con, $content);
+    $flair = mysqli_real_escape_string($con, $flair);
 
     $date = date('l jS \of F Y h:i:s A');
     $author = $_SESSION['username'];
-    $flair = $_POST['flair'];
 
     //insert image
     $target_dir = "images/";
