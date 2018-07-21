@@ -21,11 +21,6 @@ if (isset($_POST['register'])) {
     $password = mysqli_real_escape_string($con, $password);
     $password_confirm = mysqli_real_escape_string($con, $password_confirm);
     $email = mysqli_real_escape_string($con, $email);
-
-    $password = md5($password);
-    $password_confirm = md5($password_confirm);
-
-    $sql_store = "INSERT into users (username, password, email) VALUES('$username', '$password', '$email')";
     $sql_fetch_username = "SELECT username FROM users WHERE username = '$username'";
     $sql_fetch_email = "SELECT email FROM users WHERE email = '$email'";
 
@@ -58,6 +53,8 @@ if (isset($_POST['register'])) {
         return;
     }
 
+    $password = password_hash($password, PASSWORD_BCRYPT);
+    $sql_store = "INSERT into users (username, password, email) VALUES('$username', '$password', '$email')";
     mysqli_query($con, $sql_store);
     header('Location: index.php');
 

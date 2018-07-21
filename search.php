@@ -69,7 +69,7 @@ if (isset($_POST['searchbtn'])) {
             <div class='col s8'>
             <h2><a href='view_post.php?pid=$id'>$title</a></h2>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>" . substr($output, 0, 360) . "...</h6><br>
+            <h6>" . substr($output, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>
             </div>
             <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>

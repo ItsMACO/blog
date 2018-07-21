@@ -31,8 +31,6 @@ if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($con, $username);
     $password = mysqli_real_escape_string($con, $password);
 
-    $password = md5($password);
-
     $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
     $query = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($query);
@@ -41,7 +39,7 @@ if (isset($_POST['login'])) {
     $admin = $row['admin'];
     $email = $row['email'];
 
-    if ($password == $db_password) {
+    if (password_verify($password, $db_password)) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
 
