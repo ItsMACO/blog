@@ -14,12 +14,10 @@ if (!isset($_GET['uid'])) {
 $user = $_SESSION['id'];
 
 if (isset($_POST['update_data'])) {
-    $username = strip_tags($_POST['username']);
     $password = strip_tags($_POST['password']);
     $confirm_password = strip_tags($_POST['confirm_password']);
     $email = strip_tags($_POST['email']);
 
-    $username = mysqli_real_escape_string($con, $username);
     $password = mysqli_real_escape_string($con, $password);
     $confirm_password = mysqli_real_escape_string($con, $confirm_password);
     $email = mysqli_real_escape_string($con, $email);
@@ -34,7 +32,7 @@ if (isset($_POST['update_data'])) {
     }
     
     $password = password_hash($password, PASSWORD_BCRYPT);
-    $sql = "UPDATE users SET username='$username', password='$password', email='$email' WHERE id=$user";
+    $sql = "UPDATE users SET password='$password', email='$email' WHERE id=$user";
     mysqli_query($con, $sql);
     header('Location: index.php');
 }
