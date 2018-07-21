@@ -1,6 +1,9 @@
 <?php
 include 'sidebar_new.php';
 include_once 'db.php';
+if(!isset($_SESSION)) {
+    session_start();
+}
 if (isset($_SESSION['id'])) {
     $uid = $_SESSION['id'];
 }
@@ -25,8 +28,7 @@ if (isset($_SESSION['id'])) {
         <div class="center-align">
     <?php
 
-$current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$rid = substr($current_link, -5);
+$rid = $_GET['id'];
 
 require_once 'nbbc/nbbc.php';
 $bbcode = new BBCode;

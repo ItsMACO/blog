@@ -43,8 +43,7 @@ if (mysqli_num_rows($result) > 0) {
 require_once 'nbbc/nbbc.php';
 $bbcode = new BBCode;
 
-$current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$pid = substr($current_link, -6);
+$pid = $_GET['pid'];
 
 $sql = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
