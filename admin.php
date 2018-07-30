@@ -42,6 +42,7 @@ if (mysqli_num_rows($result) > 0) {
         $title = $row['title'];
         $date = $row['date'];
         $author = $row['author'];
+        $flair = $row['flair'];
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -54,10 +55,13 @@ if (mysqli_num_rows($result) > 0) {
         }
 
         if (isset($_SESSION['id'])) {
-            $admin = "<div><a href='edit_post.php?pid=$id' class='button button2'>EDIT</a>&nbsp;<a href='del_post.php?pid=$id' class='button button3'>DELETE</a></div>";
+            $admin = "<div><a href='edit_post.php?pid=$id' class='button button2'>EDIT</a>&nbsp;
+            <a href='del_post.php?pid=$id' class='button button3'>DELETE</a></div>";
         }
 
-        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p>$admin</div><br><div class='divider'></div>";
+        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2>
+        <h6 class='flair'>$flair</h6><p>$date by <a href='profile.php?id=$userid'>$author</a></p><br>
+        $admin</div><br><div class='divider'></div>";
     }
 
     echo $posts;
@@ -181,8 +185,7 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $bug_username = $row['username'];
 
-                        $bug_reports = "<br>
-                                        <div><h5 class='blue-text text-darken-2'>Bug report id:</h5><h6>$bug_id</h6>
+                        $bug_reports = "<div><h5 class='blue-text text-darken-2'>Bug report id:</h5><h6>$bug_id</h6>
                                         <h5 class='blue-text text-darken-2'>Title:</h5><h6>$bug_title</h6>
                                         <h5 class='blue-text text-darken-2'>Affected pages:</h5><h6>$bug_page</h6>
                                         <h5 class='blue-text text-darken-2'>More information:</h5><h6>$bug_more_info</h6>
@@ -193,6 +196,8 @@ if (mysqli_num_rows($result) > 0) {
                     }
                 }
             }
+        } else {
+            echo "There are no bug reports! Yay!<br>";
         }
             ?>
         </span></div>
@@ -217,19 +222,54 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $feature_username = $row['username'];
 
-                        $feature_requests = "<br>
-                                        <div><h5 class='blue-text text-darken-2'>Feature request id:</h5><h6>$feature_id</h6>
+                        $feature_requests = "<div><h5 class='blue-text text-darken-2'>Feature request id:</h5><h6>$feature_id</h6>
                                         <h5 class='blue-text text-darken-2'>Title:</h5><h6>$feature_title</h6>
                                         <h5 class='blue-text text-darken-2'>More information:</h5><h6>$feature_more_info</h6>
                                         <h5 class='blue-text text-darken-2'>Requested by:</h5><h6>$feature_username</h6></div>
                                         <br>
                                         <div class='divider'></div>";
                         echo $feature_requests;
-                    
-                    
                     }
                 }
             }
+        } else {
+            echo "There are no feature requests!<br>";
+        }
+            ?>
+        </span></div>
+    </li>
+    <li>
+        <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">report</i>Show post reports</div>
+        <div class="collapsible-body">
+        <span>
+        <?php
+        $sql_post_reports = "SELECT * FROM post_reports ORDER BY id";
+        $result_post_reports = mysqli_query($con, $sql_post_reports) or die(mysqli_error($con));
+        if (mysqli_num_rows($result_post_reports) > 0) {
+            while ($row = mysqli_fetch_assoc($result_post_reports)) {
+                $post_report_id = $row['id'];
+                $post_report_postid = $row['postid'];
+                $post_report_user_from = $row['user_from'];
+                $post_report_reason = $row['reason'];
+
+                $sql_profile = "SELECT * FROM users WHERE id='$post_report_user_from'";
+                $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+                if (mysqli_num_rows($result_profile) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_profile)) {
+                        $post_report_username = $row['username'];
+
+                        $post_reports = "<div><h5 class='blue-text text-darken-2'>Post report id:</h5><h6>$post_report_id</h6>
+                                        <h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a>
+                                        <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$post_report_reason</h6></div>
+                                        <br>
+                                        <div class='divider'></div>";
+                        echo $post_reports;
+                    }
+                }
+            }
+        } else {
+            echo "There are no post reports!<br>";
         }
             ?>
         </span></div>

@@ -7,11 +7,9 @@ if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
 } 
 
-$current_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$pid = substr($current_link, -6);
+$pid = $_GET['pid'];
 
 $sql = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
-
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
 if (mysqli_num_rows($result) > 0) {
@@ -40,7 +38,7 @@ if (mysqli_num_rows($result) > 0) {
         <div class="wrap-content">
 <br><br>
 <?php
-require_once 'nbbc/nbbc.php';
+require_once 'nbbc.php';
 $bbcode = new BBCode;
 
 $pid = $_GET['pid'];
@@ -58,6 +56,7 @@ if (mysqli_num_rows($result) > 0) {
         $content = $row['content'];
         $author = $row['author'];
         $image = $row['image'];
+        $flair = $row['flair'];
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -70,23 +69,24 @@ if (mysqli_num_rows($result) > 0) {
         }
         $output = $bbcode->Parse($content);
 
-        $post .= "<div class='row'>
-            <div class='col s8'>
-            <h2>$title</h2>
+        $post .= "<div>
+            <h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>$output...</h6><br>
-            </div>
-            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+            <div class='center-align'><img src='$image' class='post-image'></div><br>
+            <h6>$output</h6><br><br>
             </div><br>";
 
         echo $post;
-        echo "<div><form action='view_post.php?id=$pid' method='post'><button type='submit' name='like' class='button button1'>LIKE</button></form></div><br><br>";
+        echo "<div><form action='view_post.php?pid=$pid' method='post'>
+        <button type='submit' name='like' class='button button1'>LIKE</button>&nbsp;
+        <a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
         
         if (isset($_POST['like'])) {
             if (isset($_SESSION['id'])) {
                 $user = $_SESSION['id'];
-                $sql_like = "INSERT INTO likes (user, postid) VALUES ('$user', '$id')";
-                $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user='$user') AND (postid='$pid')");
+                $time = time();
+                $sql_like = "INSERT INTO likes (user_from, user_to, postid, time) VALUES ('$user', '$userid', '$id', '$time')";
+                $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
                 if (mysqli_num_rows($result_like) > 0) {
                     echo "<div class='left-align'>You've already liked this post.</div>"; 
                 } else {
@@ -104,7 +104,7 @@ if (mysqli_num_rows($result) > 0) {
                 $user_name = $_SESSION['username'];
                 $time = time();
                 $comment_content = $_POST['comment-content'];
-                $sql_comment = "INSERT INTO comments (user_username, postid, time, comment_content) VALUES ('$user_name', '$id', '$time', '$comment_content')";
+                $sql_comment = "INSERT INTO comments (comment_from, comment_to, postid, time, comment_content) VALUES ('$user_name', '$userid',  '$id', '$time', '$comment_content')";
                 mysqli_query($con, $sql_comment);
                 echo "<div class='left-align'><h5>Comment submitted!</h5></div>";
             } else {
@@ -117,7 +117,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "</form>";
     }
 } else {
-    echo "<p>There are no posts to display!</p>";
+    echo "<p>There is no post to display!</p>";
 }
 
 
@@ -134,7 +134,7 @@ if (mysqli_num_rows($result_comments) > 0) {
 
     while ($row = mysqli_fetch_assoc($result_comments)) {
         $comment_id = $row['comment_id'];
-        $comment_user_username = $row['user_username'];
+        $comment_user_username = $row['comment_from'];
         $comment_postid = $row['postid'];
         $comment_time = $row['time'];
         $comment_content = $row['comment_content'];
@@ -164,5 +164,51 @@ if (mysqli_num_rows($result_comments) > 0) {
 </div>
 </div>
 </div>
+
+<?php
+if(isset($_POST['report-submit'])) {
+    if(isset($_POST['reason'])) {
+        $reason = $_POST['reason'];
+        $time = time();
+
+        $sql = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $author = $row['author'];
+                $sql_profile = "SELECT * FROM users WHERE username='$author'";
+                $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+                if (mysqli_num_rows($result_profile) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_profile)) {
+                        $userid = $row['id'];        
+                        if(isset($_SESSION['id'])) {
+                            $sql_report = "INSERT INTO post_reports (postid, user_from, user_to, reason, time) VALUES ('$pid', '$user', '$userid', '$reason', '$time')";
+                        } else {
+                            $sql_report = "INSERT INTO post_reports (postid, user_from, user_to, reason, time) VALUES ('$pid', '0', '$userid', '$reason', '$time')";
+                        }
+                        mysqli_query($con, $sql_report) or die(mysqli_error($con));
+                    }
+                }
+            }
+        }
+    }
+}
+?>
+
+<div id="report-modal" class="modal">
+    <div class="modal-content">
+      <h4>Report Post</h4>
+        <form action="view_post.php?pid=<?php echo $pid; ?>" method="post" enctype="multipart/form-data">
+        <p>I would like to report this post because...</p>
+        <input type='text' name='reason' class='text-input'>
+        <button type='submit' name='report-submit' class='button button3'>REPORT</button>
+    </div>
+    </form> 
+  </div>
+  <script>
+var elem = document.querySelector('#report-modal');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});</script>
 </body>
 </html>

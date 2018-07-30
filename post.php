@@ -88,10 +88,10 @@ if (isset($_POST['post'])) {
         <div class="center-align">
 <br><br>
     <form action="post.php" method="post" id="post" enctype="multipart/form-data">
-    <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input"><br><br>
-    <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input"></textarea><br><br>
+    <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input" required><br><br>
+    <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input" required></textarea><br><br>
     <div class="input-field col s12">
-    <select name="flair" id="flair">
+    <select name="flair" class="select-flair" required>
     <?php
     $sql_flair = "SELECT * FROM flairs";
     $result_flair = mysqli_query($con, $sql_flair) or die(mysqli_error($con));

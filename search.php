@@ -27,7 +27,7 @@ require_once 'db.php';
 
 
     <?php
-require_once 'nbbc/nbbc.php';
+require_once 'nbbc.php';
 
 $bbcode = new BBCode;
 
@@ -49,6 +49,7 @@ if (isset($_POST['searchbtn'])) {
             $date = $row['date'];
             $author = $row['author'];
             $image = $row['image'];
+            $flair = $row['flair'];
 
             $sql_profile = "SELECT * FROM users WHERE username='$author'";
             $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -67,7 +68,7 @@ if (isset($_POST['searchbtn'])) {
             $posts .= "<div class='row'>
             <div class='col s1'></div>
             <div class='col s8'>
-            <h2><a href='view_post.php?pid=$id'>$title</a></h2>
+            <h2><a href='view_post.php?pid=$id'>$title</a></h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <h6>" . substr($output, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>

@@ -3074,6 +3074,9 @@ h6 {
   line-height: 110%;
   margin: 0.7666666667rem 0 0.46rem 0;
 }
+.inline {
+  display: inline;
+}
 body {
   font-family: 'Montserrat';
   background: url(images/body-background.png);
@@ -3096,6 +3099,7 @@ body {
   left: 5%;
   position: fixed;
   overflow-x: hidden;
+  display: block;
 }
 .sidenav-fixed a {
   font-size: 20px;
@@ -3120,6 +3124,55 @@ body {
   margin-right: 15px;
   margin-left: 15px;
 }
+.sidenav-fixed-small {
+  height: 100%;
+  width: 20%;
+  top: 5%;
+  left: 5%;
+  position: fixed;
+  overflow-x: hidden;
+  display: block;
+}
+.sidenav-fixed-small a {
+  font-size: 20px;
+  display: block;
+  line-height: 55px;
+  background-image: linear-gradient(to right,
+                                      transparent,
+                                      transparent 50%,
+                                      white,
+                                      white 50%);
+  background-position: 100% 0;
+  background-size: 200% 100%;
+  transition: all .3s ease-out;
+}
+.sidenav-fixed-small a:hover {
+  background-position: 0 0;
+  color: white;
+}
+.sidenav-fixed-small > a > i {
+  vertical-align: middle;
+  font-size: 2rem;
+  margin-right: 30%;
+}
+select {
+  border: 2px solid #1976d2;
+}
+.select-flair {
+  width: 250px;
+  display: inline;
+  border: 3px solid #1976d2;
+  background: #ffffff;
+}
+.flair {
+  display: inline;
+  border: 3px solid #d9d9d9;
+  background: #d9d9d9;
+}
+.post-image {
+  max-width: 80%;
+  max-height: 70%;
+}
 .button {
     border-radius: 25px;
     border: none;
@@ -3127,7 +3180,7 @@ body {
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline;
     font-size: 16px;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
@@ -3172,12 +3225,9 @@ body {
   color: white;
 }
 .text-input {
-  border: 1px solid #1976d2;
+  border: 2px solid #1976d2;
   border-radius: 25px;
   padding: 15px;
-}
-.text-input:focus {
-  border: 2px solid #1976d2;
 }
 a {
   color: #1976d2;
@@ -3210,4 +3260,17 @@ a {
   word-break: break-all;
   word-break: break-word;
   hyphens: auto;
+}
+@media all and (max-width: 2160px) {
+
+  .sidenav-fixed {display:inherit;}
+  .sidenav-fixed-small {display:none;}
+
+}
+
+@media all and (max-width: 1280px) {
+
+  .sidenav-fixed {display:none;}
+  .sidenav-fixed-small {display:inherit;}
+
 }

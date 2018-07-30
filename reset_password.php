@@ -53,8 +53,6 @@ if(isset($_SESSION['id'])) {
             $password = password_hash($password, PASSWORD_BCRYPT);
             $sql = "UPDATE users SET password='$password' WHERE forgot_token='$token'";
             mysqli_query($con, $sql);
-            return;
-            echo "Password set!";
         }
     }
 ?>

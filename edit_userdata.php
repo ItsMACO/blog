@@ -115,7 +115,7 @@ if (isset($_POST['profile_picture_submit'])) {
 ?>
 <form action="edit_userdata.php?uid=<?php echo $user ?>" method="post" enctype="multipart/form-data">
 <input name="profile_picture_upload" type="file" autofocus size="48" class="button button2"><br><br>
-<button type="submit" name="profile_picture_submit" class="button button1">UPLOAD IMAGE</button>
+<button type="submit" name="profile_picture_submit" class="button button1">UPLOAD PROFILE IMAGE</button>
 </form><br><br>
     </div>
     </div>

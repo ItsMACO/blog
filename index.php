@@ -23,7 +23,7 @@ if (!isset($_SESSION)) {
 <div class="container-fluid">
             <br><br>
     <?php
-require_once 'nbbc/nbbc.php';
+require_once 'nbbc.php';
 
 $bbcode = new BBCode;
 
@@ -40,6 +40,7 @@ if (mysqli_num_rows($result) > 0) {
         $date = $row['date'];
         $author = $row['author'];
         $image = $row['image'];
+        $flair = $row['flair'];
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -56,23 +57,18 @@ if (mysqli_num_rows($result) > 0) {
         $posts .= "<div class='row'>
             <div class='col s1'></div>
             <div class='col s8'>
-            <h2><a href='view_post.php?pid=$id'>$title</a></h2>
+            <h2 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>" . substr($output, 0, 140) . "...</h6><br>
+            <h6>" . substr($output, 0, 140) . "...</h6><br><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>
             </div>
-            <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
-
+            <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align' style='float: right;'></div><br>
             </div><br>";
-
     }
-
     echo $posts;
-
 } else {
     echo "There are no posts to display!";
 }
-
 ?>
 <!--DIV CONTAINER FLUID -->
 </div>
