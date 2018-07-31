@@ -30,8 +30,23 @@ include 'db.php';
     if(mysqli_num_rows($result_comments) > 0) {
         while($row = mysqli_fetch_assoc($result_comments)) {
             $comment_id = $row['comment_id'];
+            $comment_from = $row['comment_from'];
+            $comment_to = $row['comment_to'];
+            $postid = $row['postid'];
+            $time = $row['time'];
+            $comment_content = $row['comment_content'];
 
-            echo $comment_id;
+            $sql_comment_post = "SELECT * FROM posts WHERE id='$postid'";
+            $result_comment_post = mysqli_query($con, $sql_comment_post);
+            if(mysqli_num_rows($result_comment_post) > 0) {
+                while($row = mysqli_fetch_assoc($result_comment_post)) {
+                    $comment_post_name = $row['title'];
+
+                    $notify_comment = "<div><h5>New comment: <br></h5><div class='box box1'><h5 style='margin: 25px;' class='break-long-words'>$comment_from</h5><h6 style='margin: 25px;' class='break-long-words'>$comment_content</h6><p style='margin: 25px;' class='break-long-words'>Post: $comment_post_name</p></div></div><br><div class='divider'></div>";
+
+                    echo $notify_comment;
+                }
+            }
         }
     } else {
         echo "<br>There are no new notifications!<br><br>";
