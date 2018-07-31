@@ -69,6 +69,9 @@ if (mysqli_num_rows($result) > 0) {
         }
         $output = $bbcode->Parse($content);
 
+        $edit_delete = "<div><a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
+            <a href='del_post.php?pid=$pid' class='button button3'>DELETE</a></div>";
+
         $post .= "<div>
             <h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
@@ -77,6 +80,9 @@ if (mysqli_num_rows($result) > 0) {
             </div><br>";
 
         echo $post;
+        if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
+            echo $edit_delete."<br><br>";
+        }
         echo "<div><form action='view_post.php?pid=$pid' method='post'>
         <button type='submit' name='like' class='button button1'>LIKE</button>&nbsp;
         <a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
