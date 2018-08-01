@@ -63,6 +63,14 @@ if(isset($_SESSION['id'])) {
     <a href="bug_report.php" class="sidenav-link right-align">Report A Bug <i class="material-icons">bug_report</i></a>
     <a href="feature_request.php" class="sidenav-link right-align">Request A Feature <i class="material-icons">playlist_add</i></a>
 </div>
+<div class="sidenav-fixed-small">
+    <a href="login.php" class="sidenav-link right-align"><i class="material-icons">arrow_forward</i></a>
+    <a href="register.php" class="sidenav-link right-align"><i class="material-icons">person_add</i></a>
+    <a href="index.php" class="sidenav-link right-align"><i class="material-icons">home</i></a>
+    <a href="search.php" class="sidenav-link right-align"><i class="material-icons">search</i></a>
+    <a href="bug_report.php" class="sidenav-link right-align"><i class="material-icons">bug_report</i></a>
+    <a href="feature_request.php" class="sidenav-link right-align"><i class="material-icons">playlist_add</i></a>
+</div>
 <?php } ?>
 </body>
 </html>

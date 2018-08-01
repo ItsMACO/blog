@@ -106,17 +106,17 @@ if (mysqli_num_rows($result) > 0) {
         </span></div>
     </li>
     </li>
-    <li>
+        <li <?php if(isset($_GET['set_karma'])) { ?> class="active" <?php } ?>>
         <div class="collapsible-header"><i class="medium material-icons">star</i>Add or remove Karma</div>
         <div class="collapsible-body">
         <span>
             <form action="admin.php" method="post" enctype="multipart/form-data">
-            <input type="text" name="set_karma_username" class="text-input" placeholder="Username"><br><br>
+            <input type="text" name="set_karma_username" class="text-input" placeholder="Username" <?php if(isset($_GET['set_karma'])) { ?> value="<?php echo $_GET['set_karma']; ?>"<?php } ?>><br><br>
             <input type="text" name="set_karma" class="text-input" placeholder="Karma Amount"><br><br>
             <div class="switch">
                 <label>
                 Remove
-                <input type="checkbox" name="yes_no2">
+                <input type="checkbox" name="yes_no2" <?php if(isset($_GET['set_karma'])) { ?> checked <?php } ?>>
                 <span class="lever"></span>
                 Add
                 </label>
@@ -259,8 +259,8 @@ if (mysqli_num_rows($result) > 0) {
                         $post_report_username = $row['username'];
 
                         $post_reports = "<div><h5 class='blue-text text-darken-2'>Post report id:</h5><h6>$post_report_id</h6>
-                                        <h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a>
+                                        <h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br><a href='del_post.php?pid=$post_report_postid' class='button button3'>REMOVE POST</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br><a href='admin.php?set_karma=$post_report_username' class='button button1'>REWARD KARMA</a><br>
                                         <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$post_report_reason</h6></div>
                                         <br>
                                         <div class='divider'></div>";

@@ -30,7 +30,7 @@ if (isset($_SESSION['id'])) {
 
 $rid = $_GET['id'];
 
-require_once 'nbbc/nbbc.php';
+require_once 'nbbc.php';
 $bbcode = new BBCode;
 
 $sql_profile = "SELECT * FROM users WHERE id=$rid";
