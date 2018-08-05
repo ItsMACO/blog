@@ -17,10 +17,12 @@ if (isset($_POST['update_data'])) {
     $password = strip_tags($_POST['password']);
     $confirm_password = strip_tags($_POST['confirm_password']);
     $email = strip_tags($_POST['email']);
+    $profile_bio = strip_tags($_POST['profile_bio']);
 
     $password = mysqli_real_escape_string($con, $password);
     $confirm_password = mysqli_real_escape_string($con, $confirm_password);
     $email = mysqli_real_escape_string($con, $email);
+    $profile_bio = mysqli_real_escape_string($con, $profile_bio);
 
     if ($password == "" || $confirm_password == "" || $email == "") {
         echo "Please fill in your data!";
@@ -32,7 +34,7 @@ if (isset($_POST['update_data'])) {
     }
     
     $password = password_hash($password, PASSWORD_BCRYPT);
-    $sql = "UPDATE users SET password='$password', email='$email' WHERE id=$user";
+    $sql = "UPDATE users SET password='$password', email='$email', profile_bio='$profile_bio' WHERE id=$user";
     mysqli_query($con, $sql);
     header('Location: index.php');
 }
@@ -58,11 +60,13 @@ $result = mysqli_query($con, $sql_get);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $email = $row['email'];
+        $profile_bio = $row['profile_bio'];
 
         echo "<form action='edit_userdata.php?uid=$user' method='post' enctype='multipart/form-data'>";
-        echo "<input placeholder='Password' name='password' type='password' class='text-input' autofocus size='48'><br><br>";
-        echo "<input placeholder='Confirm Password' name='confirm_password' type='password' class='text-input' autofocus size='48'><br><br>";
-        echo "<input placeholder='Email' name='email' type='text' class='text-input' autofocus size='48' value='$email'><br><br>";
+        echo "<input placeholder='Password' name='password' type='password' class='text-input' autofocus size='48' required><br><br>";
+        echo "<input placeholder='Confirm Password' name='confirm_password' type='password' class='text-input' autofocus size='48' required><br><br>";
+        echo "<input placeholder='Email' name='email' type='text' class='text-input' autofocus size='48' value='$email' required><br><br>";
+        echo "<textarea placeholder='Profile Bio' name='profile_bio' class='text-input' autofocus required>$profile_bio</textarea><br><br>";
     }
 }
 ?>
@@ -113,7 +117,7 @@ if (isset($_POST['profile_picture_submit'])) {
     }
 }
 ?>
-<form action="edit_userdata.php?uid=<?php echo $user ?>" method="post" enctype="multipart/form-data">
+<form action="edit_userdata.php?uid=<?php echo $user; ?>" method="post" enctype="multipart/form-data">
 <input name="profile_picture_upload" type="file" autofocus size="48" class="button button2"><br><br>
 <button type="submit" name="profile_picture_submit" class="button button1">UPLOAD PROFILE IMAGE</button>
 </form><br><br>

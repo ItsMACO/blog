@@ -285,6 +285,7 @@ if (mysqli_num_rows($result) > 0) {
 var elem = document.querySelector('.collapsible.expandable');
 var instance = M.Collapsible.init(elem, {
   accordion: false
-});</script>
+});
+</script>
 </body>
 </html>

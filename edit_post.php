@@ -22,7 +22,7 @@
     
         $date = date('l jS \of F Y h:i:s A');
 
-        $sql = "UPDATE posts SET title='$title', content='$content', date='$date', image='$image' WHERE id=$pid";
+        $sql = "UPDATE posts SET title='$title', content='$content', date='$date' WHERE id=$pid";
 
         if($title == "" || $content == "") {
             echo "Please complete your post!";

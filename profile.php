@@ -5,7 +5,7 @@ if(!isset($_SESSION)) {
     session_start();
 }
 if (isset($_SESSION['id'])) {
-    $uid = $_SESSION['id'];
+    $user = $_SESSION['id'];
 }
 ?>
 
@@ -28,12 +28,12 @@ if (isset($_SESSION['id'])) {
         <div class="center-align">
     <?php
 
-$rid = $_GET['id'];
+$id = $_GET['id'];
 
 require_once 'nbbc.php';
 $bbcode = new BBCode;
 
-$sql_profile = "SELECT * FROM users WHERE id=$rid";
+$sql_profile = "SELECT * FROM users WHERE id=$id";
 $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
 
 if (mysqli_num_rows($result_profile) > 0) {
@@ -42,17 +42,51 @@ if (mysqli_num_rows($result_profile) > 0) {
         $username = $row['username'];
         $email = $row['email'];
         $isAdmin = $row['admin'];
+        $profile_bio = $row['profile_bio'];
         $karma = $row['karma'];
+        $profile_pic = $row['profile_pic'];
     }
-    echo "<div><h2>Profile of $username</h2></div><div class='divider'></div>";
-    echo "<p>Current Karma - $karma</p>";
-    if (isset($uid)) {
-        if ($uid == $rid) {
-            echo "<a href='edit_userdata.php?uid=$uid' name='edit_userdata' class='button button1'>EDIT USER DATA</a>";
+    if($isAdmin == 1) {
+        echo "<div><h2>$username<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i></h2></div>";
+    } else {
+        echo "<div><h2>$username</h2></div>";
+    }
+    if (isset($user)) {
+        if ($user == $id) {
+            echo "<br><a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
         }
     }
+    echo "<div class='divider'></div>";
+    echo "<h5>Current Karma - $karma</h5>";
 }
+?>
 
+<div class="row">
+<div class="col s4">
+<ul class="collapsible expandable">
+<li class="active">
+<div class="collapsible-header"><i class="medium material-icons">art_track</i>Profile bio</div>
+<div class="collapsible-body">
+<span>
+    <?php
+    $sql_profile = "SELECT * FROM users WHERE id=$id";
+    $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+    
+    $row = mysqli_fetch_assoc($result_profile);
+    $profile_bio = $row['profile_bio'];
+    if(!empty($profile_bio)) {
+        echo "<p class='break-long-words'>\"".$profile_bio."\"</p>";
+    } else {
+        echo "It's quiet here...";
+    }
+    ?>
+</span>
+</div>
+</li>
+</ul>
+</div>
+<div class="col s8">
+<?php
 $sql = "SELECT * FROM posts WHERE author='$username' ORDER BY id DESC";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
@@ -79,5 +113,18 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 </div>
 </div>
+</div>
+</div>
+<script>
+var elem = document.querySelector('.collapsible.expandable');
+var instance = M.Collapsible.init(elem, {
+  accordion: false
+});
+
+var elem = document.querySelector('.tooltipped');
+var instance = M.Tooltip.init(elem, {
+  accordion: false
+});
+</script>
 </body>
 </html>

@@ -3111,7 +3111,7 @@ body {
                                       white,
                                       white 50%);
   background-position: 100% 0;
-  background-size: 200% 100%;
+  background-size: 200.6% 100%;
   transition: all .3s ease-out;
 }
 .sidenav-fixed a:hover {
@@ -3225,6 +3225,7 @@ select {
   color: white;
 }
 .text-input {
+  font-family: inherit;
   border: 2px solid #1976d2;
   border-radius: 25px;
   padding: 15px;
@@ -3246,6 +3247,9 @@ a {
   min-height: 0;
   height: 1px;
 }
+h2 > i {
+  vertical-align: middle;
+}
 .box {
   background: #fafafa;
   border-radius: 25px;
@@ -3263,14 +3267,22 @@ a {
 }
 @media all and (max-width: 2160px) {
 
-  .sidenav-fixed {display:inherit;}
-  .sidenav-fixed-small {display:none;}
+  .sidenav-fixed {
+    display:inherit;
+  }
+  .sidenav-fixed-small {
+    display:none;
+  }
 
 }
 
 @media all and (max-width: 1280px) {
 
-  .sidenav-fixed {display:none;}
-  .sidenav-fixed-small {display:inherit;}
+  .sidenav-fixed {
+    display:none;
+  }
+  .sidenav-fixed-small {
+    display:inherit;
+  }
 
 }
