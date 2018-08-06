@@ -19,16 +19,22 @@ if (!isset($_SESSION)) {
     <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
-<div class="wrap">
 <div class="container-fluid">
+<div class="wrap">
+<div class="wrap-content">
             <br><br>
     <?php
 require_once 'nbbc.php';
-
 $bbcode = new BBCode;
 
-$sql = "SELECT * FROM posts ORDER BY id DESC";
-$result = mysqli_query($con, $sql) or die(mysqli_error());
+if(!isset($_GET['order']) || $_GET['order'] == "new") {
+    $sql = "SELECT * FROM posts ORDER BY id DESC";
+    echo "<a href='?order=top' class='button button2'>ORDER BY TOP POSTS</a>";
+} else {
+    $sql = "SELECT * FROM posts ORDER BY likes DESC";
+    echo "<a href='?order=new' class='button button2'>ORDER BY NEW POSTS</a>";
+}
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
 $posts = "";
 
@@ -55,14 +61,13 @@ if (mysqli_num_rows($result) > 0) {
         $output = $bbcode->Parse($content);
 
         $posts .= "<div class='row'>
-            <div class='col s1'></div>
             <div class='col s8'>
             <h2 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <h6>" . substr($output, 0, 140) . "...</h6><br><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a><br>
             </div>
-            <div class='col s3'><br><br><img src='$image' height='200' width='200' class='right-align' style='float: right;'></div><br>
+            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align' style='float: right;'></div><br>
             </div><br>";
     }
     echo $posts;
@@ -73,6 +78,7 @@ if (mysqli_num_rows($result) > 0) {
 <!--DIV CONTAINER FLUID -->
 </div>
 <!--DIV WRAP -->
+</div>
 </div>
 </body>
 </html>

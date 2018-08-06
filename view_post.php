@@ -87,22 +87,28 @@ if (mysqli_num_rows($result) > 0) {
         <button type='submit' name='like' class='button button1'>LIKE</button>&nbsp;
         <a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
         
+        // LETS USER LIKE A POST
+
         if (isset($_POST['like'])) {
             if (isset($_SESSION['id'])) {
                 $user = $_SESSION['id'];
                 $time = time();
                 $sql_like = "INSERT INTO likes (user_from, user_to, postid, time) VALUES ('$user', '$userid', '$id', '$time')";
+                $sql_like_posts = "UPDATE posts SET likes = likes + 1 WHERE id=$pid";
                 $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
                 if (mysqli_num_rows($result_like) > 0) {
                     echo "<div class='left-align'>You've already liked this post.</div>"; 
                 } else {
                     mysqli_query($con, $sql_like);
+                    mysqli_query($con, $sql_like_posts);
                     echo "<div class='left-align'><h5>Liked!</h5></div>";
                 }
             } else {
                 echo "You have to log in to like posts.<br>";
             }
         }
+
+        // LETS USER COMMENT ON POST
 
         if (isset($_POST['comment-submit'])) {
             if(isset($_SESSION['id'])) {
@@ -127,7 +133,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 
-
+// DISPLAYS ALL COMMENTS
 $sql_comments = "SELECT * FROM comments WHERE postid='$pid' ORDER BY time DESC";
 $result_comments = mysqli_query($con, $sql_comments) or die(mysqli_error($con));
 
