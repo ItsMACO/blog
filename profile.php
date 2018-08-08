@@ -83,6 +83,41 @@ if (mysqli_num_rows($result_profile) > 0) {
 </span>
 </div>
 </li>
+<?php
+if($user == $id) {
+?>
+<li>
+<div class="collapsible-header"><i class="medium material-icons">book</i>Saved posts</div>
+<div class="collapsible-body">
+<span>
+    <?php
+    $sql_read_later = "SELECT * FROM read_later WHERE read_user='$user' ORDER BY read_id DESC";
+    $result_read_later = mysqli_query($con, $sql_read_later) or die(mysqli_error($con));
+    
+    if(mysqli_num_rows($result_read_later) > 0) {
+        while($row = mysqli_fetch_assoc($result_read_later)) {
+            $read_later_postid = $row['read_postid'];
+
+            $sql_read_later_title = "SELECT * FROM posts WHERE id='$read_later_postid'";
+            $result_read_later_title = mysqli_query($con, $sql_read_later_title);
+            
+            if(mysqli_num_rows($result_read_later_title) > 0) {
+                while($row = mysqli_fetch_assoc($result_read_later_title)) {
+                    $read_later_title = $row['title'];
+
+                    $read_later_posts = "<div><h6><a href='view_post.php?pid=$read_later_postid'>$read_later_title</a></h6></div>";
+                    echo $read_later_posts;
+                }
+            } 
+        }
+    } else {
+        echo "No saved posts";
+    }
+    ?>
+</span>
+</div>
+</li>
+<?php } ?>
 </ul>
 </div>
 <div class="col s8">
@@ -100,13 +135,13 @@ if (mysqli_num_rows($result) > 0) {
         $date = $row['date'];
         $author = $row['author'];
 
-        $posts .= "<div><h5><a href='view_post.php?pid=$id'>$title</a></h5></div>";
+        $posts .= "<div><h6><a href='view_post.php?pid=$id'>$title</a></h6></div>";
     }
     $result_number = mysqli_num_rows($result);
     if ($result_number == 0 || $result_number > 1) {
         echo "<div><h4>Author of $result_number posts<br>$posts</h4></div><br>";
     } else {
-        echo "<div><h4>Author of $result_number post<br>$posts</h4></div><br>";
+        echo "<div><h5>Author of $result_number post<br>$posts</h5></div><br>";
     }
 }
 ?>

@@ -83,9 +83,19 @@ if (mysqli_num_rows($result) > 0) {
         if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
             echo $edit_delete."<br><br>";
         }
-        echo "<div><form action='view_post.php?pid=$pid' method='post'>
-        <button type='submit' name='like' class='button button1'>LIKE</button>&nbsp;
-        <a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
+        echo "<div><form action='view_post.php?pid=$pid' method='post'>";
+        if(isset($_SESSION['id'])) {
+        $user = $_SESSION['id'];
+        $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
+        if (mysqli_num_rows($result_like) > 0) {
+            echo "<button type='submit' name='like' class='button button1-reverse'>LIKED</button>&nbsp";
+        } else {
+            echo "<button type='submit' name='like' class='button button1'>LIKE</button>&nbsp";
+        }
+    } else {
+        echo "<button type='submit' name='like' class='button button1'>LIKE</button>&nbsp";
+    }
+        echo "<a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
         
         // LETS USER LIKE A POST
 
@@ -97,14 +107,14 @@ if (mysqli_num_rows($result) > 0) {
                 $sql_like_posts = "UPDATE posts SET likes = likes + 1 WHERE id=$pid";
                 $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
                 if (mysqli_num_rows($result_like) > 0) {
-                    echo "<div class='left-align'>You've already liked this post.</div>"; 
+                    echo "<div class='left-align'><h5>You've already liked this post.</h5></div>"; 
                 } else {
                     mysqli_query($con, $sql_like);
                     mysqli_query($con, $sql_like_posts);
                     echo "<div class='left-align'><h5>Liked!</h5></div>";
                 }
             } else {
-                echo "You have to log in to like posts.<br>";
+                echo "<h5>You have to log in to like posts.</h5><br>";
             }
         }
 
@@ -163,7 +173,7 @@ if (mysqli_num_rows($result_comments) > 0) {
                 //converts unix time to normal datetime
                 $unix_converted = date('d-m-Y H:i:s', $comment_time);
                 //breaks the comment after 90 characters
-                $comments = "<div class='box box1'>
+                $comments = "<div class='box box1' id='$comment_id'>
                 <h6 style='margin: 25px;' class='break-long-words'>
                 <a href='profile.php?id=$userid'>$comment_user_username</a>
                 <br>$unix_converted UTC<br>$comment_content</h6></div><br><br>";

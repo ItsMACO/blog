@@ -3077,6 +3077,9 @@ h6 {
 .inline {
   display: inline;
 }
+.orange-custom {
+  color: #f57c00;
+}
 body {
   font-family: 'Montserrat';
   background: url(images/body-background.png);
@@ -3095,7 +3098,7 @@ body {
 .sidenav-fixed {
   height: 100%;
   width: 20%;
-  top: 5%;
+  top: 15%;
   left: 5%;
   position: fixed;
   overflow-x: hidden;
@@ -3187,6 +3190,19 @@ select {
     cursor: pointer;
     font-family: 'Montserrat';
 }
+.button-small {
+  border-radius: 25px;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-family: 'Montserrat';
+}
 .button1 {
     background-color: white; 
     color: #1976d2; 
@@ -3199,12 +3215,12 @@ select {
 .button1-reverse {
   background-color: #1976d2;
   color: white;
+  border: 2px solid #1976d2;
 }
 
 .button1-reverse:hover {
   background-color: white; 
   color: #1976d2; 
-  border: 2px solid #1976d2;
 }
 .button2 {
   background-color: white;

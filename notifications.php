@@ -40,9 +40,13 @@ include 'db.php';
             $result_comment_post = mysqli_query($con, $sql_comment_post);
             if(mysqli_num_rows($result_comment_post) > 0) {
                 while($row = mysqli_fetch_assoc($result_comment_post)) {
+                    $comment_post_id = $row['id'];
                     $comment_post_name = $row['title'];
 
-                    $notify_comment = "<div><h5>New comment: <br></h5><div class='box box1'><h5 style='margin: 25px;' class='break-long-words'>$comment_from</h5><h6 style='margin: 25px;' class='break-long-words'>$comment_content</h6><p style='margin: 25px;' class='break-long-words'>Post: $comment_post_name</p></div></div><br><div class='divider'></div>";
+                    $notify_comment = "<div><h5>New comment: <br></h5><div class='box box1'><h5 style='margin: 25px;' class='break-long-words'>$comment_from</h5>
+                    <h6 style='margin: 25px;' class='break-long-words'>$comment_content</h6>
+                    <div class='center-align'><a href='view_post.php?pid=$comment_post_id#$comment_id' class='button-small button1'>GO THERE</a></div>
+                    </div></div><br><div class='divider'></div>";
 
                     echo $notify_comment;
                 }
