@@ -16,8 +16,10 @@ include_once 'db.php';
 </head>
 <body>
     <div class="container-fluid">
-        <div class="wrap"><br><br>
-            <div class="center-align">
+        <div class="wrap">
+        <div class="wrap-content">
+        <br><br>
+        <div class="center-align">
     <form action="login.php" method="post" enctype="multipart/form-data">
 <?php
 
@@ -58,6 +60,7 @@ if (isset($_POST['login'])) {
       <button type="submit" name="login" class="button button1">LOGIN</button>
     </form><br>
     <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a><br><br>
+</div>
 </div>
 </div>
 </div>

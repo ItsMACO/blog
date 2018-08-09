@@ -1,5 +1,5 @@
 <?php
-include 'sidebar_new.php';
+include 'online_log.php';
 include 'db.php';
 ?>
 <!DOCTYPE html>
@@ -13,9 +13,8 @@ include 'db.php';
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="main.js"></script>
 </head>
-<body>
+<body style="background: white !important;">
 <div class="container-fluid">
-<div class="wrap">
 <div class="wrap-content">
     <?php
     $user = $_SESSION['id'];
@@ -56,7 +55,6 @@ include 'db.php';
         echo "<br>There are no new notifications!<br><br>";
     }
     ?>
-</div>
 </div>
 </div>
 

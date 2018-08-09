@@ -3089,7 +3089,8 @@ body {
   background: white;
   width: 70%; 
   left: 25%;
-  top: 5%;
+  top: 60px;
+  min-height: 60%;
 }
 .wrap-content {
   width: 90%;
@@ -3098,7 +3099,7 @@ body {
 .sidenav-fixed {
   height: 100%;
   width: 20%;
-  top: 15%;
+  top: 60px;
   left: 5%;
   position: fixed;
   overflow-x: hidden;
@@ -3158,6 +3159,38 @@ body {
   font-size: 2rem;
   margin-right: 30%;
 }
+.navbar {
+  position: fixed;
+  display: inline-block;
+  overflow: hidden;
+  background-color: #f2f2f2;
+  font-size: 20px;
+  line-height: 55px;
+  top: 0;
+  left: 25%;
+  width: 70%;
+  height: 60px;
+  z-index: 999;
+}
+.navbar a {
+  vertical-align: middle;
+  margin-right: 1%;
+  padding: 1.2rem 2rem;
+  transition: background-color .2s ease-out;
+}
+.navbar a:hover {
+  background-color: #d9d9d9;
+}
+.navbar a i {
+  vertical-align: middle;
+}
+.notifications-modal {
+  min-width: 100%;
+  min-height: 100%;
+}
+#notifications iframe {
+  border: none;
+}
 select {
   border: 2px solid #1976d2;
 }
@@ -3183,25 +3216,28 @@ select {
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline;
     font-size: 16px;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
     font-family: 'Montserrat';
+    display: inline-block;
+    white-space: nowrap;
 }
 .button-small {
   border-radius: 25px;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  font-family: 'Montserrat';
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    display: inline-block;
+    white-space: nowrap;
 }
 .button1 {
     background-color: white; 

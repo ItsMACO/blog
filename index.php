@@ -22,20 +22,8 @@ if (!isset($_SESSION)) {
 <div class="container-fluid">
 <div class="wrap">
 <div class="wrap-content">
+<br><br>
 <?php
-if(isset($_SESSION['id'])) {
-    $user = $_SESSION['id'];
-    $sql_username = "SELECT * FROM users WHERE id='$user'";
-    $result_username = mysqli_query($con, $sql_username);
-    $row = mysqli_fetch_assoc($result_username);
-    $user_username = $row['username'];
-    echo "<div class='right-align'>
-    <a href='profile.php?id=$user'>$user_username</a>
-    </div>";
-}
-?>
-            <br><br>
-    <?php
 require_once 'nbbc.php';
 $bbcode = new BBCode;
 
@@ -81,7 +69,7 @@ if (mysqli_num_rows($result) > 0) {
             <a href='?read_later=$id' class='button button2'>READ LATER</a>
             <br>
             </div>
-            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align' style='float: right;'></div><br>
+            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
             </div><br>";
     }
     echo $posts;
