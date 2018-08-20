@@ -3080,7 +3080,17 @@ h6 {
 .orange-custom {
   color: #f57c00;
 }
+.red-alert {
+  display: none;
+  color: red;
+  border: 3px solid #d32f2f;
+  padding: 3px;
+}
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   font-family: 'Montserrat';
   background: url(images/body-background.png);
 }
@@ -3097,30 +3107,31 @@ body {
   margin-left: 5%;
 }
 .sidenav-fixed {
-  height: 100%;
-  width: 20%;
+  background: #262626;
+  height: 100vh;
   top: 60px;
-  left: 5%;
+  left: 0;
   position: fixed;
   overflow-x: hidden;
   display: block;
 }
 .sidenav-fixed a {
   font-size: 20px;
+  color: #f2f2f2;
+  padding: 0px 20px;
   display: block;
   line-height: 55px;
   background-image: linear-gradient(to right,
-                                      transparent,
-                                      transparent 50%,
-                                      white,
-                                      white 50%);
-  background-position: 100% 0;
-  background-size: 200.6% 100%;
-  transition: all .3s ease-out;
+                                      #262626,
+                                      #262626 50%,
+                                      #333333,
+                                      #333333 50%);
+  background-position: 0 0;
+  background-size: 200% 100%;
+  transition: all .2s ease-in-out;
 }
 .sidenav-fixed a:hover {
-  background-position: 0 0;
-  color: white;
+  background-position: 100% 0;
 }
 .sidenav-fixed > a > i {
   vertical-align: middle;
@@ -3129,30 +3140,31 @@ body {
   margin-left: 15px;
 }
 .sidenav-fixed-small {
-  height: 100%;
-  width: 20%;
-  top: 5%;
-  left: 5%;
+  background: #262626;
+  height: 100vh;
+  top: 60px;
+  left: 0;
   position: fixed;
   overflow-x: hidden;
   display: block;
 }
 .sidenav-fixed-small a {
   font-size: 20px;
+  color: #e6e6e6;
   display: block;
+  padding: 0px 20px;
   line-height: 55px;
   background-image: linear-gradient(to right,
-                                      transparent,
-                                      transparent 50%,
-                                      white,
-                                      white 50%);
-  background-position: 100% 0;
+                                      #262626,
+                                      #262626 50%,
+                                      #333333,
+                                      #333333 50%);
+  background-position: 0 0;
   background-size: 200% 100%;
-  transition: all .3s ease-out;
+  transition: all .2s ease-in-out;
 }
 .sidenav-fixed-small a:hover {
-  background-position: 0 0;
-  color: white;
+  background-position: 100% 0;
 }
 .sidenav-fixed-small > a > i {
   vertical-align: middle;
@@ -3160,29 +3172,53 @@ body {
   margin-right: 30%;
 }
 .navbar {
+  width: 100%;
   position: fixed;
-  display: inline-block;
-  overflow: hidden;
-  background-color: #f2f2f2;
-  font-size: 20px;
-  line-height: 55px;
-  top: 0;
-  left: 25%;
-  width: 70%;
   height: 60px;
+  background-color: #333;
+  overflow: hidden;
   z-index: 999;
 }
 .navbar a {
-  vertical-align: middle;
-  margin-right: 1%;
-  padding: 1.2rem 2rem;
-  transition: background-color .2s ease-out;
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 16px 32px;
+  text-decoration: none;
+  height: 60px;
+  font-size: 18px;
 }
 .navbar a:hover {
-  background-color: #d9d9d9;
+  background-color: #262626;
+  color: #f2f2f2;
 }
-.navbar a i {
-  vertical-align: middle;
+a.menu-icon {
+  display: none;
+}
+@media all and (max-width: 600px) {
+  .navbar a {
+    display: none;
+  }
+  a.menu-icon {
+    display: block;
+  }
+  .navbar .always-visible {
+    display: block;
+  }
+  .navbar.responsive {
+    position: relative;
+  }
+  .navbar.responsive a.menu-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
 }
 .notifications-modal {
   min-width: 100%;
@@ -3192,6 +3228,7 @@ body {
   border: none;
 }
 select {
+  max-width: 100%;
   border: 2px solid #1976d2;
 }
 .select-flair {
@@ -3206,23 +3243,25 @@ select {
   background: #d9d9d9;
 }
 .post-image {
-  max-width: 80%;
-  max-height: 70%;
+  width: 100%;
+  height: 100%;
 }
 .button {
-    border-radius: 25px;
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    font-family: 'Montserrat';
-    display: inline-block;
-    white-space: nowrap;
+  margin-top: 5px;
+  border-radius: 25px;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 100%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-family: 'Montserrat';
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .button-small {
   border-radius: 25px;
@@ -3231,13 +3270,14 @@ select {
     padding: 8px 16px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 100%;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
     font-family: 'Montserrat';
     display: inline-block;
     white-space: nowrap;
+    max-width: 100%;
 }
 .button1 {
     background-color: white; 
@@ -3278,6 +3318,7 @@ select {
 }
 .text-input {
   font-family: inherit;
+  max-width: 100%;
   border: 2px solid #1976d2;
   border-radius: 25px;
   padding: 15px;
@@ -3295,10 +3336,6 @@ a {
   overflow: hidden;
   background-color: #e0e0e0;
 }
-.dropdown-content li.divider {
-  min-height: 0;
-  height: 1px;
-}
 h2 > i {
   vertical-align: middle;
 }
@@ -3311,11 +3348,15 @@ h2 > i {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23), 0 -3px 6px rgba(0,0,0,0.23);
 }
 .break-long-words {
+  overflow: ellipsis;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
   word-break: break-word;
   hyphens: auto;
+}
+.text-input::placeholder {
+  color: grey;
 }
 @media all and (max-width: 2160px) {
 

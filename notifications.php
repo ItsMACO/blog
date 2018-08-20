@@ -15,7 +15,7 @@ include 'db.php';
 </head>
 <body style="background: white !important;">
 <div class="container-fluid">
-<div class="wrap-content">
+<div class="center-align">
     <?php
     $user = $_SESSION['id'];
     $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
@@ -52,7 +52,7 @@ include 'db.php';
             }
         }
     } else {
-        echo "<br>There are no new notifications!<br><br>";
+        echo "<br>You have no new notifications!<br><br>";
     }
     ?>
 </div>

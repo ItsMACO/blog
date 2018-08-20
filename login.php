@@ -13,14 +13,16 @@ include_once 'db.php';
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
+    <script src="main.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="wrap">
-        <div class="wrap-content">
-        <br><br>
-        <div class="center-align">
-    <form action="login.php" method="post" enctype="multipart/form-data">
+<div class="container-fluid">
+<div class="wrap">
+<div class="wrap-content">
+<br><br>
+<div class="center-align">
+<div id="wrong_login" class="red-alert"></div><br>
+<form action="" method="post" enctype="multipart/form-data">
 <?php
 
 if (isset($_POST['login'])) {
@@ -54,10 +56,9 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
-
       <input type="text" name="username" placeholder="Username" class="text-input"><br><br>
       <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
-      <button type="submit" name="login" class="button button1">LOGIN</button>
+      <button type="submit" name="login" class="button button1" id="login" onclick="loggingIn()">LOGIN</button>
     </form><br>
     <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a><br><br>
 </div>

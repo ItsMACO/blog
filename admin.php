@@ -59,7 +59,7 @@ if (mysqli_num_rows($result) > 0) {
             <a href='del_post.php?pid=$id' class='button button3'>DELETE</a></div>";
         }
 
-        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2>
+        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank' class='break-long-words'>$title</a></h2>
         <h6 class='flair'>$flair</h6><p>$date by <a href='profile.php?id=$userid'>$author</a></p><br>
         $admin</div><br><div class='divider'></div>";
     }
@@ -259,8 +259,8 @@ if (mysqli_num_rows($result) > 0) {
                         $post_report_username = $row['username'];
 
                         $post_reports = "<div><h5 class='blue-text text-darken-2'>Post report id:</h5><h6>$post_report_id</h6>
-                                        <h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br><a href='del_post.php?pid=$post_report_postid' class='button button3'>REMOVE POST</a><br>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br><a href='admin.php?set_karma=$post_report_username' class='button button1'>REWARD KARMA</a><br>
+                                        <h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br><a href='del_post.php?pid=$post_report_postid' class='button-small button3'>REMOVE POST</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br><a href='admin.php?set_karma=$post_report_username' class='button-small button1'>REWARD KARMA</a><br>
                                         <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$post_report_reason</h6></div>
                                         <br>
                                         <div class='divider'></div>";

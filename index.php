@@ -29,10 +29,10 @@ $bbcode = new BBCode;
 
 if(!isset($_GET['order']) || $_GET['order'] == "new") {
     $sql = "SELECT * FROM posts ORDER BY id DESC";
-    echo "<a href='?order=top' class='button-small button2'>ORDER BY TOP POSTS</a>";
+    echo "<a href='?order=top' class='button-small button2'>ORDER BY TOP POSTS</a><br><br><div class='divider'></div>";
 } else {
     $sql = "SELECT * FROM posts ORDER BY likes DESC";
-    echo "<a href='?order=new' class='button-small button2'>ORDER BY NEW POSTS</a>";
+    echo "<a href='?order=new' class='button-small button2'>ORDER BY NEW POSTS</a><br><br><div class='divider'></div>";
 }
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
@@ -61,15 +61,14 @@ if (mysqli_num_rows($result) > 0) {
         $output = $bbcode->Parse($content);
 
         $posts .= "<div class='row'>
-            <div class='col s8'>
-            <h2 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h2><h6 class='flair'>$flair</h6>
+            <div class='col s12 m8 l8'>
+            <h3 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h3><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>" . substr($output, 0, 140) . "...</h6><br><br>
+            <h6>" . substr($output, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a>
             <a href='?read_later=$id' class='button button2'>READ LATER</a>
-            <br>
             </div>
-            <div class='col s4'><br><br><img src='$image' height='200' width='200' class='right-align'></div><br>
+            <div class='col s12 m4 l4'><br><br><img src='$image' class='post-image'></div><br><br>
             </div><br>";
     }
     echo $posts;

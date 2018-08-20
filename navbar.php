@@ -15,7 +15,7 @@ include 'db.php';
 </head>
 <body>
 <div class="container-fluid">
-<div class="navbar">
+<div class="navbar" id="navbar">
 <?php
 if(!isset($_SESSION)) {
     session_start();
@@ -26,8 +26,8 @@ if(isset($_SESSION['id'])) {
     $result_username = mysqli_query($con, $sql_username);
     $row = mysqli_fetch_assoc($result_username);
     $user_username = $row['username'];
-    echo "<div class='right-align'>";
-    echo "<a href='#notifications' class='modal-trigger'>";
+    echo "<div>";
+    echo "<a href='#notifications' class='modal-trigger always-visible'>";
         
         $user = $_SESSION['id'];
         $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
@@ -48,11 +48,14 @@ if(isset($_SESSION['id'])) {
         <?php
         }
     echo "<span><a href='profile.php?id=$user'>$user_username</a></span>
+    <span><a href='profile.php?id=$user' class='menu-icon'><i class='material-icons'>account_circle</i></a></span>
     </div>";
 } else {
-    echo "<div class='right-align'>
-    <a href='login.php'>Login</a>&nbsp;
-    <a href='register.php'>Register</a>
+    echo "<div class='hide-nav'>
+    <a href='register.php' class='register'>Register</a>
+    <a href='login.php' class='login'>Login</a>
+    <a href='register.php' class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>person_add</i></a>
+    <a href='login.php' class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>arrow_forward</i></a>
     </div>";
 }
 ?>

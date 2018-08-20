@@ -2,6 +2,20 @@
     session_start();
     require 'db.php';
     require 'sidebar_new.php';
+    $pid = $_GET['pid'];
+
+    $sql_get = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
+    $result = mysqli_query($con, $sql_get);
+
+    if(mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $author = $row['author'];
+
+            if($_SESSION['admin'] == 0 && $author != $_SESSION['username']) {
+                header('Location: index.php');
+            }
+        }
+    }
 
     if(!isset($_SESSION['username'])) {
         header('Location: login.php');
@@ -11,7 +25,6 @@
         header('Location: index.php');
     }
 
-        $pid = $_GET['pid'];
 
     if(isset($_POST['update'])) {
         $title = strip_tags($_POST['title']);
@@ -30,8 +43,7 @@
         }
 
         mysqli_query($con, $sql);
-
-        header('Location: index.php');
+        header('Location: view_post.php?pid='.$pid);
     }
 ?>
 <!DOCTYPE html>

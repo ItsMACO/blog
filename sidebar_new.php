@@ -19,7 +19,7 @@ if (isset($_SESSION['id'])) {
     <script src="main.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body style="background: white !important;">
 <?php
 if(isset($_SESSION['id'])) {
     $user = $_SESSION['id'];

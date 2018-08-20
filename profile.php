@@ -62,7 +62,7 @@ if (mysqli_num_rows($result_profile) > 0) {
 ?>
 
 <div class="row">
-<div class="col s4">
+<div class="col s12 m6 l6">
 <ul class="collapsible expandable">
 <li class="active">
 <div class="collapsible-header"><i class="medium material-icons">art_track</i>Profile bio</div>
@@ -120,7 +120,7 @@ if($user == $id) {
 <?php } ?>
 </ul>
 </div>
-<div class="col s8">
+<div class="col s12 m6 l6">
 <?php
 $sql = "SELECT * FROM posts WHERE author='$username' ORDER BY id DESC";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
@@ -139,9 +139,9 @@ if (mysqli_num_rows($result) > 0) {
     }
     $result_number = mysqli_num_rows($result);
     if ($result_number == 0 || $result_number > 1) {
-        echo "<div><h4>Author of $result_number posts<br>$posts</h4></div><br>";
+        echo "<div><h5 class='break-long-words'>Author of $result_number posts<br>$posts</h5></div><br>";
     } else {
-        echo "<div><h5>Author of $result_number post<br>$posts</h5></div><br>";
+        echo "<div><h5class='break-long-words'>Author of $result_number post<br>$posts</h5></div><br>";
     }
 }
 ?>
