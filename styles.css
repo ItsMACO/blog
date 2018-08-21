@@ -3188,6 +3188,7 @@ body {
   text-decoration: none;
   height: 60px;
   font-size: 18px;
+  transition: background-color .2s ease-out;
 }
 .navbar a:hover {
   background-color: #262626;

@@ -29,6 +29,7 @@ if (isset($_SESSION['id'])) {
     <?php
 
 $id = $_GET['id'];
+$uid = $_GET['id'];
 
 require_once 'nbbc.php';
 $bbcode = new BBCode;
@@ -53,9 +54,10 @@ if (mysqli_num_rows($result_profile) > 0) {
     }
     if (isset($user)) {
         if ($user == $id) {
-            echo "<br><a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
+            echo "<br><a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a>&nbsp;";
         }
     }
+    echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
     echo "<div class='divider'></div>";
     echo "<h5>Current Karma - $karma</h5>";
 }
@@ -150,6 +152,33 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 </div>
 </div>
+
+<?php
+if(isset($_POST['report-submit'])) {
+    if(isset($_POST['reason'])) {
+        $reason = $_POST['reason'];
+        $time = time();     
+            if(isset($_SESSION['id'])) {
+                $user = $_SESSION['id'];
+                $sql_report = "INSERT INTO user_reports (userid, user_from, reason, time) VALUES ('$uid', '$user', '$reason', '$time')";
+            } else {
+                $sql_report = "INSERT INTO user_reports (userid, user_from, reason, time) VALUES ('$uid', '0', '$reason', '$time')";
+            }
+            mysqli_query($con, $sql_report) or die(mysqli_error($con));
+    }
+}
+?>
+
+<div id="reportuser" class="modal">
+    <div class="modal-content">
+      <h4>Report User</h4>
+        <form action="profile.php?id=<?php echo $uid; ?>" method="post" enctype="multipart/form-data">
+        <p>I would like to report this user because...</p>
+        <input type='text' name='reason' class='text-input'>
+        <button type='submit' name='report-submit' class='button button3'>REPORT</button>
+    </form>
+    </div>
+  </div>
 <script>
 var elem = document.querySelector('.collapsible.expandable');
 var instance = M.Collapsible.init(elem, {
@@ -158,6 +187,11 @@ var instance = M.Collapsible.init(elem, {
 
 var elem = document.querySelector('.tooltipped');
 var instance = M.Tooltip.init(elem, {
+  accordion: false
+});
+
+var elem = document.querySelector('#reportuser');
+var instance = M.Modal.init(elem, {
   accordion: false
 });
 </script>
