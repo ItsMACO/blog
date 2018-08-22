@@ -3171,6 +3171,9 @@ body {
   font-size: 2rem;
   margin-right: 30%;
 }
+.online-users h6 > i {
+  vertical-align: middle;
+} 
 .navbar {
   width: 100%;
   position: fixed;
@@ -3220,6 +3223,9 @@ a.menu-icon {
     display: block;
     text-align: left;
   }
+}
+.online-users {
+  color: #f2f2f2;
 }
 .notifications-modal {
   min-width: 100%;

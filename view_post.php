@@ -68,21 +68,22 @@ if (mysqli_num_rows($result) > 0) {
             }
         }
         $output = $bbcode->Parse($content);
-
+        if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
         $edit_delete = "<div><a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
             <a href='del_post.php?pid=$pid' class='button button3'>DELETE</a></div>";
+        } else {
+            $edit_delete = "<div>";
+        }
 
-        $post .= "<div>
-            <h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
+        $post .= "<h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <div class='center-align'><img src='$image' class='post-image'></div><br>
             <h6 class='break-long-words'>$output</h6><br><br>
             </div><br>";
 
-        echo $post;
-        if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
-            echo $edit_delete."<br><br>";
-        }
+        echo $post."&nbsp;".$edit_delete;
+
+        
         echo "<div><form action='view_post.php?pid=$pid' method='post'>";
         if(isset($_SESSION['id'])) {
         $user = $_SESSION['id'];
