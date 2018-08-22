@@ -64,7 +64,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class='col s12 m8 l8'>
             <h3 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h3><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>" . substr($output, 0, 140) . "...</h6><br>
+            <h6 class='break-long-words'>" . substr($output, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a>
             <a href='?read_later=$id' class='button button2'>READ LATER</a>
             </div>

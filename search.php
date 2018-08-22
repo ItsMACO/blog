@@ -13,17 +13,20 @@ require_once 'db.php';
     <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
     <script src="materialize/js/materialize.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>"></link>
+    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
 <div class="wrap">
 <br><br>
-<div class="center-align">
+<div class="wrap-content">
+<div class='center-align'>
 <form action="search.php" method="post">
 <input type="text" name="searchtxt" class="text-input" size="48"><br><br>
       <button type="submit" class="button button1" name="searchbtn"><span>SEARCH</span></button>
-</form><br><br>
+</form>
+</div>
+<br><br>
 
 
     <?php
@@ -68,7 +71,7 @@ if (isset($_POST['searchbtn'])) {
             <div class='col s12 m8 l8'>
             <h3 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h3><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6>" . substr($output, 0, 140) . "...</h6><br>
+            <h6 class='break-long-words'>" . substr($output, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a>
             <a href='?read_later=$id' class='button button2'>READ LATER</a>
             </div>
@@ -88,22 +91,19 @@ if (isset($_POST['searchbtn'])) {
         } else {
             header('Location: login.php');
         }
-
+    }
         }
 
         if (mysqli_num_rows($result) > 1) {
-            echo "Found " . mysqli_num_rows($result) . " results.</div>";
+            echo "<div class='center-align'>Found " . mysqli_num_rows($result) . " results.</div>";
         }
         if (mysqli_num_rows($result) == 1) {
-            echo "Found " . mysqli_num_rows($result) . " result.</div>";
+            echo "<div class='center-align'>Found " . mysqli_num_rows($result) . " result.</div>";
         }
 
         echo $posts;
 
-    } else {
-        echo "<br><br>No posts found!";
     }
-}
 
 ?>
 </div>

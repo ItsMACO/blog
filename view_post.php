@@ -76,7 +76,7 @@ if (mysqli_num_rows($result) > 0) {
             <h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
             <div class='center-align'><img src='$image' class='post-image'></div><br>
-            <h6>$output</h6><br><br>
+            <h6 class='break-long-words'>$output</h6><br><br>
             </div><br>";
 
         echo $post;
