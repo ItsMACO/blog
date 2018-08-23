@@ -90,7 +90,7 @@ if (mysqli_num_rows($result) > 0) {
                 Yes
                 </label>
             </div><br>
-            <button type="submit" class="button button1">SET</button>
+            <button type="submit" class="button button1" id="set_admin_btn">SET</button>
             </form>
             <?php
             if(isset($_POST['set_admin'])){

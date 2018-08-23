@@ -143,7 +143,7 @@ if (mysqli_num_rows($result) > 0) {
     if ($result_number == 0 || $result_number > 1) {
         echo "<div><h5 class='break-long-words'>Author of $result_number posts<br>$posts</h5></div><br>";
     } else {
-        echo "<div><h5class='break-long-words'>Author of $result_number post<br>$posts</h5></div><br>";
+        echo "<div><h5 class='break-long-words'>Author of $result_number post<br>$posts</h5></div><br>";
     }
 }
 ?>
