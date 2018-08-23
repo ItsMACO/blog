@@ -36,8 +36,8 @@ if (isset($_POST['feature_submit'])) {
 </head>
 <body>
 <div class="container-fluid">
-    <div class="wrap">
-        <div class="center-align">
+<div class="wrap">
+<div class="wrap-content">
 <br><br>
 <form action="feature_request.php" method="post">
 <input type="text" name="feature_title" size="48" placeholder="Your feature request title" class="text-input"><br><br>

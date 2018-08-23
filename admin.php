@@ -42,6 +42,7 @@ if (mysqli_num_rows($result) > 0) {
         $title = $row['title'];
         $date = $row['date'];
         $author = $row['author'];
+        $flair = $row['flair'];
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
@@ -54,10 +55,15 @@ if (mysqli_num_rows($result) > 0) {
         }
 
         if (isset($_SESSION['id'])) {
-            $admin = "<div><a href='edit_post.php?pid=$id' class='button button2'>EDIT</a>&nbsp;<a href='del_post.php?pid=$id' class='button button3'>DELETE</a></div>";
+            $admin = "<div><a href='edit_post.php?pid=$id' class='button-small button2'>EDIT</a>&nbsp;
+            <a href='del_post.php?pid=$id' class='button-small button3'>DELETE</a></div>";
         }
 
-        $posts .= "<div><h2><a href='view_post.php?pid=$id' target='_blank'>$title</a></h2><p>$date by <a href='profile.php?id=$userid'>$author</a></p>$admin</div><br><div class='divider'></div>";
+        $posts .= "<div style='display: inline-block;'>
+        <h4><a href='view_post.php?pid=$id' target='_blank' class='break-long-words'>$title</a></h4>
+        <span class='flair'>$flair</span> by 
+        <a href='profile.php?id=$userid'>$author</a><br><br>
+        $admin</div><br><br><div class='divider'></div>";
     }
 
     echo $posts;
@@ -84,11 +90,12 @@ if (mysqli_num_rows($result) > 0) {
                 Yes
                 </label>
             </div><br>
-            <button type="submit" class="button button1">SET</button>
+            <button type="submit" class="button button1" id="set_admin_btn">SET</button>
             </form>
             <?php
             if(isset($_POST['set_admin'])){
-                $set_admin = $_POST['set_admin'];
+                $set_admin = strip_tags($_POST['set_admin']);
+                $set_admin = mysqli_real_escape_string($con, $set_admin);
                 if(isset($_POST['yes_no'])) {
                     $sql_set_admin = "UPDATE users SET admin=1 WHERE username='$set_admin'";
                     mysqli_query($con, $sql_set_admin);
@@ -101,17 +108,17 @@ if (mysqli_num_rows($result) > 0) {
         </span></div>
     </li>
     </li>
-    <li>
+        <li <?php if(isset($_GET['set_karma'])) { ?> class="active" <?php } ?>>
         <div class="collapsible-header"><i class="medium material-icons">star</i>Add or remove Karma</div>
         <div class="collapsible-body">
         <span>
             <form action="admin.php" method="post" enctype="multipart/form-data">
-            <input type="text" name="set_karma_username" class="text-input" placeholder="Username"><br><br>
+            <input type="text" name="set_karma_username" class="text-input" placeholder="Username" <?php if(isset($_GET['set_karma'])) { ?> value="<?php echo $_GET['set_karma']; ?>"<?php } ?>><br><br>
             <input type="text" name="set_karma" class="text-input" placeholder="Karma Amount"><br><br>
             <div class="switch">
                 <label>
                 Remove
-                <input type="checkbox" name="yes_no2">
+                <input type="checkbox" name="yes_no2" <?php if(isset($_GET['set_karma'])) { ?> checked <?php } ?>>
                 <span class="lever"></span>
                 Add
                 </label>
@@ -120,8 +127,10 @@ if (mysqli_num_rows($result) > 0) {
             </form>
             <?php
             if(isset($_POST['set_karma_username']) && isset($_POST['set_karma'])){
-                $set_karma_username = $_POST['set_karma_username'];
-                $set_karma = $_POST['set_karma'];
+                $set_karma_username = strip_tags($_POST['set_karma_username']);
+                $set_karma_username = mysqli_real_escape_string($con, $set_karma_username);
+                $set_karma = strip_tags($_POST['set_karma']);
+                $set_karma = mysqli_real_escape_string($con, $set_karma);
                 if(isset($_POST['yes_no2'])) {
                     $sql_set_karma = "UPDATE users SET karma = karma + $set_karma WHERE username='$set_karma_username'";
                     mysqli_query($con, $sql_set_karma);
@@ -140,12 +149,19 @@ if (mysqli_num_rows($result) > 0) {
             <form action="admin.php" method="post" enctype="multipart/form-data">
             <input type="text" name="set_flair" class="text-input" placeholder="Flair name"><br><br>
             <button type="submit" class="button button1">ADD</button>
-            </form>
+            </form><br>
             <?php
-            if(isset($_POST['set_flair'])){
-                $set_flair = $_POST['set_flair'];
+            if(isset($_POST['set_flair'])) {
+                $set_flair = strip_tags($_POST['set_flair']);
+                $set_flair = mysqli_real_escape_string($con, $set_flair);
+                $sql_flair_exists = "SELECT * FROM flairs WHERE flairname='$set_flair'";
+                $result_flair_exists = mysqli_query($con, $sql_flair_exists);
+                if(mysqli_num_rows($result_flair_exists) > 0) {
+                    echo "This flair already exists!";
+                } else {
                 $sql_flair = "INSERT INTO flairs (flairname) VALUES ('$set_flair')";
                 mysqli_query($con, $sql_flair);
+                }
             }
             ?>
         </span></div>
@@ -171,18 +187,19 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $bug_username = $row['username'];
 
-                        $bug_reports = "<br>
-                                        <div><h5 class='blue-text text-darken-2'>Bug report id:</h5><h6>$bug_id</h6>
-                                        <h5 class='blue-text text-darken-2'>Title:</h5><h6>$bug_title</h6>
+                        $bug_reports = "<div><h5 class='blue-text text-darken-2'>Title:</h5><h6>$bug_title</h6>
                                         <h5 class='blue-text text-darken-2'>Affected pages:</h5><h6>$bug_page</h6>
                                         <h5 class='blue-text text-darken-2'>More information:</h5><h6>$bug_more_info</h6>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><h6>$bug_username</h6></div>
-                                        <br>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><h6>$bug_username</h6>
+                                        <a href='admin.php?set_karma=$bug_username' class='button-small button1'>REWARD KARMA</a><br>
+                                        </div><br>
                                         <div class='divider'></div>";
                         echo $bug_reports;
                     }
                 }
             }
+        } else {
+            echo "There are no bug reports! Yay!<br>";
         }
             ?>
         </span></div>
@@ -207,19 +224,94 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $feature_username = $row['username'];
 
-                        $feature_requests = "<br>
-                                        <div><h5 class='blue-text text-darken-2'>Feature request id:</h5><h6>$feature_id</h6>
-                                        <h5 class='blue-text text-darken-2'>Title:</h5><h6>$feature_title</h6>
+                        $feature_requests = "<div><h5 class='blue-text text-darken-2'>Title:</h5><h6>$feature_title</h6>
                                         <h5 class='blue-text text-darken-2'>More information:</h5><h6>$feature_more_info</h6>
-                                        <h5 class='blue-text text-darken-2'>Requested by:</h5><h6>$feature_username</h6></div>
-                                        <br>
+                                        <h5 class='blue-text text-darken-2'>Requested by:</h5><h6>$feature_username</h6>
+                                        <a href='admin.php?set_karma=$feature_username' class='button-small button1'>REWARD KARMA</a><br>
+                                        </div><br>
                                         <div class='divider'></div>";
                         echo $feature_requests;
-                    
-                    
                     }
                 }
             }
+        } else {
+            echo "There are no feature requests!<br>";
+        }
+            ?>
+        </span></div>
+    </li>
+    <li>
+        <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">report</i>Show post reports</div>
+        <div class="collapsible-body">
+        <span>
+        <?php
+        $sql_post_reports = "SELECT * FROM post_reports ORDER BY id";
+        $result_post_reports = mysqli_query($con, $sql_post_reports) or die(mysqli_error($con));
+        if (mysqli_num_rows($result_post_reports) > 0) {
+            while ($row = mysqli_fetch_assoc($result_post_reports)) {
+                $post_report_id = $row['id'];
+                $post_report_postid = $row['postid'];
+                $post_report_user_from = $row['user_from'];
+                $post_report_reason = $row['reason'];
+
+                $sql_profile = "SELECT * FROM users WHERE id='$post_report_user_from'";
+                $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+                if (mysqli_num_rows($result_profile) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_profile)) {
+                        $post_report_username = $row['username'];
+
+                        $post_reports = "<div><h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br>
+                                        <a href='del_post.php?pid=$post_report_postid' class='button-small button3'>REMOVE POST</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br>
+                                        <a href='admin.php?set_karma=$post_report_username' class='button-small button1'>REWARD KARMA</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$post_report_reason</h6></div>
+                                        <br>
+                                        <div class='divider'></div>";
+                        echo $post_reports;
+                    }
+                }
+            }
+        } else {
+            echo "There are no post reports!<br>";
+        }
+            ?>
+        </span></div>
+    </li>
+    <li>
+        <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">person</i>Show user reports</div>
+        <div class="collapsible-body">
+        <span>
+        <?php
+        $sql_user_reports = "SELECT * FROM user_reports ORDER BY id";
+        $result_user_reports = mysqli_query($con, $sql_user_reports) or die(mysqli_error($con));
+        if (mysqli_num_rows($result_user_reports) > 0) {
+            while ($row = mysqli_fetch_assoc($result_user_reports)) {
+                $user_report_id = $row['id'];
+                $user_report_userid = $row['userid'];
+                $user_report_user_from = $row['user_from'];
+                $user_report_reason = $row['reason'];
+
+                $sql_profile = "SELECT * FROM users WHERE id='$user_report_user_from'";
+                $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
+                $row = mysqli_fetch_assoc($result_profile);
+                $user_reported_by = $row['username'];
+
+                $sql_profile2 = "SELECT * FROM users WHERE id='$user_report_userid'";
+                $result_profile2 = mysqli_query($con, $sql_profile2) or die(mysqli_error($con));
+                $row = mysqli_fetch_assoc($result_profile2);
+                $user_reported = $row['username'];
+
+                        $user_reports = "<div><h5 class='blue-text text-darken-2'>User:</h5><a href='profile.php?id=$user_report_userid'>$user_reported</a><br><br>
+                                        <a href='punish_user.php?id=$userid' class='button-small button3'>PUNISH USER</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$user_report_user_from'>$user_reported_by</a><br><br>
+                                        <a href='admin.php?set_karma=$user_reported_by' class='button-small button1'>REWARD KARMA</a><br>
+                                        <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$user_report_reason</h6></div>
+                                        <br>
+                                        <div class='divider'></div>";
+                        echo $user_reports;
+                    }
+        } else {
+            echo "There are no user reports!<br>";
         }
             ?>
         </span></div>
@@ -235,6 +327,7 @@ if (mysqli_num_rows($result) > 0) {
 var elem = document.querySelector('.collapsible.expandable');
 var instance = M.Collapsible.init(elem, {
   accordion: false
-});</script>
+});
+</script>
 </body>
 </html>

@@ -39,8 +39,8 @@ if (isset($_POST['bug_submit'])) {
 </head>
 <body>
 <div class="container-fluid">
-    <div class="wrap">
-        <div class="center-align">
+<div class="wrap">
+<div class="wrap-content">
 <br><br>
 <form action="bug_report.php" method="post">
 <input type="text" name="bug_title" size="48" placeholder="Your bug report title" class="text-input"><br><br>

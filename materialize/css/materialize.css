@@ -4799,7 +4799,6 @@ body.keyboard-focused .dropdown-content li:focus {
   right: 0;
   background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
   width: 55%;
   margin: auto;
   overflow-y: auto;
@@ -5133,11 +5132,6 @@ body.keyboard-focused .dropdown-content li:focus {
 
 select:focus {
   outline: 1px solid #c9f3ef;
-}
-
-button:focus {
-  outline: none;
-  background-color: #2ab7a9;
 }
 
 label {
@@ -6035,7 +6029,7 @@ textarea.materialize-textarea {
 }
 
 .switch label input[type=checkbox]:checked + .lever {
-  background-color: #84c7c1;
+  background-color: #c686df;
 }
 
 .switch label input[type=checkbox]:checked + .lever:before, .switch label input[type=checkbox]:checked + .lever:after {
@@ -6043,7 +6037,7 @@ textarea.materialize-textarea {
 }
 
 .switch label input[type=checkbox]:checked + .lever:after {
-  background-color: #26a69a;
+  background-color: #a239ca;
 }
 
 .switch label .lever {

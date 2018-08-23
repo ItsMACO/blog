@@ -6,13 +6,14 @@ include 'sidebar_new.php';
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
     $content = strip_tags($_POST['content']);
+    $flair = strip_tags($_POST['flair']);
 
     $title = mysqli_real_escape_string($con, $title);
     $content = mysqli_real_escape_string($con, $content);
+    $flair = mysqli_real_escape_string($con, $flair);
 
     $date = date('l jS \of F Y h:i:s A');
     $author = $_SESSION['username'];
-    $flair = $_POST['flair'];
 
     //insert image
     $target_dir = "images/";
@@ -87,10 +88,10 @@ if (isset($_POST['post'])) {
         <div class="center-align">
 <br><br>
     <form action="post.php" method="post" id="post" enctype="multipart/form-data">
-    <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input"><br><br>
-    <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input"></textarea><br><br>
+    <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input" required><br><br>
+    <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input" required></textarea><br><br>
     <div class="input-field col s12">
-    <select name="flair" id="flair">
+    <select name="flair" class="select-flair" required>
     <?php
     $sql_flair = "SELECT * FROM flairs";
     $result_flair = mysqli_query($con, $sql_flair) or die(mysqli_error($con));

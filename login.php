@@ -13,12 +13,16 @@ include_once 'db.php';
     <script src="materialize/js/materialize.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
+    <script src="main.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="wrap"><br><br>
-            <div class="center-align">
-    <form action="login.php" method="post" enctype="multipart/form-data">
+<div class="container-fluid">
+<div class="wrap">
+<div class="wrap-content">
+<br><br>
+<div class="center-align">
+<div id="wrong_login" class="red-alert"></div><br>
+<form action="" method="post" enctype="multipart/form-data">
 <?php
 
 if (isset($_POST['login'])) {
@@ -31,8 +35,6 @@ if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($con, $username);
     $password = mysqli_real_escape_string($con, $password);
 
-    $password = md5($password);
-
     $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
     $query = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($query);
@@ -41,7 +43,7 @@ if (isset($_POST['login'])) {
     $admin = $row['admin'];
     $email = $row['email'];
 
-    if ($password == $db_password) {
+    if (password_verify($password, $db_password)) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
 
@@ -54,12 +56,12 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
-
       <input type="text" name="username" placeholder="Username" class="text-input"><br><br>
       <input type="password" name="password" placeholder="Password" class="text-input"><br><br>
-      <button type="submit" name="login" class="button button1">LOGIN</button>
+      <button type="submit" name="login" class="button button1" id="login" onclick="loggingIn()">LOGIN</button>
     </form><br>
     <a href="forgot_password.php" class="button button2">FORGOT PASSWORD</a><br><br>
+</div>
 </div>
 </div>
 </div>
