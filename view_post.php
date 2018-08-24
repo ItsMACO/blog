@@ -15,6 +15,7 @@ $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $pagetitle = $row['title'];
+        $image = $row['image'];
     }
 }
 ?>
@@ -22,20 +23,13 @@ if (mysqli_num_rows($result) > 0) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo $pagetitle; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
-    <div class="wrap">
-        <div class="wrap-content">
+<div class="wrap">
+<div class="wrap-content">
+<div class='center-align' style="background: url('<?php echo $image; ?>'); height: 400px;"><h2 class='break-long-words screen'><?php echo $pagetitle; ?></h2></div>
 <br><br>
 <?php
 require_once 'nbbc.php';
@@ -75,9 +69,8 @@ if (mysqli_num_rows($result) > 0) {
             $edit_delete = "<div>";
         }
 
-        $post .= "<h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
-            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <div class='center-align'><img src='$image' class='post-image'></div><br>
+        $post .= "<h6 class='flair'>$flair</h6>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p><br>
             <h6 class='break-long-words'>$output</h6><br><br>
             </div><br>";
 

@@ -3091,7 +3091,7 @@ html {
 }
 body {
   height: 100%;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   background: url(images/body-background.png);
 }
 .wrap {
@@ -3105,6 +3105,18 @@ body {
 .wrap-content {
   width: 90%;
   margin-left: 5%;
+}
+.screen {
+  line-height: 70px;
+  position: relative;
+  color: black;
+  mix-blend-mode: screen;
+  background-color: rgb(255, 255, 255);
+  display: inline;
+  padding: 5px;
+  text-shadow: 1px 0px 0px rgb(0, 0, 0);
+  text-shadow: 0px 1px 1px rgb(0, 0, 0);
+  text-shadow: 1px 1px 0px rgb(0, 0, 0);
 }
 .sidenav-fixed {
   background: #262626;
@@ -3329,6 +3341,9 @@ select {
   border: 2px solid #1976d2;
   border-radius: 25px;
   padding: 15px;
+}
+textarea.text-input {
+  min-height: 100px;
 }
 a {
   color: #1976d2;

@@ -42,12 +42,7 @@ if (isset($_POST['update_data'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Blog - Post</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
+    <title>Edit User Data</title>
 </head>
 <body>
 <div class="container-fluid">
