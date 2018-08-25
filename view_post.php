@@ -2,6 +2,7 @@
 session_start();
 require_once 'db.php';
 require 'sidebar_new.php';
+include 'seen.php';
 
 if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
@@ -63,7 +64,9 @@ if (mysqli_num_rows($result) > 0) {
         }
         $output = $bbcode->Parse($content);
         if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
-        $edit_delete = "<div><a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
+        $edit_delete = "<div>
+            <a href='#stats' class='button button1 modal-trigger'>STATS</a>
+            <a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
             <a href='del_post.php?pid=$pid' class='button button3'>DELETE</a></div>";
         } else {
             $edit_delete = "<div>";
@@ -218,13 +221,26 @@ if(isset($_POST['report-submit'])) {
         <p>I would like to report this post because...</p>
         <input type='text' name='reason' class='text-input'>
         <button type='submit' name='report-submit' class='button button3'>REPORT</button>
-    </div>
     </form> 
+    </div>
+  </div>
+  <div id="stats" class="modal">
+    <div class="modal-content">
+      <h4>Statistics</h4>
+        <iframe src="statistics.php?pid=<?php echo $pid; ?>" height="400px" width="400px"></iframe>
+    </form> 
+    </div>
   </div>
   <script>
 var elem = document.querySelector('#report-modal');
 var instance = M.Modal.init(elem, {
   accordion: false
 });</script>
+<script>
+var elem = document.querySelector('#stats');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});</script>
 </body>
+
 </html>

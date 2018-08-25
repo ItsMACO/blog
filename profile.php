@@ -44,12 +44,11 @@ if (mysqli_num_rows($result_profile) > 0) {
     } else {
         echo "<div><h2>$username</h2></div>";
     }
-    if (isset($user)) {
-        if ($user == $id) {
-            echo "<br><a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a>&nbsp;";
-        }
-    }
+    if ($user == $id) {
+        echo "<a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
+    } else {
     echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
+    }
     echo "<div class='divider'></div>";
     echo "<h5>Current Karma - $karma</h5>";
 }

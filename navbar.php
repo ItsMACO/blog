@@ -6,6 +6,7 @@ include 'db.php';
 <head>
     <?php
     include 'head_links.html';
+    include 'settings.php';
     ?>
 </head>
 <body>

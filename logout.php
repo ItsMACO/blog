@@ -7,9 +7,10 @@ session_destroy();
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="refresh" content="1;url=index.php" />
     <title>Logging out...</title>
 </head>
-<body>
+<body style="background: white !important;">
 <div style="position: absolute;
     top: 40%;
     left: 48%;">

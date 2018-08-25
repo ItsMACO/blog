@@ -3361,6 +3361,9 @@ a {
 h2 > i {
   vertical-align: middle;
 }
+p > i {
+  vertical-align: middle;
+}
 .box {
   background: #fafafa;
   border-radius: 25px;
