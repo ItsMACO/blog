@@ -66,6 +66,20 @@ if (isset($_POST['post'])) {
     }
 
     mysqli_query($con, $sql);
+
+    $sql_check_for_usernames = "SELECT username FROM users";
+    $result_check_for_usernames = mysqli_query($con, $sql_check_for_usernames);
+    while($row = mysqli_fetch_assoc($result_check_for_usernames)) {
+        $username_check = $row['username'];
+        if(strpos($content, '@'.$username_check) !== false) {
+            $sql_postid = "SELECT * FROM posts WHERE title='$title' ORDER BY id DESC LIMIT 1";
+            $result_postid = mysqli_query($con, $sql_postid);
+            $row = mysqli_fetch_assoc($result_postid);
+            $postid = $row['id'];
+            $time = time();
+            mysqli_query($con, "INSERT INTO mentions (username, postid, time) VALUES ('$username_check', '$postid', '$time')");
+        }
+    }
     header('Location: index.php');
 }
 ?>

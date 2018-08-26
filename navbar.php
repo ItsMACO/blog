@@ -26,6 +26,7 @@ if(isset($_SESSION['id'])) {
     echo "<a href='#notifications' class='modal-trigger always-visible'>";
         
         $user = $_SESSION['id'];
+        $user_name = $_SESSION['username'];
         $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
         $result_notify = mysqli_query($con, $sql_notify);
         $row = mysqli_fetch_assoc($result_notify);
@@ -33,8 +34,10 @@ if(isset($_SESSION['id'])) {
 
         $sql_comments = "SELECT * FROM comments WHERE (comment_to='$user') AND (time>$notifytime) AND NOT (comment_from='$user')";
         $result_comments = mysqli_query($con, $sql_comments);
+        $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name') AND (time>$notifytime)";
+        $result_mentions = mysqli_query($con, $sql_mentions);
 
-        if(mysqli_num_rows($result_comments) > 0) {
+        if(mysqli_num_rows($result_comments) > 0 || mysqli_num_rows($result_mentions) > 0) {
         ?>
         <i class="orange-custom material-icons">notifications_active</i></a>
         <?php

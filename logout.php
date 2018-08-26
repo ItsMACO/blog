@@ -11,9 +11,7 @@ session_destroy();
     <title>Logging out...</title>
 </head>
 <body style="background: white !important;">
-<div style="position: absolute;
-    top: 40%;
-    left: 48%;">
+<div class='center-align' style='position: fixed; top: 40%; left: 50%;'>
     <p>Logging out...</p>
     <div class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">
