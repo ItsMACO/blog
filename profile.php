@@ -47,7 +47,24 @@ if (mysqli_num_rows($result_profile) > 0) {
     if ($user == $id) {
         echo "<a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
     } else {
-    echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
+        echo "<form action='profile.php?id=$id' method='post'>";
+        $sql_follow_already = "SELECT * FROM follows WHERE follow_from='$user' AND follow_to='$id'";
+        $result_follow_already = mysqli_query($con, $sql_follow_already);
+        if(mysqli_num_rows($result_follow_already) > 0) {
+            echo "<button type='submit' name='unfollow' class='button button2'>UNFOLLOW</button>&nbsp;";
+        } else {
+            echo "<button type='submit' name='follow' class='button button1'>FOLLOW</button>&nbsp;";
+        }
+        echo "</form>";
+        if(isset($_POST['follow'])) {
+            mysqli_query($con, "INSERT INTO follows (follow_from, follow_to) VALUES ('$user', '$id')");
+            header("Refresh:0");
+        }
+        if(isset($_POST['unfollow'])) {
+            mysqli_query($con, "DELETE FROM follows WHERE follow_from='$user' AND follow_to='$id'");
+            header("Refresh:0");
+        }
+        echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
     }
     echo "<div class='divider'></div>";
     echo "<h5>Current Karma - $karma</h5>";

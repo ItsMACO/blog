@@ -8,9 +8,8 @@ include 'head_links.html';
 <head>
     <title>Notifications</title>
 </head>
-<body style="background: white !important;">
+<body style="background: #fafafa !important;">
 <div class="container-fluid">
-<div class="center-align">
     <?php
     $user = $_SESSION['id'];
     $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
@@ -51,10 +50,6 @@ include 'head_links.html';
     }
     ?>
 </div>
-</div>
-
-
-
 
 <?php
 include 'notifytime.php';

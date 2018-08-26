@@ -33,26 +33,34 @@ if(isset($_SESSION['id'])) {
         <br><br>
             <?php
             $time = time() - 4*60;
-            $sql_online = "SELECT * FROM users WHERE NOT id=$user";
-            $result_online = mysqli_query($con, $sql_online);
-            if(mysqli_num_rows($result_online) > 0) {
-                while($row = mysqli_fetch_assoc($result_online)) {
-                    $online_id = $row['id'];
-                    $online_username = $row['username'];
-                    $last_online = $row['lastonline'];
+            $sql_followed = "SELECT * FROM follows WHERE follow_from='$user'";
+            $result_followed = mysqli_query($con, $sql_followed);
+            if(mysqli_num_rows($result_followed)) {
+                while($row = mysqli_fetch_assoc($result_followed)) {
+                    $follow_to = $row['follow_to'];
+                    
+                    $sql_online = "SELECT * FROM users WHERE id='$follow_to'";
+                    $result_online = mysqli_query($con, $sql_online);
+                    if(mysqli_num_rows($result_online) > 0) {
+                        while($row = mysqli_fetch_assoc($result_online)) {
+                            $online_id = $row['id'];
+                            $online_username = $row['username'];
+                            $last_online = $row['lastonline'];
 
-                    if($last_online > $time) {
-                    $online = "<div class='online-users'>
-                    <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons green-text'>lens</i></h6>
-                    </div>";
-                    echo $online;
-                    } else {
-                    $online = "<div class='online-users'>
-                    <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons red-text'>lens</i></h6>
-                    </div>";
-                    echo $online;
+                            if($last_online > $time) {
+                            $online = "<div class='online-users'>
+                            <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons green-text'>lens</i></h6>
+                            </div>";
+                            echo $online;
+                            } else {
+                            $online = "<div class='online-users'>
+                            <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons red-text'>lens</i></h6>
+                            </div>";
+                            echo $online;
+                            }
+
+                        }
                     }
-
                 }
             }
             ?>

@@ -3107,7 +3107,7 @@ body {
   margin-left: 5%;
 }
 .screen {
-  line-height: 70px;
+  line-height: 60px;
   position: relative;
   color: black;
   mix-blend-mode: screen;
@@ -3243,7 +3243,7 @@ a.menu-icon {
   min-width: 100%;
   min-height: 100%;
 }
-#notifications iframe {
+iframe {
   border: none;
 }
 select {

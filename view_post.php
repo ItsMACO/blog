@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0) {
 <div class="container-fluid">
 <div class="wrap">
 <div class="wrap-content">
-<div class='center-align' style="background: url('<?php echo $image; ?>'); height: 400px;"><h2 class='break-long-words screen'><?php echo $pagetitle; ?></h2></div>
+<div class='center-align' style="background: url('<?php echo $image; ?>'); height: 400px;"><h3 class='break-long-words screen'><?php echo $pagetitle; ?></h3></div>
 <br><br>
 <?php
 require_once 'nbbc.php';
