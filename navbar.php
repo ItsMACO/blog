@@ -58,6 +58,10 @@ if(isset($_SESSION['id'])) {
     </div>";
 }
 ?>
+<form action='search.php?<?php echo $searchtxt; ?>'>
+<input type='text' class='text-input' name='searchtxt' placeholder='Search'>
+</form>
+<a href='search.php' class='menu-icon'><i class='material-icons'>search</i></a>
 </div>
 </div>
 <div id="notifications" class="modal">

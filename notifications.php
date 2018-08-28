@@ -45,8 +45,6 @@ include 'head_links.html';
                 }
             }
         }
-    } else {
-        echo "<br>You have no new notifications!<br><br>";
     }
 
 
@@ -75,11 +73,14 @@ include 'head_links.html';
                     echo $notify_mention;
                 }
             }
-        }
-    } else {
-        echo "<br>You have no new notifications!<br><br>";
+
+            
     }
-    ?>
+}
+if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1) {
+    echo "<br>You have no new notifications!<br><br>";
+}
+?>
 </div>
 
 <?php

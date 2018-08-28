@@ -5,6 +5,7 @@ include 'sidebar_new.php';
 if (!isset($_SESSION)) {
     session_start();
 }
+$user = $_SESSION['id'];
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +18,51 @@ if (!isset($_SESSION)) {
 <div class="wrap">
 <div class="wrap-content">
 <br><br>
+<?php
+$sql_countdown = "SELECT * FROM countdowns WHERE active=1 LIMIT 1";
+$result_countdown = mysqli_query($con, $sql_countdown);
+if(mysqli_num_rows($result_countdown) > 0) {
+    $row = mysqli_fetch_assoc($result_countdown);
+    $event = $row['event'];
+    $date = $row['date'];
+    $time = $row['time'];
+}
+echo "<div class='countdown center-align'>";
+echo $event;
+echo "<p id='demo'></p>";
+echo "</div>";
+?>
+<p id="demo"></p>
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("<?php echo $date." ".$time; ?>").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 100);
+</script>
 <?php
 require_once 'nbbc.php';
 $bbcode = new BBCode;
@@ -67,7 +113,10 @@ if (mysqli_num_rows($result) > 0) {
     }
     echo $posts;
     if(isset($_GET['read_later'])) {
-        if(isset($_SESSION['id'])) {
+        header('Refresh:0');
+        if(!isset($_SESSION['id'])) {
+            header('Location: login.php');
+        } else {
             $read_postid = $_GET['read_later'];
             $read_later_exists = mysqli_query($con, "SELECT * FROM read_later WHERE (read_user='$user') AND (read_postid='$read_postid')");
             if(mysqli_num_rows($read_later_exists) > 0) {
@@ -76,8 +125,6 @@ if (mysqli_num_rows($result) > 0) {
                 $sql_read_later = "INSERT INTO read_later (read_user, read_postid) VALUES ('$user', '$read_postid')";
                 mysqli_query($con, $sql_read_later);
             }
-        } else {
-            header('Location: login.php');
         }
     }
 

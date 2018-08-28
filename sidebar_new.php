@@ -21,7 +21,6 @@ if(isset($_SESSION['id'])) {
     <div class="sidenav-fixed">
         <a href="index.php" class="sidenav-link right-align">Home <i class="material-icons">home</i></a>
         <a href="post.php" class="sidenav-link right-align">New Post <i class="material-icons">add</i></a>
-        <a href="search.php" class="sidenav-link right-align">Search <i class="material-icons">search</i></a>
         <?php
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
             echo "<a href='admin.php' class='sidenav-link right-align'>Admin <i class='material-icons'>adb</i></a>";
@@ -68,7 +67,6 @@ if(isset($_SESSION['id'])) {
     <div class="sidenav-fixed-small">
         <a href="index.php" class="sidenav-link right-align"><i class="material-icons">home</i></a>
         <a href="post.php" class="sidenav-link right-align"><i class="material-icons">add</i></a>
-        <a href="search.php" class="sidenav-link right-align"><i class="material-icons">search</i></a>
         <?php
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
             echo "<a href='admin.php' class='sidenav-link right-align'><i class='material-icons'>adb</i></a>";
@@ -82,13 +80,11 @@ if(isset($_SESSION['id'])) {
 } else { ?>
     <div class="sidenav-fixed">
     <a href="index.php" class="sidenav-link right-align">Home <i class="material-icons">home</i></a>
-    <a href="search.php" class="sidenav-link right-align">Search <i class="material-icons">search</i></a>
     <a href="bug_report.php" class="sidenav-link right-align">Report A Bug <i class="material-icons">bug_report</i></a>
     <a href="feature_request.php" class="sidenav-link right-align">Request A Feature <i class="material-icons">playlist_add</i></a>
 </div>
 <div class="sidenav-fixed-small">
     <a href="index.php" class="sidenav-link right-align"><i class="material-icons">home</i></a>
-    <a href="search.php" class="sidenav-link right-align"><i class="material-icons">search</i></a>
     <a href="bug_report.php" class="sidenav-link right-align"><i class="material-icons">bug_report</i></a>
     <a href="feature_request.php" class="sidenav-link right-align"><i class="material-icons">playlist_add</i></a>
 </div>

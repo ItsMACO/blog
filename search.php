@@ -14,9 +14,9 @@ require_once 'db.php';
 <br><br>
 <div class="wrap-content">
 <div class='center-align'>
-<form action="search.php" method="post">
+<form action="search.php" method="get">
 <input type="text" name="searchtxt" class="text-input" size="48"><br><br>
-      <button type="submit" class="button button1" name="searchbtn"><span>SEARCH</span></button>
+      <button type="submit" class="button button1"><span>SEARCH</span></button>
 </form>
 </div>
 <br><br>
@@ -26,11 +26,8 @@ require_once 'db.php';
 require_once 'nbbc.php';
 $bbcode = new BBCode;
 
-if (isset($_POST['searchtxt'])) {
-    $searchtxt = $_POST['searchtxt'];
-}
-
-if (isset($_POST['searchbtn'])) {
+if (isset($_GET['searchtxt'])) {
+    $searchtxt = $_GET['searchtxt'];
     $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') ORDER BY id DESC";
     $result = mysqli_query($con, $sql) or die(mysqli_error());
 
