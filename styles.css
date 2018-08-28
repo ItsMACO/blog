@@ -2167,10 +2167,6 @@ TEXT COLOURS END
   float: right !important;
 }
 
-.circle {
-  border-radius: 50%;
-}
-
 .center-block {
   display: block;
   margin-left: auto;
@@ -3407,6 +3403,18 @@ p > i {
 }
 .text-input::placeholder {
   color: grey;
+}
+.profile-picture {
+  width: 20%;
+}
+.circle {
+  width: 50%;
+  height: 0;
+  padding-bottom: 50%;
+  -moz-border-radius: 50%; 
+  -webkit-border-radius: 50%; 
+  border-radius: 50%;
+  background: #4679BD; 
 }
 @media all and (max-width: 2160px) {
 

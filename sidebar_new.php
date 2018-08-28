@@ -48,12 +48,12 @@ if(isset($_SESSION['id'])) {
 
                             if($last_online > $time) {
                             $online = "<div class='online-users'>
-                            <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons green-text'>lens</i></h6>
+                            <a href='profile.php?id=$online_id'><h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons green-text'>lens</i></h6></a>
                             </div>";
                             echo $online;
                             } else {
                             $online = "<div class='online-users'>
-                            <h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons red-text'>lens</i></h6>
+                            <a href='profile.php?id=$online_id'><h6 class='center-align'>$online_username&nbsp;<i class='tiny material-icons red-text'>lens</i></h6></a>
                             </div>";
                             echo $online;
                             }

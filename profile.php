@@ -18,8 +18,8 @@ if (isset($_SESSION['id'])) {
 <div class="container-fluid">
     <div class="wrap">
         <div class="center-align">
-    <?php
-
+        <br>
+<?php
 $id = $_GET['id'];
 $uid = $_GET['id'];
 
@@ -40,8 +40,10 @@ if (mysqli_num_rows($result_profile) > 0) {
         $profile_pic = $row['profile_pic'];
     }
     if($isAdmin == 1) {
+        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
         echo "<div><h2>$username<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i></h2></div>";
     } else {
+        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
         echo "<div><h2>$username</h2></div>";
     }
     if ($user == $id) {
