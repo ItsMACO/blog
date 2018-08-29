@@ -36,7 +36,7 @@ include 'head_links.html';
                     $comment_post_id = $row['id'];
                     $comment_post_name = $row['title'];
 
-                    $notify_comment = "<div><h5>New comment: <br></h5><div class='box box1'><h5 style='margin: 25px;' class='break-long-words'>$comment_from</h5>
+                    $notify_comment = "<div><p>New comment: <br></p><div class='box box1'><h6 style='margin: 25px;' class='break-long-words'>$comment_from</h6>
                     <h6 style='margin: 25px;' class='break-long-words'>$comment_content</h6>
                     <div class='center-align'><a href='view_post.php?pid=$comment_post_id#$comment_id' class='button-small button1'>GO THERE</a></div>
                     </div></div><br><div class='divider'></div>";
@@ -66,7 +66,7 @@ include 'head_links.html';
                 while($row = mysqli_fetch_assoc($result_mention_post)) {
                     $mention_post_title = $row['title'];
 
-                    $notify_mention = "<div><h5>New mention: <br></h5><div class='box box1'><h5 style='margin: 25px;' class='break-long-words'>$mention_post_title</h5>
+                    $notify_mention = "<div><p>New mention: <br></p><div class='box box1'><h6 style='margin: 25px;' class='break-long-words'>$mention_post_title</h6>
                     <div class='center-align'><a href='view_post.php?pid=$mention_postid' class='button-small button1'>GO THERE</a></div>
                     </div></div><br><div class='divider'></div>";
 
@@ -77,7 +77,25 @@ include 'head_links.html';
             
     }
 }
-if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1) {
+
+$sql_admin_msg = "SELECT * FROM admin_msg WHERE (user_to='$user') AND (time>$notifytime)";
+$result_admin_msg = mysqli_query($con, $sql_admin_msg);
+
+if(mysqli_num_rows($result_admin_msg) > 0) {
+    while($row = mysqli_fetch_assoc($result_admin_msg)) {
+        $admin_msg_id = $row['id'];
+        $admin_msg_text = $row['text'];
+        $time = $row['time'];
+
+                $admin_msg = "<div><p>New message from admin: <br></p><div class='box box1'>
+                <h6 style='margin: 25px;' class='break-long-words'>$admin_msg_text</h6>
+                </div><br><div class='divider'></div>";
+
+                echo $admin_msg;
+    }
+}
+
+if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1 && mysqli_num_rows($result_admin_msg) < 1) {
     echo "<br>You have no new notifications!<br><br>";
 }
 ?>

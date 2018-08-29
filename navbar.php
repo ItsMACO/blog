@@ -36,8 +36,10 @@ if(isset($_SESSION['id'])) {
         $result_comments = mysqli_query($con, $sql_comments);
         $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name') AND (time>$notifytime)";
         $result_mentions = mysqli_query($con, $sql_mentions);
+        $sql_admin_msg = "SELECT * FROM admin_msg WHERE (user_to='$user') AND (time>$notifytime)";
+        $result_admin_msg = mysqli_query($con, $sql_admin_msg);
 
-        if(mysqli_num_rows($result_comments) > 0 || mysqli_num_rows($result_mentions) > 0) {
+        if(mysqli_num_rows($result_comments) > 0 || mysqli_num_rows($result_mentions) > 0 || mysqli_num_rows($result_admin_msg) > 0) {
         ?>
         <i class="orange-custom material-icons">notifications_active</i></a>
         <?php

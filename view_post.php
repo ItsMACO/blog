@@ -85,7 +85,7 @@ if (mysqli_num_rows($result) > 0) {
         $user = $_SESSION['id'];
         $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
         if (mysqli_num_rows($result_like) > 0) {
-            echo "<button type='submit' name='like' class='button button1-reverse'>LIKED</button>&nbsp";
+            echo "<button type='submit' class='button button1-reverse'>LIKED</button>&nbsp";
         } else {
             echo "<button type='submit' name='like' class='button button1'>LIKE</button>&nbsp";
         }
@@ -102,12 +102,14 @@ if (mysqli_num_rows($result) > 0) {
                 $time = time();
                 $sql_like = "INSERT INTO likes (user_from, user_to, postid, time) VALUES ('$user', '$userid', '$id', '$time')";
                 $sql_like_posts = "UPDATE posts SET likes = likes + 1 WHERE id=$pid";
+                $sql_like_karma = "UPDATE users SET karma = karma + 1 WHERE username='$author'";
                 $result_like = mysqli_query($con, "SELECT * FROM likes WHERE (user_from='$user') AND (postid='$pid')");
                 if (mysqli_num_rows($result_like) > 0) {
                     echo "<div class='left-align'><h5>You've already liked this post.</h5></div>"; 
                 } else {
                     mysqli_query($con, $sql_like);
                     mysqli_query($con, $sql_like_posts);
+                    mysqli_query($con, $sql_like_karma);
                     echo "<div class='left-align'><h5>Liked!</h5></div>";
                 }
             } else {
