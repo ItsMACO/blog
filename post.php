@@ -6,10 +6,12 @@ include 'sidebar_new.php';
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
     $content = strip_tags($_POST['content']);
+    $tags = strip_tags($_POST['tags']);
     $flair = strip_tags($_POST['flair']);
 
     $title = mysqli_real_escape_string($con, $title);
     $content = mysqli_real_escape_string($con, $content);
+    $tags = mysqli_real_escape_string($con, $tags);
     $flair = mysqli_real_escape_string($con, $flair);
 
     $date = date('l jS \of F Y h:i:s A');
@@ -55,9 +57,9 @@ if (isset($_POST['post'])) {
     } else {
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
     }
-        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', '$target_file', '$flair')";
+        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', '$target_file', '$flair')";
     } else {
-        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', 'images/default.png', '$flair')";
+        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', 'images/default.png', '$flair')";
     }
 
     if ($title == "" || $content == "") {
@@ -111,8 +113,11 @@ if (isset($_POST['post'])) {
     <button type="button" id="strike" class='button-small button1'><s>S</s></button>
     </div>
 </div>
+<br>
 <div class='center-align'>
+<input placeholder="Tags (optional - separate with space)" name="tags" type="text" autofocus size="48" class="text-input"><br><br>
     <select name="flair" class="select-flair" required>
+    <option hidden disabled selected value>Select flair...</option>
     <?php
     $sql_flair = "SELECT * FROM flairs";
     $result_flair = mysqli_query($con, $sql_flair) or die(mysqli_error($con));

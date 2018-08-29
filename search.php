@@ -28,7 +28,7 @@ $bbcode = new BBCode;
 
 if (isset($_GET['searchtxt'])) {
     $searchtxt = $_GET['searchtxt'];
-    $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') ORDER BY id DESC";
+    $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') OR (tags LIKE '%$searchtxt%') ORDER BY id DESC";
     $result = mysqli_query($con, $sql) or die(mysqli_error());
 
     $posts = "";
@@ -84,7 +84,7 @@ if (isset($_GET['searchtxt'])) {
     }
         }
 
-        if (mysqli_num_rows($result) > 1) {
+        if (mysqli_num_rows($result) > 1 || mysqli_num_rows($result) == 0) {
             echo "<div class='center-align'>Found " . mysqli_num_rows($result) . " results.</div>";
         }
         if (mysqli_num_rows($result) == 1) {
