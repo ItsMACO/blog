@@ -173,7 +173,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class='divider'></div><div class='divider'></div><div class='divider'></div><br><br>
             <?php
             if(isset($_POST['add_countdown'])) {
-                $event = $_POST['event'];
+                $event = strtoupper($_POST['event']);
                 $date = $_POST['date'];
                 $time = $_POST['time'];
                 $sql_add_countdown = "INSERT INTO countdowns (event, date, time) VALUES ('$event', '$date', '$time')";

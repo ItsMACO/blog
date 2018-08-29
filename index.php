@@ -26,10 +26,11 @@ if(mysqli_num_rows($result_countdown) > 0) {
     $event = $row['event'];
     $date = $row['date'];
     $time = $row['time'];
-echo "<div class='countdown center-align'>";
-echo $event;
-echo "<p id='countdown'></p>";
-echo "</div>";
+echo "<center><div class='countdown'><br>";
+echo "<h5><b>".$event."</b></h5>";
+echo "<h5 id='countdown'></h5>";
+echo "<br></div>";
+echo "</center>";
 }
 ?>
 <br><br>
@@ -37,7 +38,7 @@ echo "</div>";
 // Set the date we're counting down to
 var countDownDate = new Date("<?php echo $date." ".$time; ?>").getTime();
 
-// Update the count down every 1 second
+// Update the count down every 0.1 second
 var x = setInterval(function() {
 
   // Get todays date and time
@@ -52,9 +53,9 @@ var x = setInterval(function() {
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Display the result in the element with id="demo"
-  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  // Display
+  document.getElementById("countdown").innerHTML = "<b>" + days + "</b>d <b>" + hours + "</b>h <b>"
+  + minutes + "</b>m <b>" + seconds + "</b>s ";
 
   // If the count down is finished, write some text 
   if (distance < 0) {
