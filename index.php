@@ -5,24 +5,65 @@ include 'sidebar_new.php';
 if (!isset($_SESSION)) {
     session_start();
 }
+$user = $_SESSION['id'];
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="materialize/js/materialize.js"></script>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
 <div class="wrap">
 <div class="wrap-content">
 <br><br>
+<?php
+$sql_countdown = "SELECT * FROM countdowns WHERE active=1 LIMIT 1";
+$result_countdown = mysqli_query($con, $sql_countdown);
+if(mysqli_num_rows($result_countdown) > 0) {
+    $row = mysqli_fetch_assoc($result_countdown);
+    $event = $row['event'];
+    $date = $row['date'];
+    $time = $row['time'];
+echo "<center><div class='countdown'><br>";
+echo "<h5><b>".$event."</b></h5>";
+echo "<h5 id='countdown'></h5>";
+echo "<br></div>";
+echo "</center>";
+}
+?>
+<br><br>
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("<?php echo $date." ".$time; ?>").getTime();
+
+// Update the count down every 0.1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display
+  document.getElementById("countdown").innerHTML = "<b>" + days + "</b>d <b>" + hours + "</b>h <b>"
+  + minutes + "</b>m <b>" + seconds + "</b>s ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown").innerHTML = "IT'S HERE";
+  }
+}, 100);
+</script>
 <?php
 require_once 'nbbc.php';
 $bbcode = new BBCode;
@@ -73,7 +114,10 @@ if (mysqli_num_rows($result) > 0) {
     }
     echo $posts;
     if(isset($_GET['read_later'])) {
-        if(isset($_SESSION['id'])) {
+        header('Refresh:0');
+        if(!isset($_SESSION['id'])) {
+            header('Location: login.php');
+        } else {
             $read_postid = $_GET['read_later'];
             $read_later_exists = mysqli_query($con, "SELECT * FROM read_later WHERE (read_user='$user') AND (read_postid='$read_postid')");
             if(mysqli_num_rows($read_later_exists) > 0) {
@@ -82,8 +126,6 @@ if (mysqli_num_rows($result) > 0) {
                 $sql_read_later = "INSERT INTO read_later (read_user, read_postid) VALUES ('$user', '$read_postid')";
                 mysqli_query($con, $sql_read_later);
             }
-        } else {
-            header('Location: login.php');
         }
     }
 

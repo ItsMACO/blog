@@ -12,22 +12,14 @@ if (isset($_SESSION['id'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Profile</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="main.js"></script>
 </head>
 <body>
 <div class="container-fluid">
     <div class="wrap">
         <div class="center-align">
-    <?php
-
+        <br>
+<?php
 $id = $_GET['id'];
 $uid = $_GET['id'];
 
@@ -48,16 +40,34 @@ if (mysqli_num_rows($result_profile) > 0) {
         $profile_pic = $row['profile_pic'];
     }
     if($isAdmin == 1) {
+        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
         echo "<div><h2>$username<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i></h2></div>";
     } else {
+        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
         echo "<div><h2>$username</h2></div>";
     }
-    if (isset($user)) {
-        if ($user == $id) {
-            echo "<br><a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a>&nbsp;";
+    if ($user == $id) {
+        echo "<a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
+    } else {
+        echo "<form action='profile.php?id=$id' method='post'>";
+        $sql_follow_already = "SELECT * FROM follows WHERE follow_from='$user' AND follow_to='$id'";
+        $result_follow_already = mysqli_query($con, $sql_follow_already);
+        if(mysqli_num_rows($result_follow_already) > 0) {
+            echo "<button type='submit' name='unfollow' class='button button2'>UNFOLLOW</button>&nbsp;";
+        } else {
+            echo "<button type='submit' name='follow' class='button button1'>FOLLOW</button>&nbsp;";
         }
+        echo "</form>";
+        if(isset($_POST['follow'])) {
+            mysqli_query($con, "INSERT INTO follows (follow_from, follow_to) VALUES ('$user', '$id')");
+            header("Refresh:0");
+        }
+        if(isset($_POST['unfollow'])) {
+            mysqli_query($con, "DELETE FROM follows WHERE follow_from='$user' AND follow_to='$id'");
+            header("Refresh:0");
+        }
+        echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
     }
-    echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
     echo "<div class='divider'></div>";
     echo "<h5>Current Karma - $karma</h5>";
 }

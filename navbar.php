@@ -4,14 +4,10 @@ include 'db.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css?<?php echo time(); ?>" />
-    <script src="main.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <?php
+    include 'head_links.html';
+    include 'settings.php';
+    ?>
 </head>
 <body>
 <div class="container-fluid">
@@ -30,6 +26,7 @@ if(isset($_SESSION['id'])) {
     echo "<a href='#notifications' class='modal-trigger always-visible'>";
         
         $user = $_SESSION['id'];
+        $user_name = $_SESSION['username'];
         $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
         $result_notify = mysqli_query($con, $sql_notify);
         $row = mysqli_fetch_assoc($result_notify);
@@ -37,8 +34,10 @@ if(isset($_SESSION['id'])) {
 
         $sql_comments = "SELECT * FROM comments WHERE (comment_to='$user') AND (time>$notifytime) AND NOT (comment_from='$user')";
         $result_comments = mysqli_query($con, $sql_comments);
+        $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name') AND (time>$notifytime)";
+        $result_mentions = mysqli_query($con, $sql_mentions);
 
-        if(mysqli_num_rows($result_comments) > 0) {
+        if(mysqli_num_rows($result_comments) > 0 || mysqli_num_rows($result_mentions) > 0) {
         ?>
         <i class="orange-custom material-icons">notifications_active</i></a>
         <?php
@@ -59,6 +58,10 @@ if(isset($_SESSION['id'])) {
     </div>";
 }
 ?>
+<form action='search.php?<?php echo $searchtxt; ?>'>
+<input type='text' class='text-input' name='searchtxt' placeholder='Search'>
+</form>
+<a href='search.php' class='menu-icon'><i class='material-icons'>search</i></a>
 </div>
 </div>
 <div id="notifications" class="modal">

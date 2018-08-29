@@ -2,6 +2,7 @@
 session_start();
 require_once 'db.php';
 require 'sidebar_new.php';
+include 'seen.php';
 
 if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
@@ -15,6 +16,7 @@ $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $pagetitle = $row['title'];
+        $image = $row['image'];
     }
 }
 ?>
@@ -22,20 +24,13 @@ if (mysqli_num_rows($result) > 0) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo $pagetitle; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
-    <div class="wrap">
-        <div class="wrap-content">
+<div class="wrap">
+<div class="wrap-content">
+<div class='center-align' style="background: url('<?php echo $image; ?>'); height: 400px;"><h3 class='break-long-words screen'><?php echo $pagetitle; ?></h3></div>
 <br><br>
 <?php
 require_once 'nbbc.php';
@@ -69,15 +64,16 @@ if (mysqli_num_rows($result) > 0) {
         }
         $output = $bbcode->Parse($content);
         if(isset($_SESSION['username']) && $_SESSION['username'] == $author) {
-        $edit_delete = "<div><a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
+        $edit_delete = "<div>
+            <a href='#stats' class='button button1 modal-trigger'>STATS</a>
+            <a href='edit_post.php?pid=$pid' class='button button2'>EDIT</a>&nbsp;
             <a href='del_post.php?pid=$pid' class='button button3'>DELETE</a></div>";
         } else {
             $edit_delete = "<div>";
         }
 
-        $post .= "<h2 class='break-long-words'>$title</h2><h6 class='flair'>$flair</h6>
-            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <div class='center-align'><img src='$image' class='post-image'></div><br>
+        $post .= "<h6 class='flair'>$flair</h6>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p><br>
             <h6 class='break-long-words'>$output</h6><br><br>
             </div><br>";
 
@@ -225,13 +221,26 @@ if(isset($_POST['report-submit'])) {
         <p>I would like to report this post because...</p>
         <input type='text' name='reason' class='text-input'>
         <button type='submit' name='report-submit' class='button button3'>REPORT</button>
-    </div>
     </form> 
+    </div>
+  </div>
+  <div id="stats" class="modal">
+    <div class="modal-content">
+      <h4>Statistics</h4>
+        <iframe src="statistics.php?pid=<?php echo $pid; ?>" height="400px" width="400px"></iframe>
+    </form> 
+    </div>
   </div>
   <script>
 var elem = document.querySelector('#report-modal');
 var instance = M.Modal.init(elem, {
   accordion: false
 });</script>
+<script>
+var elem = document.querySelector('#stats');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});</script>
 </body>
+
 </html>

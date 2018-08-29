@@ -11,14 +11,7 @@ if (!isset($_SESSION['admin']) && $_SESSION['admin'] != 1) {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
@@ -162,6 +155,57 @@ if (mysqli_num_rows($result) > 0) {
                 $sql_flair = "INSERT INTO flairs (flairname) VALUES ('$set_flair')";
                 mysqli_query($con, $sql_flair);
                 }
+            }
+            ?>
+        </span></div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="medium material-icons">add_alarm</i>Add or set active countdown</div>
+        <div class="collapsible-body">
+        <span>
+            <a href="#help-countdown" class="button-small button2 modal-trigger">HELP?</a><br><br>
+            <form action="admin.php" method="post" enctype="multipart/form-data">
+            <input type="text" name="event" class='text-input' placeholder="Event name"><br><br>
+            <input type="date" name="date" class="text-input"><br><br>
+            <input type="time" name="time" class="text-input"><br><br>
+            <button type="submit" name="add_countdown" class="button button1">ADD</button>
+            </form><br><br>
+            <div class='divider'></div><div class='divider'></div><div class='divider'></div><br><br>
+            <?php
+            if(isset($_POST['add_countdown'])) {
+                $event = strtoupper($_POST['event']);
+                $date = $_POST['date'];
+                $time = $_POST['time'];
+                $sql_add_countdown = "INSERT INTO countdowns (event, date, time) VALUES ('$event', '$date', '$time')";
+                mysqli_query($con, $sql_add_countdown);
+            }
+            ?>
+            <form action='admin.php' method='post' enctype="multipart/form-data">
+            <select name='active_countdown'>
+            <?php
+            $sql_exist_countdown = "SELECT * FROM countdowns ORDER BY id DESC";
+            $result_exist_countdown = mysqli_query($con, $sql_exist_countdown);
+            if(mysqli_num_rows($result_exist_countdown) > 0) {
+                while($row = mysqli_fetch_assoc($result_exist_countdown)) {
+                    $countdown_id = $row['id'];
+                    $countdown_event = $row['event'];
+                    $countdown_date = $row['date'];
+                    $countdown_time = $row['time'];
+                    
+                    echo "<option value='".$countdown_id."'>$countdown_event ($countdown_date $countdown_time)</option>";
+                }
+            }
+            ?>
+            </select><br><br>
+            <button type="submit" name="set_active_countdown" class="button button1">SET ACTIVE</button>
+            </form>
+            <?php
+            if(isset($_POST['set_active_countdown'])) {
+                $set_active_event = $_POST['active_countdown'];
+                $sql_set_active = "UPDATE countdowns SET active=1 WHERE id='$set_active_event'";
+                $sql_set_inactive = "UPDATE countdowns SET active=0 WHERE NOT id='$set_active_event'";
+                mysqli_query($con, $sql_set_active);
+                mysqli_query($con, $sql_set_inactive);
             }
             ?>
         </span></div>
@@ -323,6 +367,22 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 <!--DIV CONTAINER FLUID -->
 </div>
+<div id="help-countdown" class="modal">
+    <div class="modal-content">
+      <h4>Countdown Help</h4>
+      <p>To create a new countdown, insert an Event name into the input field, then set the date and time you want to count down to and click ADD.</p>
+      <p>To display a countdown on the homepage, scroll down a little bit and choose an event from the dropdown menu, then click SET ACTIVE.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close btn-flat">Close</a>
+    </div>
+  </div>
+<script>
+var elem = document.querySelector('#help-countdown');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});
+</script>
 <script>
 var elem = document.querySelector('.collapsible.expandable');
 var instance = M.Collapsible.init(elem, {

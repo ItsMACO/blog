@@ -6,14 +6,7 @@ require_once 'db.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Search</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
 </head>
 <body>
 <div class="container-fluid">
@@ -21,9 +14,9 @@ require_once 'db.php';
 <br><br>
 <div class="wrap-content">
 <div class='center-align'>
-<form action="search.php" method="post">
+<form action="search.php" method="get">
 <input type="text" name="searchtxt" class="text-input" size="48"><br><br>
-      <button type="submit" class="button button1" name="searchbtn"><span>SEARCH</span></button>
+      <button type="submit" class="button button1"><span>SEARCH</span></button>
 </form>
 </div>
 <br><br>
@@ -33,12 +26,9 @@ require_once 'db.php';
 require_once 'nbbc.php';
 $bbcode = new BBCode;
 
-if (isset($_POST['searchtxt'])) {
-    $searchtxt = $_POST['searchtxt'];
-}
-
-if (isset($_POST['searchbtn'])) {
-    $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') ORDER BY id DESC";
+if (isset($_GET['searchtxt'])) {
+    $searchtxt = $_GET['searchtxt'];
+    $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') OR (tags LIKE '%$searchtxt%') ORDER BY id DESC";
     $result = mysqli_query($con, $sql) or die(mysqli_error());
 
     $posts = "";
@@ -94,7 +84,7 @@ if (isset($_POST['searchbtn'])) {
     }
         }
 
-        if (mysqli_num_rows($result) > 1) {
+        if (mysqli_num_rows($result) > 1 || mysqli_num_rows($result) == 0) {
             echo "<div class='center-align'>Found " . mysqli_num_rows($result) . " results.</div>";
         }
         if (mysqli_num_rows($result) == 1) {

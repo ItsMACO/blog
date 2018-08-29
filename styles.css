@@ -2167,10 +2167,6 @@ TEXT COLOURS END
   float: right !important;
 }
 
-.circle {
-  border-radius: 50%;
-}
-
 .center-block {
   display: block;
   margin-left: auto;
@@ -3091,7 +3087,7 @@ html {
 }
 body {
   height: 100%;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   background: url(images/body-background.png);
 }
 .wrap {
@@ -3105,6 +3101,18 @@ body {
 .wrap-content {
   width: 90%;
   margin-left: 5%;
+}
+.screen {
+  line-height: 60px;
+  position: relative;
+  color: black;
+  mix-blend-mode: screen;
+  background-color: rgb(255, 255, 255);
+  display: inline;
+  padding: 5px;
+  text-shadow: 1px 0px 0px rgb(0, 0, 0);
+  text-shadow: 0px 1px 1px rgb(0, 0, 0);
+  text-shadow: 1px 1px 0px rgb(0, 0, 0);
 }
 .sidenav-fixed {
   background: #262626;
@@ -3193,6 +3201,15 @@ body {
   font-size: 18px;
   transition: background-color .2s ease-out;
 }
+.navbar input {
+  float: right;
+  padding: 16px 32px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 18px;
+  display: block;
+}
 .navbar a:hover {
   background-color: #262626;
   color: #f2f2f2;
@@ -3200,8 +3217,21 @@ body {
 a.menu-icon {
   display: none;
 }
+.navbar .text-input {
+  font-family: inherit;
+  max-width: 100%;
+  border: 2px solid #333;
+  border-radius: 25px;
+  padding: 15px;
+}
+.navbar .text-input:active {
+  border: 2px solid #262626;
+}
 @media all and (max-width: 600px) {
   .navbar a {
+    display: none;
+  }
+  .navbar input {
     display: none;
   }
   a.menu-icon {
@@ -3231,7 +3261,7 @@ a.menu-icon {
   min-width: 100%;
   min-height: 100%;
 }
-#notifications iframe {
+iframe {
   border: none;
 }
 select {
@@ -3252,6 +3282,10 @@ select {
 .post-image {
   width: 100%;
   height: 100%;
+}
+.countdown {
+  border-radius: 25px;
+  border: 2px solid #1976d2;
 }
 .button {
   margin-top: 5px;
@@ -3330,6 +3364,9 @@ select {
   border-radius: 25px;
   padding: 15px;
 }
+textarea.text-input {
+  min-height: 100px;
+}
 a {
   color: #1976d2;
   text-decoration: none;
@@ -3344,6 +3381,9 @@ a {
   background-color: #e0e0e0;
 }
 h2 > i {
+  vertical-align: middle;
+}
+p > i {
   vertical-align: middle;
 }
 .box {
@@ -3364,6 +3404,18 @@ h2 > i {
 }
 .text-input::placeholder {
   color: grey;
+}
+.profile-picture {
+  width: 20%;
+}
+.circle {
+  width: 50%;
+  height: 0;
+  padding-bottom: 50%;
+  -moz-border-radius: 50%; 
+  -webkit-border-radius: 50%; 
+  border-radius: 50%;
+  background: #4679BD; 
 }
 @media all and (max-width: 2160px) {
 

@@ -6,15 +6,18 @@ include 'sidebar_new.php';
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
     $content = strip_tags($_POST['content']);
+    $tags = strip_tags($_POST['tags']);
     $flair = strip_tags($_POST['flair']);
 
     $title = mysqli_real_escape_string($con, $title);
     $content = mysqli_real_escape_string($con, $content);
+    $tags = mysqli_real_escape_string($con, $tags);
     $flair = mysqli_real_escape_string($con, $flair);
 
     $date = date('l jS \of F Y h:i:s A');
     $author = $_SESSION['username'];
 
+    if(isset($_POST['image'])) {
     //insert image
     $target_dir = "images/";
     $target_upload = basename($_FILES["image"]["name"]);
@@ -54,10 +57,9 @@ if (isset($_POST['post'])) {
     } else {
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
     }
-    if ($target_upload == "" || !$target_upload) {
-        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', 'images/default.png', '$flair')";
+        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', '$target_file', '$flair')";
     } else {
-        $sql = "INSERT into posts (title, content, date, author, image, flair) VALUES ('$title', '$content', '$date', '$author', '$target_file', '$flair')";
+        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', 'images/default.png', '$flair')";
     }
 
     if ($title == "" || $content == "") {
@@ -67,31 +69,55 @@ if (isset($_POST['post'])) {
 
     mysqli_query($con, $sql);
 
+    $sql_check_for_usernames = "SELECT username FROM users";
+    $result_check_for_usernames = mysqli_query($con, $sql_check_for_usernames);
+    while($row = mysqli_fetch_assoc($result_check_for_usernames)) {
+        $username_check = $row['username'];
+        if(strpos($content, '@'.$username_check) !== false) {
+            $sql_postid = "SELECT * FROM posts WHERE title='$title' ORDER BY id DESC LIMIT 1";
+            $result_postid = mysqli_query($con, $sql_postid);
+            $row = mysqli_fetch_assoc($result_postid);
+            $postid = $row['id'];
+            $time = time();
+            mysqli_query($con, "INSERT INTO mentions (username, postid, time) VALUES ('$username_check', '$postid', '$time')");
+        }
+    }
     header('Location: index.php');
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Create Post</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
-    <script src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css?<?php echo time(); ?>" />
-    <script src="main.js"></script>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="wrap">
-        <div class="center-align">
+<div class="wrap">
+<div class="center-align">
 <br><br>
     <form action="post.php" method="post" id="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input" required><br><br>
-    <textarea placeholder="Content" name="content" rows="20" cols="50" class="text-input" required></textarea><br><br>
-    <div class="input-field col s12">
+    <textarea placeholder="Content" id="content" name="content" rows="20" cols="50" class="text-input" required></textarea><br>
+</div>
+<div class="row">
+    <div class="col s3 center-align">
+    <button type="button" id="bold" class='button-small button1'><b>B</b></button>
+    </div>
+    <div class="col s3 center-align">
+    <button type="button" id="italic" class='button-small button1'><i>I</i></button>
+    </div>
+    <div class="col s3 center-align">
+    <button type="button" id="underline" class='button-small button1'><u>U</u></button>
+    </div>
+    <div class="col s3 center-align">
+    <button type="button" id="strike" class='button-small button1'><s>S</s></button>
+    </div>
+</div>
+<br>
+<div class='center-align'>
+<input placeholder="Tags (optional - separate with space)" name="tags" type="text" autofocus size="48" class="text-input"><br><br>
     <select name="flair" class="select-flair" required>
+    <option hidden disabled selected value>Select flair...</option>
     <?php
     $sql_flair = "SELECT * FROM flairs";
     $result_flair = mysqli_query($con, $sql_flair) or die(mysqli_error($con));
@@ -104,9 +130,8 @@ if (isset($_POST['post'])) {
         }
     }
     ?>
-    </select>
-  </div>
-    <input name="image" type="file" autofocus size="48" class="button button2"><br><br>
+    </select><br><br>
+    <input name="image" type="file" name="post-image" autofocus size="48" class="button button2"><br><br>
       <button type="submit" name="post" class="button button1">POST</button>
     </form><br><br>
     </div>
@@ -118,5 +143,31 @@ if (isset($_POST['post'])) {
     var instances = M.FormSelect.init(elems, options);
   });
     </script>
+    <script type="text/javascript">
+    $(function () {
+        $('#bold').on('click', function () {
+            var text = $('#content');
+            text.val(text.val() + ' [b][/b]');    
+        });
+    });
+    $(function () {
+        $('#italic').on('click', function () {
+            var text = $('#content');
+            text.val(text.val() + ' [i][/i]');    
+        });
+    });
+    $(function () {
+        $('#underline').on('click', function () {
+            var text = $('#content');
+            text.val(text.val() + ' [u][/u]');    
+        });
+    });
+    $(function () {
+        $('#strike').on('click', function () {
+            var text = $('#content');
+            text.val(text.val() + ' [s][/s]');    
+        });
+    });
+</script>
 </body>
 </html>
