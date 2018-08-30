@@ -28,7 +28,7 @@ $bbcode = new BBCode;
 
 if (isset($_GET['searchtxt'])) {
     $searchtxt = $_GET['searchtxt'];
-    $sql = "SELECT * FROM posts WHERE (title LIKE '%$searchtxt%') OR (content LIKE '%$searchtxt%') OR (tags LIKE '%$searchtxt%') ORDER BY id DESC";
+    $sql = "SELECT * FROM posts WHERE MATCH (title, content, tags) AGAINST ('$searchtxt' IN NATURAL LANGUAGE MODE) ORDER BY id DESC";
     $result = mysqli_query($con, $sql) or die(mysqli_error());
 
     $posts = "";

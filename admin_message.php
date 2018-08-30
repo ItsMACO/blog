@@ -42,8 +42,8 @@ if(isset($_POST['send'])) {
     <div class='wrap-content'>
     <br><br>
         <form action='admin_message.php' method='post' enctype='multipart/form-data'>
-        <input type='text' name='username' placeholder='Send to...' class='text-input'><br><br>
-        <textarea name='text' placeholder='Text' class='text-input'></textarea><br><br>
+        <input type='text' name='username' placeholder='Send to...' class='text-input' required><br><br>
+        <textarea name='text' placeholder='Text' class='text-input' required></textarea><br><br>
         <button type='submit' name='send' class='button button1'>SEND</button>
         </form>
     </div>
