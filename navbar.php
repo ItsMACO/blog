@@ -23,7 +23,7 @@ if(isset($_SESSION['id'])) {
     $row = mysqli_fetch_assoc($result_username);
     $user_username = $row['username'];
     echo "<div>";
-    echo "<a href='#notifications' class='modal-trigger always-visible'>";
+    echo "<a href='#notifications' id='notify_btn' class='modal-trigger always-visible'>";
         
         $user = $_SESSION['id'];
         $user_name = $_SESSION['username'];
@@ -60,6 +60,7 @@ if(isset($_SESSION['id'])) {
     </div>";
 }
 ?>
+
 <form action='search.php?<?php echo $searchtxt; ?>'>
 <input type='text' class='text-input' name='searchtxt' placeholder='Search'>
 </form>
@@ -69,7 +70,7 @@ if(isset($_SESSION['id'])) {
 <div id="notifications" class="modal">
     <div class="modal-content">
       <h4>Notifications</h4>
-      <iframe src="notifications.php" height="400px" class="notifications-modal"></iframe>
+      <div id='notify_iframe'></div>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close btn-flat">Close</a>
@@ -80,6 +81,9 @@ var elem = document.querySelector('#notifications');
 var instance = M.Modal.init(elem, {
   accordion: false
 });
+document.getElementById('notify_btn').onclick = function(){
+    document.getElementById('notify_iframe').innerHTML = "<iframe src='notifications.php' height='400px' class='notifications-modal'></iframe>";
+    };
 </script>
 </body>
 </html>
