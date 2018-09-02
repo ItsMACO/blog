@@ -3185,6 +3185,8 @@ body {
 .navbar {
   width: 100%;
   position: fixed;
+  top: 0;
+  left: 0;
   height: 60px;
   background-color: #333;
   overflow: hidden;
@@ -3395,7 +3397,6 @@ p > i {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23), 0 -3px 6px rgba(0,0,0,0.23);
 }
 .break-long-words {
-  overflow: ellipsis;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;

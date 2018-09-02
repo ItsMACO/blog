@@ -231,10 +231,10 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $bug_username = $row['username'];
 
-                        $bug_reports = "<div><h5 class='blue-text text-darken-2'>Title:</h5><h6>$bug_title</h6>
-                                        <h5 class='blue-text text-darken-2'>Affected pages:</h5><h6>$bug_page</h6>
-                                        <h5 class='blue-text text-darken-2'>More information:</h5><h6>$bug_more_info</h6>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><h6>$bug_username</h6>
+                        $bug_reports = "<div><h6 class='blue-text text-darken-2'>Title:</h6><p>$bug_title</p>
+                                        <h6 class='blue-text text-darken-2'>Affected pages:</h6><p>$bug_page</p>
+                                        <h6 class='blue-text text-darken-2'>More information:</h6><p>$bug_more_info</p>
+                                        <h6 class='blue-text text-darken-2'>Reported by:</h6><p>$bug_username</p>
                                         <a href='admin.php?set_karma=$bug_username' class='button-small button1'>REWARD KARMA</a><br>
                                         </div><br>
                                         <div class='divider'></div>";
@@ -268,9 +268,9 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $feature_username = $row['username'];
 
-                        $feature_requests = "<div><h5 class='blue-text text-darken-2'>Title:</h5><h6>$feature_title</h6>
-                                        <h5 class='blue-text text-darken-2'>More information:</h5><h6>$feature_more_info</h6>
-                                        <h5 class='blue-text text-darken-2'>Requested by:</h5><h6>$feature_username</h6>
+                        $feature_requests = "<div><h6 class='blue-text text-darken-2'>Title:</h6><p>$feature_title</p>
+                                        <h6 class='blue-text text-darken-2'>More information:</h6><p>$feature_more_info</p>
+                                        <h6 class='blue-text text-darken-2'>Requested by:</h6><p>$feature_username</p>
                                         <a href='admin.php?set_karma=$feature_username' class='button-small button1'>REWARD KARMA</a><br>
                                         </div><br>
                                         <div class='divider'></div>";
@@ -304,11 +304,11 @@ if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result_profile)) {
                         $post_report_username = $row['username'];
 
-                        $post_reports = "<div><h5 class='blue-text text-darken-2'>Post link:</h5><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br>
+                        $post_reports = "<div><h6 class='blue-text text-darken-2'>Post link:</h6><a href='view_post.php?pid=$post_report_postid'>$post_report_postid</a><br><br>
                                         <a href='del_post.php?pid=$post_report_postid' class='button-small button3'>REMOVE POST</a><br>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br>
+                                        <h6 class='blue-text text-darken-2'>Reported by:</h6><a href='profile.php?id=$post_report_user_from'>$post_report_username</a><br><br>
                                         <a href='admin.php?set_karma=$post_report_username' class='button-small button1'>REWARD KARMA</a><br>
-                                        <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$post_report_reason</h6></div>
+                                        <h6 class='blue-text text-darken-2'>Reason:</h6><h6>$post_report_reason</h6></div>
                                         <br>
                                         <div class='divider'></div>";
                         echo $post_reports;
@@ -345,11 +345,11 @@ if (mysqli_num_rows($result) > 0) {
                 $row = mysqli_fetch_assoc($result_profile2);
                 $user_reported = $row['username'];
 
-                        $user_reports = "<div><h5 class='blue-text text-darken-2'>User:</h5><a href='profile.php?id=$user_report_userid'>$user_reported</a><br><br>
+                        $user_reports = "<div><h6 class='blue-text text-darken-2'>User:</h6><a href='profile.php?id=$user_report_userid'>$user_reported</a><br><br>
                                         <a href='punish_user.php?id=$userid' class='button-small button3'>PUNISH USER</a><br>
-                                        <h5 class='blue-text text-darken-2'>Reported by:</h5><a href='profile.php?id=$user_report_user_from'>$user_reported_by</a><br><br>
+                                        <h6 class='blue-text text-darken-2'>Reported by:</h6><a href='profile.php?id=$user_report_user_from'>$user_reported_by</a><br><br>
                                         <a href='admin.php?set_karma=$user_reported_by' class='button-small button1'>REWARD KARMA</a><br>
-                                        <h5 class='blue-text text-darken-2'>Reason:</h5><h6>$user_report_reason</h6></div>
+                                        <h6 class='blue-text text-darken-2'>Reason:</h6><h6>$user_report_reason</h6></div>
                                         <br>
                                         <div class='divider'></div>";
                         echo $user_reports;
