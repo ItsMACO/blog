@@ -198,6 +198,7 @@ if (mysqli_num_rows($result) > 0) {
             ?>
             </select><br><br>
             <button type="submit" name="set_active_countdown" class="button button1">SET ACTIVE</button>
+            <button type="submit" name="set_all_inactive" class="button button3">SET ALL INACTIVE</button>
             </form>
             <?php
             if(isset($_POST['set_active_countdown'])) {
@@ -206,6 +207,10 @@ if (mysqli_num_rows($result) > 0) {
                 $sql_set_inactive = "UPDATE countdowns SET active=0 WHERE NOT id='$set_active_event'";
                 mysqli_query($con, $sql_set_active);
                 mysqli_query($con, $sql_set_inactive);
+            }
+            if(isset($_POST['set_all_inactive'])) {
+                $sql_set_all_inactive = "UPDATE countdowns SET active=0";
+                mysqli_query($con, $sql_set_all_inactive);
             }
             ?>
         </span></div>
@@ -346,7 +351,7 @@ if (mysqli_num_rows($result) > 0) {
                 $user_reported = $row['username'];
 
                         $user_reports = "<div><h6 class='blue-text text-darken-2'>User:</h6><a href='profile.php?id=$user_report_userid'>$user_reported</a><br><br>
-                                        <a href='punish_user.php?id=$userid' class='button-small button3'>PUNISH USER</a><br>
+                                        <a href='admin.php?ban_name=$user_reported' class='button-small button3 modal-trigger'>PUNISH</a><br>
                                         <h6 class='blue-text text-darken-2'>Reported by:</h6><a href='profile.php?id=$user_report_user_from'>$user_reported_by</a><br><br>
                                         <a href='admin.php?set_karma=$user_reported_by' class='button-small button1'>REWARD KARMA</a><br>
                                         <h6 class='blue-text text-darken-2'>Reason:</h6><h6>$user_report_reason</h6></div>
@@ -360,6 +365,30 @@ if (mysqli_num_rows($result) > 0) {
             ?>
         </span></div>
     </li>
+    <li <?php if(isset($_GET['ban_name'])) {echo "class='active'";} ?>>
+        <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">block</i>Ban user</div>
+        <div class="collapsible-body">
+        <span>
+        <?php
+        if(isset($_GET['ban_name'])) {
+        $ban_name = $_GET['ban_name'];
+        }
+        if(isset($_POST['ban_confirm'])) {
+            $ban_username = $_POST['ban_username'];
+            $ban_time = time() + $_POST['ban_time'] * 86400;
+            $reason = $_POST['ban_reason'];
+            $sql_punish = "INSERT INTO bans (ban_to, ban_until, reason) VALUES ('$ban_username', '$ban_time', '$reason')";
+            mysqli_query($con, $sql_punish);
+        }
+        ?>
+        <form action='admin.php' method='post' enctype='multipart/form-data'>
+        <input type='text' name='ban_username' class='text-input' value=<?php if(isset($_GET['ban_name'])) {echo "'".$ban_name."'";} ?>>
+        <input type='number' name='ban_time' class='text-input' value='1' required><p style='display: inline-block;'>&nbsp;day(s).</p><br>
+        <input type='text' name='ban_reason' placeholder='Reason' class='text-input' required>
+        <button type='submit' name='ban_confirm' class='button button3'>CONFIRM</button>
+        </form>
+        </span></div>
+    </li>
 </ul>
 <br>
 </div>
@@ -369,25 +398,24 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 <div id="help-countdown" class="modal">
     <div class="modal-content">
-      <h4>Countdown Help</h4>
-      <p>To create a new countdown, insert an Event name into the input field, then set the date and time you want to count down to and click ADD.</p>
-      <p>To display a countdown on the homepage, scroll down a little bit and choose an event from the dropdown menu, then click SET ACTIVE.</p>
+        <h4>Countdown Help</h4>
+        <p>To create a new countdown, insert an Event name into the input field, then set the date and time you want to count down to and click ADD.</p>
+        <p>To display a countdown on the front page, scroll down a little bit and choose an event from the dropdown menu, then click SET ACTIVE.</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close btn-flat">Close</a>
+        <a href="#!" class="modal-close btn-flat">Close</a>
     </div>
-  </div>
-<script>
-var elem = document.querySelector('#help-countdown');
-var instance = M.Modal.init(elem, {
-  accordion: false
-});
-</script>
+</div>
 <script>
 var elem = document.querySelector('.collapsible.expandable');
 var instance = M.Collapsible.init(elem, {
   accordion: false
 });
+</script>
+<script>
+$(document).ready(function(){
+    $('#help-countdown').modal();
+  });
 </script>
 </body>
 </html>

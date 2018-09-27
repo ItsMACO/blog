@@ -87,12 +87,10 @@ if (mysqli_num_rows($result) > 0) {
         if (mysqli_num_rows($result_like) > 0) {
             echo "<button type='submit' class='button button1-reverse'>LIKED</button>&nbsp";
         } else {
-            echo "<button type='submit' name='like' class='button button1'>LIKE</button>&nbsp";
+            echo "<button type='submit' name='like' class='button button1'><i class='material-icons'>thumb_up</i></button>&nbsp";
         }
-    } else {
-        echo "<button type='submit' name='like' class='button button1'>LIKE</button>&nbsp";
     }
-        echo "<a href='#report-modal' name='report' class='button button3 modal-trigger'>REPORT</a></form></div><br><br>";
+        echo "<a href='#report-modal' name='report' class='button button3 modal-trigger'><i class='material-icons'>flag</i></a></form></div><br><br>";
         
         // LETS USER LIKE A POST
 
@@ -171,7 +169,6 @@ if (mysqli_num_rows($result_comments) > 0) {
         }
                 //converts unix time to normal datetime
                 $unix_converted = date('d-m-Y H:i:s', $comment_time);
-                //breaks the comment after 90 characters
                 $comments = "<div class='box box1' id='$comment_id'>
                 <h6 style='margin: 25px;' class='break-long-words'>
                 <a href='profile.php?id=$userid'>$comment_user_username</a>

@@ -6,16 +6,12 @@
 
     $sql_get = "SELECT * FROM posts WHERE id=$pid LIMIT 1";
     $result = mysqli_query($con, $sql_get);
-
-    if(mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
+            $row = mysqli_fetch_assoc($result);
             $author = $row['author'];
 
             if($_SESSION['admin'] == 0 && $author != $_SESSION['username']) {
                 header('Location: index.php');
             }
-        }
-    }
 
     if(!isset($_SESSION['username'])) {
         header('Location: login.php');

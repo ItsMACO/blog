@@ -38,14 +38,26 @@ if (mysqli_num_rows($result_profile) > 0) {
         $profile_bio = $row['profile_bio'];
         $karma = $row['karma'];
         $profile_pic = $row['profile_pic'];
+        $date_joined = $row['date_joined'];
     }
+
+    $sql_top_cont = "SELECT id FROM users ORDER BY karma DESC LIMIT 1";
+    $result_top_cont = mysqli_query($con, $sql_top_cont);
+    $row = mysqli_fetch_assoc($result_top_cont);
+    $top_cont = $row['id'];
+
     if($isAdmin == 1) {
-        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
-        echo "<div><h2>$username<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i></h2></div>";
+        $admin_pin = "<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i>";
     } else {
-        echo "<center><div class='profile-picture'><img src='$profile_pic' class='circle'></div></center>";
-        echo "<div><h2>$username</h2></div>";
+        $admin_pin = "";
     }
+    if($top_cont == $uid) {
+        $top_cont_pin = "<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Top Contributor'>sentiment_very_satisfied</i>";
+    } else {
+        $top_cont_pin = "";
+    }
+        echo "<center><img src='$profile_pic' class='profile-picture'></center>";
+        echo "<div><h2>$username $admin_pin $top_cont_pin</h2></div>";
     if ($user == $id) {
         echo "<a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
     } else {
@@ -88,6 +100,7 @@ if (mysqli_num_rows($result_profile) > 0) {
     $profile_bio = $row['profile_bio'];
     if(!empty($profile_bio)) {
         echo "<p class='break-long-words'>\"".$profile_bio."\"</p>";
+        echo "Joined: ".date('d.m.Y', $date_joined);
     } else {
         echo "It's quiet here...";
     }

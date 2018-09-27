@@ -29,7 +29,7 @@ if(isset($_SESSION['id'])) {
         ?>
         <a href="bug_report.php" class="sidenav-link right-align">Report A Bug <i class="material-icons">bug_report</i></a>
         <a href="feature_request.php" class="sidenav-link right-align">Request A Feature <i class="material-icons">playlist_add</i></a>
-        <a href="logout.php" class="sidenav-link right-align">Logout <i class="material-icons">cancel</i></a>
+        <a href="credits.php" class="sidenav-link right-align">Credits <i class="material-icons">assignment</i></a>
         <br><br>
             <?php
             $time = time() - 4*60;
@@ -76,7 +76,7 @@ if(isset($_SESSION['id'])) {
         ?>
         <a href="bug_report.php" class="sidenav-link right-align"><i class="material-icons">bug_report</i></a>
         <a href="feature_request.php" class="sidenav-link right-align"><i class="material-icons">playlist_add</i></a>
-        <a href="logout.php" class="sidenav-link right-align"><i class="material-icons">cancel</i></a>
+        <a href="credits.php" class="sidenav-link right-align"><i class="material-icons">assignment</i></a>
     </div>
 <?php
 } else { ?>
@@ -84,12 +84,19 @@ if(isset($_SESSION['id'])) {
     <a href="index.php" class="sidenav-link right-align">Home <i class="material-icons">home</i></a>
     <a href="bug_report.php" class="sidenav-link right-align">Report A Bug <i class="material-icons">bug_report</i></a>
     <a href="feature_request.php" class="sidenav-link right-align">Request A Feature <i class="material-icons">playlist_add</i></a>
+    <a href="credits.php" class="sidenav-link right-align">Credits <i class="material-icons">assignment</i></a>
 </div>
 <div class="sidenav-fixed-small">
     <a href="index.php" class="sidenav-link right-align"><i class="material-icons">home</i></a>
     <a href="bug_report.php" class="sidenav-link right-align"><i class="material-icons">bug_report</i></a>
     <a href="feature_request.php" class="sidenav-link right-align"><i class="material-icons">playlist_add</i></a>
+    <a href="credits.php" class="sidenav-link right-align"><i class="material-icons">assignment</i></a>
 </div>
 <?php } ?>
+<script>
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+</script>
 </body>
 </html>

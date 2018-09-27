@@ -17,7 +17,7 @@ include 'head_links.html';
     $row = mysqli_fetch_assoc($result_notify);
     $notifytime = $row['notifytime'];
 
-    $sql_comments = "SELECT * FROM comments WHERE (comment_to='$user') AND (time>$notifytime) AND NOT (comment_from='$user')";
+    $sql_comments = "SELECT * FROM comments WHERE (comment_to='$user') AND NOT (comment_from='$user')";
     $result_comments = mysqli_query($con, $sql_comments);
 
     if(mysqli_num_rows($result_comments) > 0) {
@@ -36,10 +36,14 @@ include 'head_links.html';
                     $comment_post_id = $row['id'];
                     $comment_post_name = $row['title'];
 
-                    $notify_comment = "<div><p>New comment: <br></p><div class='box box1'><h6 style='margin: 25px;' class='break-long-words'>$comment_from</h6>
-                    <h6 style='margin: 25px;' class='break-long-words'>$comment_content</h6>
-                    <div class='center-align'><a href='view_post.php?pid=$comment_post_id#$comment_id' class='button-small button1'>GO THERE</a></div>
-                    </div></div><br><div class='divider'></div>";
+                    $new_comment = "";
+                    if($time>$notifytime) {
+                        $new_comment = "<p>New comment: <br></p>";
+                    }
+                    $notify_comment = "<div style='margin: 25px;'>$new_comment<h6 class='break-long-words'>$comment_from</h6>
+                    <h6 class='break-long-words'>$comment_content</h6>
+                    <a href='view_post.php?pid=$comment_post_id#$comment_id' class='button-small button1'>GO THERE</a>
+                    </div><br><div class='divider'></div>";
 
                     echo $notify_comment;
                 }
@@ -50,7 +54,7 @@ include 'head_links.html';
 
 
     $user_name = $_SESSION['username'];
-    $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name') AND (time>$notifytime)";
+    $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name')";
     $result_mentions = mysqli_query($con, $sql_mentions);
 
     if(mysqli_num_rows($result_mentions) > 0) {
@@ -66,9 +70,13 @@ include 'head_links.html';
                 while($row = mysqli_fetch_assoc($result_mention_post)) {
                     $mention_post_title = $row['title'];
 
-                    $notify_mention = "<div><p>New mention: <br></p><div class='box box1'><h6 style='margin: 25px;' class='break-long-words'>$mention_post_title</h6>
-                    <div class='center-align'><a href='view_post.php?pid=$mention_postid' class='button-small button1'>GO THERE</a></div>
-                    </div></div><br><div class='divider'></div>";
+                    $new_mention = "";
+                    if($time>$notifytime) {
+                        $new_mention = "<p>New mention: <br></p>";
+                    }
+                    $notify_mention = "<div style='margin: 25px;'>$new_mention<h6 class='break-long-words'>$mention_post_title</h6>
+                    <a href='view_post.php?pid=$mention_postid' class='button-small button1'>GO THERE</a>
+                    </div><br><div class='divider'></div>";
 
                     echo $notify_mention;
                 }
@@ -78,7 +86,7 @@ include 'head_links.html';
     }
 }
 
-$sql_admin_msg = "SELECT * FROM admin_msg WHERE (user_to='$user') AND (time>$notifytime)";
+$sql_admin_msg = "SELECT * FROM admin_msg WHERE (user_to='$user')";
 $result_admin_msg = mysqli_query($con, $sql_admin_msg);
 
 if(mysqli_num_rows($result_admin_msg) > 0) {
@@ -87,9 +95,15 @@ if(mysqli_num_rows($result_admin_msg) > 0) {
         $admin_msg_text = $row['text'];
         $time = $row['time'];
 
-                $admin_msg = "<div><p>New message from admin: <br></p><div class='box box1'>
-                <h6 style='margin: 25px;' class='break-long-words'>$admin_msg_text</h6>
-                </div><br><div class='divider'></div>";
+        $new_admin_msg = "";
+        if($time>$notifytime) {
+            $new_admin_msg = "<p>New message from admin: <br></p>";
+        }
+
+                $admin_msg = "<div style='margin: 25px;'>$new_admin_msg
+                <h6 class='break-long-words'>$admin_msg_text</h6>
+                </div>
+                <br><div class='divider'></div>";
 
                 echo $admin_msg;
     }

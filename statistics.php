@@ -22,10 +22,6 @@ if($_SESSION['username'] != $author && $_SESSION['admin'] == 0) {
 <head>
 </head>
 <body style="background: #fafafa !important;">
-    
-</body>
-</html>
-
 <?php
 $sql_seen_times = "SELECT * FROM seen WHERE postid=$pid";
 $result_seen_times = mysqli_query($con, $sql_seen_times);
@@ -51,6 +47,8 @@ $result_commented_times = mysqli_query($con, $sql_commented_times);
 if(mysqli_num_rows($result_commented_times) > 0) {
     echo "<p class='break-long-words'><i class='material-icons'>comment</i>&nbsp;Commented ".mysqli_num_rows($result_commented_times)." times.</p>";
 } else {
-    echo "<p class='break-long-words'><i class='material-icons'>comment</i>&nbsp;No one has commented your post yet!</p>";
+    echo "<p class='break-long-words'><i class='material-icons'>comment</i>&nbsp;No one has commented on your post yet!</p>";
 }
 ?>
+</body>
+</html>

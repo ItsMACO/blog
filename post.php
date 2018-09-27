@@ -66,8 +66,12 @@ if (isset($_POST['post'])) {
         echo "Please complete your post!";
         return;
     }
+    if(checkNoBan()) {
+        mysqli_query($con, $sql);
+    } else {
+        echo "You are banned";
+    }
 
-    mysqli_query($con, $sql);
 
     $sql_check_for_usernames = "SELECT username FROM users";
     $result_check_for_usernames = mysqli_query($con, $sql_check_for_usernames);
@@ -82,7 +86,6 @@ if (isset($_POST['post'])) {
             mysqli_query($con, "INSERT INTO mentions (username, postid, time) VALUES ('$username_check', '$postid', '$time')");
         }
     }
-    header('Location: index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -95,7 +98,7 @@ if (isset($_POST['post'])) {
 <div class="wrap">
 <div class="center-align">
 <br><br>
-    <form action="post.php" method="post" id="post" enctype="multipart/form-data">
+    <form action="index.php" method="post" id="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input" required><br><br>
     <textarea placeholder="Content" id="content" name="content" rows="20" cols="50" class="text-input" required></textarea><br>
 </div>

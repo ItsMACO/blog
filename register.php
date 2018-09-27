@@ -54,7 +54,8 @@ if (isset($_POST['register'])) {
     }
 
     $password = password_hash($password, PASSWORD_BCRYPT);
-    $sql_store = "INSERT into users (username, password, email) VALUES('$username', '$password', '$email')";
+    $time = time();
+    $sql_store = "INSERT into users (username, password, email, date_joined) VALUES('$username', '$password', '$email', '$time')";
     mysqli_query($con, $sql_store);
     header('Location: login.php');
 
