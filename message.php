@@ -2,9 +2,6 @@
 if(!isset($_SESSION)) {
 session_start();
 }
-if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
-    header('Location: login.php');
-}
 require_once 'db.php';
 include_once 'sidebar_new.php';
 $user = $_SESSION['id'];
@@ -21,7 +18,7 @@ if(isset($_POST['send'])) {
         $row = mysqli_fetch_assoc($userid);
         $user_to = $row['id'];
         
-        $sql_message = "INSERT INTO admin_msg (user_to, admin_from, text, time) VALUES ('$user_to', '$user', '$text', '$time')";
+        $sql_message = "INSERT INTO messages (user_to, user_from, text, time) VALUES ('$user_to', '$user', '$text', '$time')";
         mysqli_query($con, $sql_message);
         header('Location: index.php');
     } else {
@@ -34,14 +31,14 @@ if(isset($_POST['send'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin Message</title>
+    <title>Message</title>
 </head>
 <body>
     <div class='container-fluid'>
     <div class='wrap'>
     <div class='wrap-content'>
     <br><br>
-        <form action='admin_message.php' method='post' enctype='multipart/form-data'>
+        <form action='message.php' method='post' enctype='multipart/form-data'>
         <input type='text' name='username' placeholder='Send to...' class='text-input' required><br><br>
         <textarea name='text' placeholder='Text' class='text-input' required></textarea><br><br>
         <button type='submit' name='send' class='button button1'>SEND</button>

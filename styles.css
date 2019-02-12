@@ -3099,6 +3099,7 @@ body {
   min-height: 60%;
 }
 .wrap-content {
+  margin-top: 20px;
   width: 90%;
   margin-left: 5%;
 }
@@ -3311,6 +3312,9 @@ select {
   border-radius: 25px;
   border: 2px solid #1976d2;
 }
+.middle {
+  vertical-align: middle;
+}
 .button {
   margin-top: 5px;
   border-radius: 25px;
@@ -3319,7 +3323,7 @@ select {
   padding: 16px 32px;
   text-align: center;
   text-decoration: none;
-  font-size: 100%;
+  font-size: 16px;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   cursor: pointer;
@@ -3343,6 +3347,31 @@ select {
     display: inline-block;
     white-space: nowrap;
     max-width: 100%;
+}
+.button-admin {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: black;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 28px;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  cursor: pointer;
+  font-family: 'Montserrat';
+  display: inline-block;
+  max-width: 100%;
+  width: 100%; 
+  height: 200px;
+  font-weight: 600;
+}
+.button-admin:hover {
+  background: black;
+  color: white;
+  font-size: 30px;
 }
 .button1 {
     background-color: white; 
@@ -3433,7 +3462,7 @@ p > i {
   max-height: 20%;
 }
 .tiny-text {
-  font-size: 11px;
+  font-size: 13px;
 }
 @media all and (max-width: 2160px) {
 

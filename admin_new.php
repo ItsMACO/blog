@@ -1,6 +1,6 @@
 <?php
-include 'sidebar_new.php';
-include_once 'db.php';
+include_once 'sidebar_new.php';
+require_once 'db.php';
 
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
     header('Location: login.php');
@@ -11,8 +11,158 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
 <html>
 <head>
     <title>Blog</title>
+
+    <script>
+            $(document).ready(function(){ 
+                $('#edit_posts').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "edit_posts.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#set_admin').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "set_admin.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#set_karma').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "set_karma.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#add_flairs').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "add_flairs.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#countdowns').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "countdowns.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#bug_reports').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "bug_reports.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#feature_requests').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "feature_requests.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#post_reports').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "post_reports.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+    
+                
+
+            });
+    </script>
+
 </head>
 <body>
+<div class="container-fluid">
+<div class="wrap">
+
+<div id="panels">
+
+    <div class='row'>
+    
+    <div class='col s12 m3'>
+        <button type='button' id='edit_posts' class='button-admin break-long-words'>EDIT OR REMOVE POSTS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='set_admin' class='button-admin break-long-words'>ADD OR REMOVE ADMIN</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='set_karma' class='button-admin break-long-words'>ADD OR REMOVE KARMA</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='add_flairs' class='button-admin break-long-words'>ADD FLAIRS</button>
+    </div>
+    
+    </div>
+
+    <div class='row'>
+    
+    <div class='col s12 m3'>
+        <button type='button' id='countdowns' class='button-admin break-long-words'>COUNTDOWNS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='bug_reports' class='button-admin break-long-words'>BUG REPORTS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='feature_requests' class='button-admin break-long-words'>FEATURE REQUESTS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='post_reports' class='button-admin break-long-words'>POST REPORTS</button>
+    </div>
+    
+    </div>
+
+    <div class='row'>
+    
+    <div class='col s12 m3'>
+        <button type='button' id='user_reports' class='button-admin break-long-words'>USER REPORTS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='ban_user' class='button-admin break-long-words'>BAN USER</button>
+    </div>
+    <!--
+    <div class='col s12 m3'>
+        <button type='button' id='set_karma' class='button-admin break-long-words'>FEATURE REQUESTS</button>
+    </div>
+    <div class='col s12 m3'>
+        <button type='button' id='add_flairs' class='button-admin break-long-words'>POST REPORTS</button>
+    </div>
+    -->
+    
+    </div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- LEGACY -->
+<!-- LEGACY -->
+<!-- LEGACY -->
+
+<!--
 <div class="container-fluid">
     <div class="wrap">
         <div class="wrap-content">
@@ -22,6 +172,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
    <div class="collapsible-header"><i class="medium material-icons">art_track</i>Edit or delete posts</div>
    <div class="collapsible-body"><span>
    <?php
+   /*
 
 $sql = "SELECT * FROM posts ORDER BY id DESC";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
@@ -61,7 +212,7 @@ if (mysqli_num_rows($result) > 0) {
 ?>
    </span>
 </div>
-<!-- ADD OR REMOVE ADMIN -->
+ ADD OR REMOVE ADMIN
 </li>
     <li>
         <div class="collapsible-header"><i class="medium material-icons">adb</i>Add or remove admin</div>
@@ -94,7 +245,7 @@ if (mysqli_num_rows($result) > 0) {
             ?>
     </span></div>
 </li>
-<!-- ADD OR REMOVE KARMA -->
+ADD OR REMOVE KARMA
 </li>
     <li <?php if(isset($_GET['set_karma'])) { ?> class="active" <?php } ?>>
     <div class="collapsible-header"><i class="medium material-icons">star</i>Add or remove Karma</div>
@@ -130,7 +281,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- ADD FLAIRS -->
+ADD FLAIRS
 <li>
     <div class="collapsible-header"><i class="medium material-icons">local_offer</i>Add flairs</div>
     <div class="collapsible-body">
@@ -155,7 +306,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- ADD OR SET ACTIVE COUNTDOWN -->
+ADD OR SET ACTIVE COUNTDOWN
 <li>
     <div class="collapsible-header"><i class="medium material-icons">add_alarm</i>Add or set active countdown</div>
     <div class="collapsible-body">
@@ -212,7 +363,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- BUG REPORTS -->
+BUG REPORTS
 <li>
     <div class="collapsible-header"><i class="medium material-icons">bug_report</i>Show bug reports</div>
     <div class="collapsible-body">
@@ -250,7 +401,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- FEATURE REQUESTS -->
+FEATURE REQUESTS
 <li>
     <div class="collapsible-header"><i class="medium material-icons">playlist_add</i>Show feature requests</div>
     <div class="collapsible-body">
@@ -287,7 +438,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- POST REPORTS -->
+POST REPORTS
 <li>
     <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">report</i>Show post reports</div>
     <div class="collapsible-body">
@@ -325,7 +476,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- USER REPORTS -->
+USER REPORTS
 <li>
     <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">person</i>Show user reports</div>
     <div class="collapsible-body">
@@ -365,7 +516,7 @@ if (mysqli_num_rows($result) > 0) {
         ?>
     </span></div>
 </li>
-<!-- BAN USER -->
+BAN USER
 <li <?php if(isset($_GET['ban_name'])) {echo "class='active'";} ?>>
     <div class="collapsible-header red-text text-darken-2"><i class="medium material-icons">block</i>Ban user</div>
     <div class="collapsible-body">
@@ -383,7 +534,8 @@ if (mysqli_num_rows($result) > 0) {
     }
     ?>
     <form action='admin.php' method='post' enctype='multipart/form-data'>
-    <input type='text' name='ban_username' class='text-input' placeholder='Username' value=<?php if(isset($_GET['ban_name'])) {echo "'".$ban_name."'";} ?>><br><br>
+    <input type='text' name='ban_username' class='text-input' placeholder='Username' value=<?php if(isset($_GET['ban_name'])) {echo "'".$ban_name."'";} 
+    */?>><br><br>
     <input type='number' name='ban_time' class='text-input' value='1' required><p style='display: inline-block;'>&nbsp;day(s).</p><br><br>
     <input type='text' name='ban_reason' placeholder='Reason' class='text-input' required><br><br>
     <button type='submit' name='ban_confirm' class='button button3'>CONFIRM</button>
@@ -393,9 +545,9 @@ if (mysqli_num_rows($result) > 0) {
 </ul>
 <br>
 </div>
-<!--DIV ROW -->
+DIV ROW
 </div>
-<!--DIV CONTAINER FLUID -->
+DIV CONTAINER FLUID
 </div>
 <div id="help-countdown" class="modal">
     <div class="modal-content">
@@ -413,5 +565,11 @@ var instance = M.Collapsible.init(elem, {
   accordion: false
 });
 </script>
+<script>
+$(document).ready(function(){
+    $('#help-countdown').modal();
+  });
+</script>
+
 </body>
 </html>

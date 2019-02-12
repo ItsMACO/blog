@@ -15,12 +15,12 @@ if (isset($_POST['bug_submit'])) {
     $bug_page = mysqli_real_escape_string($con, $bug_page);
     $bug_more_info = mysqli_real_escape_string($con, $bug_more_info);
 
-    if(isset($_SESSION['id'])) {
-        $bug_userid = $_SESSION['id'];
+    if(isset($_SESSION['username'])) {
+        $bug_username = $_SESSION['username'];
     } else {
         $bug_userid = 99999;
     }
-    $bug_store = "INSERT INTO bug_reports (bug_title, bug_page, bug_more_info, userid) VALUES ('$bug_title', '$bug_page', '$bug_more_info', '$bug_userid')";
+    $bug_store = "INSERT INTO bug_reports (bug_title, bug_page, bug_more_info, bug_from) VALUES ('$bug_title', '$bug_page', '$bug_more_info', '$bug_username')";
 
     mysqli_query($con, $bug_store);
 }

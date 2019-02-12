@@ -86,30 +86,34 @@ include 'head_links.html';
     }
 }
 
-$sql_admin_msg = "SELECT * FROM admin_msg WHERE (user_to='$user')";
-$result_admin_msg = mysqli_query($con, $sql_admin_msg);
+$sql_messages = "SELECT * FROM messages WHERE (user_to='$user')";
+$result_messages = mysqli_query($con, $sql_messages);
 
-if(mysqli_num_rows($result_admin_msg) > 0) {
-    while($row = mysqli_fetch_assoc($result_admin_msg)) {
-        $admin_msg_id = $row['id'];
-        $admin_msg_text = $row['text'];
+if(mysqli_num_rows($result_messages) > 0) {
+    while($row = mysqli_fetch_assoc($result_messages)) {
+        $message_id = $row['id'];
+        $message_text = $row['text'];
         $time = $row['time'];
 
-        $new_admin_msg = "";
+        $new_message = "";
         if($time>$notifytime) {
-            $new_admin_msg = "<p>New message from admin: <br></p>";
+            $new_message = "<p>New message: <br></p>";
         }
 
-                $admin_msg = "<div style='margin: 25px;'>$new_admin_msg
-                <h6 class='break-long-words'>$admin_msg_text</h6>
+                $messages = "<div class='row'>
+                <div class='col s1'><i class='material-icons'>email</i></div>
+                $new_message
+                <div class='col s11'>
+                <h6 class='tiny-text break-long-words'>$message_text</h6>
                 </div>
-                <br><div class='divider'></div>";
+                </div>
+                <div class='divider'></div>";
 
-                echo $admin_msg;
+                echo $messages;
     }
 }
 
-if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1 && mysqli_num_rows($result_admin_msg) < 1) {
+if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1 && mysqli_num_rows($result_messages) < 1) {
     echo "<br>You have no new notifications!<br><br>";
 }
 ?>

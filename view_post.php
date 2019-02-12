@@ -89,7 +89,8 @@ if (mysqli_num_rows($result) > 0) {
         } else {
             echo "<button type='submit' name='like' class='button button1'><i class='material-icons'>thumb_up</i></button>&nbsp";
         }
-    }
+    }   
+        echo "<a href='#share-local' name='share-local' class='button button2 modal-trigger'>SHARE</a>";
         echo "<a href='#report-modal' name='report' class='button button3 modal-trigger'><i class='material-icons'>flag</i></a></form></div><br><br>";
         
         // LETS USER LIKE A POST
@@ -124,8 +125,13 @@ if (mysqli_num_rows($result) > 0) {
                 $time = time();
                 $comment_content = $_POST['comment-content'];
                 $sql_comment = "INSERT INTO comments (comment_from, comment_to, postid, time, comment_content) VALUES ('$user_name', '$userid',  '$id', '$time', '$comment_content')";
-                mysqli_query($con, $sql_comment);
-                echo "<div class='left-align'><h5>Comment submitted!</h5></div>";
+                if(checkNoBan()) {
+                    mysqli_query($con, $sql_comment);
+                    echo "<div class='left-align'><h5>Comment submitted!</h5></div>";
+                } else {
+                    echo "You are banned";
+                }
+                
             } else {
                 echo "You have to log in to comment on posts.";
             }
@@ -223,23 +229,53 @@ if(isset($_POST['report-submit'])) {
     </form> 
     </div>
   </div>
-  <div id="stats" class="modal">
+<div id="stats" class="modal">
+<div class="modal-content">
+    <h4>Statistics</h4>
+    <iframe src="statistics.php?pid=<?php echo $pid; ?>" height="400px" width="400px"></iframe>
+</form> 
+</div>
+</div>
+<?php
+$_POST['share-link'] = $_SERVER['SERVER_NAME']."".$_SERVER['REQUEST_URI'];
+if(isset($_POST['share-submit'])) {
+    $share_to = $_POST['share-to'];
+    $sql_find_share = "SELECT * FROM users WHERE username='$share_to'"; 
+    $result_find_share = mysqli_query($con, $sql_find_share);
+    if(mysqli_num_rows($result_find_share) > 0) {
+        $row = mysqli_fetch_assoc($result_find_share);
+        $share_id = $row['id'];
+    } else {
+        echo "User not found.";
+    }
+    $share_link = $_POST['share-link'];
+    $time = time();
+    $sql_share_local = "INSERT INTO messages (user_to, user_from, text, time) VALUES ('$share_id', '$user', '$share_link', '$time')"; //ADD CURRENT LINK WITHOUT HASH TO THE TEXT VALUE
+}
+?>
+<div id="share-local" class="modal">
     <div class="modal-content">
-      <h4>Statistics</h4>
-        <iframe src="statistics.php?pid=<?php echo $pid; ?>" height="400px" width="400px"></iframe>
-    </form> 
+      <h4>Share locally</h4>
+        <form action="view_post.php?pid=<?php echo $pid; ?>" method="post" enctype="multipart/form-data">
+        <input type='text' name='share-to' class='text-input' placeholder='Share To...'><br><br>
+        <input type='text' name='share-link' class='text-input' value='<?php echo $_POST['share-link']; ?>' disabled><br>
+        <button type='submit' name='share-submit' class='button button1'>SHARE</button>
+        </form> 
     </div>
   </div>
-  <script>
+<script>
 var elem = document.querySelector('#report-modal');
 var instance = M.Modal.init(elem, {
   accordion: false
-});</script>
-<script>
+});
 var elem = document.querySelector('#stats');
 var instance = M.Modal.init(elem, {
   accordion: false
-});</script>
+});
+var elem = document.querySelector('#share-local');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});
+</script>
 </body>
-
 </html>
