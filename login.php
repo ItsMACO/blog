@@ -33,11 +33,21 @@ if (isset($_POST['login'])) {
     $id = $row['id'];
     $db_password = $row['password'];
     $admin = $row['admin'];
-    $email = $row['email'];
 
     if (password_verify($password, $db_password)) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
+        
+        
+        $sql_ban = "SELECT * FROM user_bans WHERE userid='$id' LIMIT 1";
+        $result_ban = mysqli_query($con, $sql_ban);
+        $row = mysqli_fetch_assoc($result_ban);
+        $banned = $row['banned_until'];
+        $time = time();
+        
+        if($banned > $time) {
+            $_SESSION['banned'] = 1;
+        }
 
         if ($admin == 1) {
             $_SESSION['admin'] = 1;
