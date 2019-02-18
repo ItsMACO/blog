@@ -47,6 +47,11 @@ if(isset($_SESSION['id'])) {
         <form action='search.php?<?php echo $searchtxt; ?>'>
         <input type='text' class='text-input' name='searchtxt' placeholder='Search'>
         </form>
+        if($_SESSION['banned'] == 1) {
+            echo "<a href='#banned_modal' id='banned_btn' class='modal-trigger nav-link'>
+                <i class='material-icons red-text'>error</i>
+            </a>";
+        }
 </div>
 <div class='small'>
 <a href='#notifications' id='notify_btn' class='modal-trigger nav-link'>
@@ -100,8 +105,24 @@ if(isset($_SESSION['id'])) {
       <a href="#!" class="modal-close btn-flat">Close</a>
     </div>
   </div>
+    
+  <div id="banned_modal" class="modal">
+    <div class="modal-content">
+      <h4>You have been banned</h4>
+        <h5>You have been banned and can't create new posts or comment on posts. Your ban expires: </h5>
+        <!--TODO banned until time -->
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close btn-flat">Close</a>
+    </div>
+  </div>  
+  
 <script>
 var elem = document.querySelector('#notifications');
+var instance = M.Modal.init(elem, {
+  accordion: false
+});
+var elem = document.querySelector('#banned_modal');
 var instance = M.Modal.init(elem, {
   accordion: false
 });
