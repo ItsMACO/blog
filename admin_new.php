@@ -141,14 +141,6 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
     <div class='col s12 m3'>
         <button type='button' id='ban_user' class='button-admin break-long-words'>BAN USER</button>
     </div>
-    <!--
-    <div class='col s12 m3'>
-        <button type='button' id='set_karma' class='button-admin break-long-words'>FEATURE REQUESTS</button>
-    </div>
-    <div class='col s12 m3'>
-        <button type='button' id='add_flairs' class='button-admin break-long-words'>POST REPORTS</button>
-    </div>
-    -->
     
     </div>
 
