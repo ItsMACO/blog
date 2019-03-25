@@ -1,6 +1,6 @@
 <?php
 include_once 'db.php';
-include 'head_links.html';
+include 'head_links.php';
 
 if(!isset($_SESSION)) {
     session_start();

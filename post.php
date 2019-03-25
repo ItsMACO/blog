@@ -1,7 +1,6 @@
 <?php
-session_start();
-include_once 'db.php';
-include 'sidebar_new.php';
+require_once 'db.php';
+include_once 'sidebar_new.php';
 
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
@@ -14,7 +13,7 @@ if (isset($_POST['post'])) {
     $tags = mysqli_real_escape_string($con, $tags);
     $flair = mysqli_real_escape_string($con, $flair);
 
-    $date = date('l jS \of F Y h:i:s A');
+    $date = time();
     $author = $_SESSION['username'];
 
     if(isset($_POST['image'])) {
@@ -57,19 +56,15 @@ if (isset($_POST['post'])) {
     } else {
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
     }
-        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', '$target_file', '$flair')";
+	
+        $sql = "INSERT INTO posts (title, content, date, author, image, flair, tags) VALUES ('$title', '$content', '$date', '$author', '$target_file', '$flair', '$tags')";
     } else {
-        $sql = "INSERT into posts (title, content, tags, date, author, image, flair) VALUES ('$title', '$content', '$tags', '$date', '$author', 'images/default.png', '$flair')";
+        $sql = "INSERT INTO posts (title, content, date, author, image, flair, tags) VALUES ('$title', '$content', '$date', '$author', 'images/default.png', '$flair', '$tags')";
     }
 
     if ($title == "" || $content == "") {
         echo "Please complete your post!";
         return;
-    }
-    if(checkNoBan()) {
-        mysqli_query($con, $sql);
-    } else {
-        echo "You are banned";
     }
 
 
@@ -86,6 +81,8 @@ if (isset($_POST['post'])) {
             mysqli_query($con, "INSERT INTO mentions (username, postid, time) VALUES ('$username_check', '$postid', '$time')");
         }
     }
+	
+	mysqli_query($con, $sql);
 }
 ?>
 <!DOCTYPE html>
@@ -98,7 +95,7 @@ if (isset($_POST['post'])) {
 <div class="wrap">
 <div class="center-align">
 <br><br>
-    <form action="index.php" method="post" id="post" enctype="multipart/form-data">
+    <form action="post.php" method="post" id="post" enctype="multipart/form-data">
     <input placeholder="Title" name="title" type="text" autofocus size="48" class="text-input" required><br><br>
     <textarea placeholder="Content" id="content" name="content" rows="20" cols="50" class="text-input" required></textarea><br>
 </div>
@@ -129,7 +126,7 @@ if (isset($_POST['post'])) {
             $flairid = $row['flairid'];
             $flairname = $row['flairname'];
 
-            echo "<option value='$flairname'>$flairname</option>";
+            echo "<option value='$flairid'>$flairname</option>";
         }
     }
     ?>

@@ -10,7 +10,7 @@ include_once 'sidebar_new.php';
     <div class='container-fluid'>
         <div class='wrap'>
             <div class='wrap-content'>
-                <p>Blog created by Matej Palo. <br>Smiley icons made by Roundicons from https://roundicons.com/ </p>
+                <p>Blog created by Matej Palo. <br>Emojis made by Roundicons from https://roundicons.com/ </p>
             </div>
         </div>
     </div>

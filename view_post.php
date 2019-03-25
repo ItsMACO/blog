@@ -48,6 +48,7 @@ if (mysqli_num_rows($result) > 0) {
         $id = $row['id'];
         $title = $row['title'];
         $date = $row['date'];
+		$date = date('d.m.Y h:i', $date);
         $content = $row['content'];
         $author = $row['author'];
         $image = $row['image'];

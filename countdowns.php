@@ -2,6 +2,9 @@
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
+	if(!isset($_SESSION)) {
+		session_start();
+	}
 ?>
 <div class='wrap-content'>
     <a href="#help-countdown" class="button-small button2 modal-trigger">HELP?</a><br><br>

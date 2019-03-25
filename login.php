@@ -37,7 +37,10 @@ if (isset($_POST['login'])) {
     if (password_verify($password, $db_password)) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $id;
-        
+        if ($admin == 1) {
+            $_SESSION['admin'] = 1;
+        }
+		/*
         
         $sql_ban = "SELECT * FROM user_bans WHERE userid='$id' LIMIT 1";
         $result_ban = mysqli_query($con, $sql_ban);
@@ -48,10 +51,8 @@ if (isset($_POST['login'])) {
         if($banned > $time) {
             $_SESSION['banned'] = 1;
         }
+		*/
 
-        if ($admin == 1) {
-            $_SESSION['admin'] = 1;
-        }
         header('Location: index.php');
     } else {
         echo "<h6>Incorrect details!</h6>";

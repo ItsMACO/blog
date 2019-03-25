@@ -1,5 +1,5 @@
 <?php
-include 'head_links.html';
+include 'head_links.php';
 session_start();
 session_destroy();
 ?>

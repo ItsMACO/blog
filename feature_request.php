@@ -17,7 +17,7 @@ if (isset($_POST['feature_submit'])) {
     } else {
         $feature_userid = 99999;
     }
-    $feature_store = "INSERT INTO feature_requests (feature_title, feature_more_info, userid) VALUES ('$feature_title', '$feature_more_info', '$feature_userid')";
+    $feature_store = "INSERT INTO feature_requests (feature_title, feature_more_info, feature_from) VALUES ('$feature_title', '$feature_more_info', '$feature_userid')";
 
     mysqli_query($con, $feature_store);
 }

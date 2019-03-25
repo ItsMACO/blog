@@ -1,8 +1,11 @@
 <?php
+require_once 'db.php';
+if(!isset($_SESSION)) {
+	session_start();
+}
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
     header('Location: login.php');
 }
-require_once 'db.php';
     $sql = "SELECT * FROM posts ORDER BY id DESC";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 

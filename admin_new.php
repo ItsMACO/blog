@@ -147,6 +147,9 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
 </div>
 
 </div>
+<?php
+	if(isset($_SESSION['admin'])) {echo "132";}
+?>
 </div>
 
 

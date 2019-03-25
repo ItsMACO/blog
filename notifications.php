@@ -1,7 +1,7 @@
 <?php
 include 'online_log.php';
 include 'db.php';
-include 'head_links.html';
+include 'head_links.php';
 ?>
 <!DOCTYPE html>
 <html>

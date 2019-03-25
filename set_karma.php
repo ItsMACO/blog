@@ -2,6 +2,9 @@
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
+	if(!isset($_SESSION)) {
+		session_start();
+	}
 ?>
 <div class='wrap-content'>
     <form action="admin.php" method="post" enctype="multipart/form-data">

@@ -4,7 +4,6 @@
     <?php
     require_once 'db.php';
     include 'head_links.php';
-    include 'settings.php';
     ?>
 </head>
 <body>
@@ -44,14 +43,22 @@ if(isset($_SESSION['id'])) {
         <li><a href='profile?id=<?php echo $user; ?>'>Profile</a></li>
         <li><a href='logout'>Logout</a></li>
         </ul>
-        <form action='search.php?<?php echo $searchtxt; ?>'>
+        <form action='search.php?<?php 
+		if(isset($searchtxt)) {
+			echo $searchtxt; 
+		}
+		?>'>
         <input type='text' class='text-input' name='searchtxt' placeholder='Search'>
         </form>
-        if($_SESSION['banned'] == 1) {
-            echo "<a href='#banned_modal' id='banned_btn' class='modal-trigger nav-link'>
-                <i class='material-icons red-text'>error</i>
-            </a>";
-        }
+		<?php
+		if(isset($_SESSION['banned'])) {
+			if($_SESSION['banned'] == 1) {
+				echo "<a href='#banned_modal' id='banned_btn' class='modal-trigger nav-link'>
+					<i class='material-icons red-text'>error</i>
+				</a>";
+			}
+		}
+		?>
 </div>
 <div class='small'>
 <a href='#notifications' id='notify_btn' class='modal-trigger nav-link'>

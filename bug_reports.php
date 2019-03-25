@@ -1,6 +1,9 @@
 <div class='wrap-content'>
 <?php
     require_once 'db.php';
+	if(!isset($_SESSION)) {
+		session_start();
+	}
     include_once 'admin_back.php';
     $bug_reports = "";
     $sql_bugs = "SELECT * FROM bug_reports";

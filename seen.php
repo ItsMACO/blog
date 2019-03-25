@@ -13,14 +13,15 @@ $userid = $row['id'];
 
 if(!isset($_SESSION['id'])) {
     $postid = $_GET['pid'];
-    $sql_seen = "INSERT INTO seen (userid, postid) VALUES ('0', '$postid')";
+	$time = time();
+    $sql_seen = "INSERT INTO seen (userid, postid, time) VALUES ('0', '$postid', '$time')";
     mysqli_query($con, $sql_seen);
 } elseif(!isset($_GET['pid'])) {
 } elseif($_SESSION['id'] == $userid) {
 } else {
     $user = $_SESSION['id'];
     $postid = $_GET['pid'];
-    $sql_seen = "INSERT INTO seen (userid, postid) VALUES ('$user', '$postid')";
+    $sql_seen = "INSERT INTO seen (userid, postid, time) VALUES ('$user', '$postid', '$time')";
     mysqli_query($con, $sql_seen);
 }
 ?>

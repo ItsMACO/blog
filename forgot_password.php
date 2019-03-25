@@ -36,7 +36,11 @@ $random_token = random_str(128);
 
 if(isset($_POST['forgot-submit'])) {
     $forgot_email = $_POST['forgot-email'];
-    $sql = "UPDATE users SET forgot_token='$random_token' WHERE email='$forgot_email'"; 
+	$sql_check_token = "SELECT forgot_token FROM users WHERE forgot_token='$random_token'";
+	if(mysqli_num_rows($sql_check_token) > 0) {
+		$random_token = random_str(128);
+	}
+	$sql = "UPDATE users SET forgot_token='$random_token' WHERE email='$forgot_email'"; 
     mysqli_query($con, $sql);
 }
 ?>

@@ -1,11 +1,12 @@
 <?php
 require_once 'db.php';
-include 'online_log.php';
 include 'sidebar_new.php';
 if (!isset($_SESSION)) {
     session_start();
 }
-$user = $_SESSION['id'];
+if(isset($_SESSION['id'])) {
+	$user = $_SESSION['id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -85,9 +86,18 @@ if (mysqli_num_rows($result) > 0) {
         $title = $row['title'];
         $content = $row['content'];
         $date = $row['date'];
+		$date = date('d.m.Y h:i', $date);
         $author = $row['author'];
         $image = $row['image'];
         $flair = $row['flair'];
+		
+		$sql_flair = "SELECT flairname FROM flairs WHERE flairid='$flair'";
+		$result_flair = mysqli_query($con, $sql_flair);
+		if(mysqli_num_rows($result_flair) > 0) {
+			while ($row = mysqli_fetch_assoc($result_flair)) {
+                $flair = $row['flairname'];
+            }
+		}
 
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
