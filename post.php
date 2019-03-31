@@ -4,7 +4,7 @@ include_once 'sidebar_new.php';
 
 if (isset($_POST['post'])) {
     $title = strip_tags($_POST['title']);
-    $content = strip_tags($_POST['content']);
+    $content = htmlspecialchars($_POST['content']);
     $tags = strip_tags($_POST['tags']);
     $flair = strip_tags($_POST['flair']);
 

@@ -1,0 +1,18 @@
+restylize admin.php*
+fix closing bug reports*
+reenable pasword resetting
+change comments design
+add support for "<3" in SQL
+better changing user data
+add notification and navbar text when banned
+fix notifications bullshit
+
+share post locally*
+user chat
+add polls
+stay logged in (cookies)
+schedule
+banned phrases
+filter by flair
+scheduled posts
+global settings

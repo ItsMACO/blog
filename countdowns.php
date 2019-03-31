@@ -1,4 +1,5 @@
 <?php
+    require_once 'db.php';
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
@@ -16,7 +17,6 @@
     </form><br><br>
     <div class='divider'></div><div class='divider'></div><div class='divider'></div><br><br>
         <?php
-        require_once 'db.php';
         include_once 'head_links.php';
         //ADD COUNTDOWN
         if(isset($_POST['add_countdown'])) {

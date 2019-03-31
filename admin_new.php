@@ -86,6 +86,24 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
                         }
                     });
                 })
+                $('#user_reports').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "user_reports.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
+                $('#ban_user').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "ban_user.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
     
                 
 

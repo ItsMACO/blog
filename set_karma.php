@@ -1,4 +1,5 @@
 <?php
+    require_once 'db.php';
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
@@ -22,7 +23,6 @@
     </form>
 </div>
 <?php
-require_once 'db.php';
 if(isset($_POST['set_karma_username']) && isset($_POST['set_karma'])){
     $set_karma_username = strip_tags($_POST['set_karma_username']);
     $set_karma_username = mysqli_real_escape_string($con, $set_karma_username);

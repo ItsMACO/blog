@@ -54,6 +54,13 @@ if (mysqli_num_rows($result) > 0) {
         $image = $row['image'];
         $flair = $row['flair'];
 
+        $sql_flair = "SELECT flairname FROM flairs WHERE flairid='$flair'";
+        $result_flair = mysqli_query($con, $sql_flair);
+        if(mysqli_num_rows($result_flair) > 0) {
+            $row = mysqli_fetch_assoc($result_flair);
+            $flair = $row['flairname'];
+        }
+
         $sql_profile = "SELECT * FROM users WHERE username='$author'";
         $result_profile = mysqli_query($con, $sql_profile) or die(mysqli_error($con));
         if (mysqli_num_rows($result_profile) > 0) {

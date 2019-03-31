@@ -1,10 +1,8 @@
 <?php
+    require_once 'db.php';
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
-	if(!isset($_SESSION)) {
-		session_start();
-	}
 ?>
 <div class='wrap-content'>
     <form action="admin.php" method="post" enctype="multipart/form-data">
@@ -21,7 +19,6 @@
     </form>
 </div>
 <?php
-require_once 'db.php';
 if(isset($_POST['set_admin'])){
     $set_admin = strip_tags($_POST['set_admin']);
     $set_admin = mysqli_real_escape_string($con, $set_admin);

@@ -84,7 +84,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         $title = $row['title'];
-        $content = $row['content'];
+        $content = html_entity_decode($row['content']);
         $date = $row['date'];
 		$date = date('d.m.Y h:i', $date);
         $author = $row['author'];

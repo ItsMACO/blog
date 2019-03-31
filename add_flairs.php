@@ -1,4 +1,5 @@
 <?php
+    require_once 'db.php';
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
         header('Location: login.php');
     }
@@ -13,7 +14,6 @@
 </form><br>
 </div>
 <?php
-require_once 'db.php';
     if(isset($_POST['set_flair'])) {
         $set_flair = strip_tags($_POST['set_flair']);
         $set_flair = mysqli_real_escape_string($con, $set_flair);
