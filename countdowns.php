@@ -63,3 +63,18 @@
     }
     ?>
 </div>
+<div id="help-countdown" class="modal">
+    <div class="modal-content">
+        <h4>Countdown Help</h4>
+        <p>To create a new countdown, insert an Event name into the input field, then set the date and time you want to count down to and click ADD.</p>
+        <p>To display a countdown on the front page, scroll down a little bit and choose an event from the dropdown menu, then click SET ACTIVE.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn-flat">Close</a>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    $('#help-countdown').modal();
+  });
+</script>

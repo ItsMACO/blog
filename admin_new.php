@@ -104,6 +104,15 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
                         }
                     });
                 })
+				$('#global_settings').click(function(){    
+                    $.ajax({
+                        type: "GET",
+                        url: "global_settings.php",
+                        success: function(returnedData) {
+                        $('#panels').html(returnedData);
+                        }
+                    });
+                })
     
                 
 
@@ -159,15 +168,15 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] != 1) {
     <div class='col s12 m3'>
         <button type='button' id='ban_user' class='button-admin break-long-words'>BAN USER</button>
     </div>
-    
+    <div class='col s12 m3'>
+        <button type='button' id='global_settings' class='button-admin break-long-words'>GLOBAL SETTINGS</button>
+    </div>
+	
     </div>
 
 </div>
 
 </div>
-<?php
-	if(isset($_SESSION['admin'])) {echo "132";}
-?>
 </div>
 
 

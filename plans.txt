@@ -1,8 +1,6 @@
-restylize admin.php*
 fix closing bug reports*
-reenable pasword resetting
+ fix changing values in config.php via global_settings.php* finish rewarding karma through bug_reports more easily* reenable pasword resetting
 change comments design
-add support for "<3" in SQL
 better changing user data
 add notification and navbar text when banned
 fix notifications bullshit

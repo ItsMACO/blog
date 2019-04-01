@@ -1,10 +1,10 @@
 <?php
 return [
-    'createPosts' => [
-        'onlyAdmin' => 1,
-        'onlyMember' => 0
+    'reward_karma' => [
+        'bug_report' => 50,
+        'feature_request' => 50
     ],
-    'createPostsOnlyAdmin' => 1,
+    'createPostsOnlyAdmin' => 0,
     '' => '',
     '' => '',
     '' => '',
