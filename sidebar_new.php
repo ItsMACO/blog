@@ -1,6 +1,7 @@
 <?php
 require 'online_log.php';
 include_once 'navbar.php';
+include_once 'chat_popup.php';
 if (!isset($_SESSION)) {
     session_start();
 }

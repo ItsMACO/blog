@@ -50,6 +50,7 @@ if (mysqli_num_rows($result) > 0) {
         $date = $row['date'];
 		$date = date('d.m.Y h:i', $date);
         $content = $row['content'];
+        $content = html_entity_decode($content);
         $author = $row['author'];
         $image = $row['image'];
         $flair = $row['flair'];

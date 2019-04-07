@@ -1,4 +1,4 @@
 <?php
     $config = include 'config.php';
-    echo $config['createPosts']['onlyMember'];
+    echo $config['reward_karma']['bug_report'];
 ?>

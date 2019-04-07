@@ -92,12 +92,14 @@ if(isset($_SESSION['id'])) {
 </div>
 <?php
 } else {
-    echo "<div class='hide-nav'>
-    <a href='register.php' class='register nav-link'>Register</a>
-    <a href='login.php' class='login nav-link'>Login</a>
-    <a href='register.php' class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>person_add</i></a>
-    <a href='login.php' class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>arrow_forward</i></a>
-    </div>";
+?>
+    <div class='hide-nav'>
+    <a href="register.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class='register nav-link'>Register</a>
+    <a href="login.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class='login nav-link'>Login</a>
+    <a href="register.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>person_add</i></a>
+    <a href="login.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class='menu-icon' onclick='navbarMenu()'><i class='material-icons'>arrow_forward</i></a>
+    </div>
+<?php
 }
 ?>
 </div>

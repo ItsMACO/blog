@@ -126,7 +126,7 @@ if (mysqli_num_rows($result) > 0) {
     if(isset($_GET['read_later'])) {
         header('Refresh:0');
         if(!isset($_SESSION['id'])) {
-            header('Location: login.php');
+            header('Location: login.php?location='.urlencode($_SERVER['REQUEST_URI']));
         } else {
             $read_postid = $_GET['read_later'];
             $read_later_exists = mysqli_query($con, "SELECT * FROM read_later WHERE (read_user='$user') AND (read_postid='$read_postid')");

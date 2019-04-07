@@ -1,12 +1,18 @@
 <?php
-return [
-    'reward_karma' => [
-        'bug_report' => 50,
-        'feature_request' => 50
-    ],
-    'createPostsOnlyAdmin' => 0,
-    '' => '',
-    '' => '',
-    '' => '',
-];
+    class Config {
+        var $name, $value;
+
+        function getName() {
+            $this->name;
+        }
+        function setName($new_name) {
+            $this->name = $new_name;
+        }
+        function getValue() {
+            $this->value;
+        }
+        function setValue($new_value) {
+            $this->value = $new_value;
+        }
+    }
 ?>
