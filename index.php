@@ -18,23 +18,9 @@ if(isset($_SESSION['id'])) {
 <div class="container-fluid">
 <div class="wrap">
 <div class="wrap-content">
-<br><br>
 <?php
-$sql_countdown = "SELECT * FROM countdowns WHERE active=1 LIMIT 1";
-$result_countdown = mysqli_query($con, $sql_countdown);
-if(mysqli_num_rows($result_countdown) > 0) {
-    $row = mysqli_fetch_assoc($result_countdown);
-    $event = $row['event'];
-    $date = $row['date'];
-    $time = $row['time'];
-echo "<center><div class='countdown'><br>";
-echo "<h5><b>".$event."</b></h5>";
-echo "<h5 id='countdown'></h5>";
-echo "<br></div>";
-echo "</center>";
-}
+include_once 'countdown.php';
 ?>
-<br><br>
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("<?php echo $date." ".$time; ?>").getTime();

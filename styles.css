@@ -44,14 +44,13 @@ body {
   text-shadow: 1px 1px 0px rgb(0, 0, 0);
 }
 .sidenav-fixed {
-  background: #262626;
+  background: #da1b60;
   height: 100vh;
   top: 60px;
   left: 0;
   position: fixed;
   overflow-x: hidden;
   display: block;
-  box-shadow: 2px -2px 3px #1f1f1f;
 }
 .sidenav-fixed a {
   font-size: 17px;
@@ -60,17 +59,13 @@ body {
   padding: 0px 20px;
   display: block;
   line-height: 55px;
-  background-image: linear-gradient(to right,
-                                      #262626,
-                                      #262626 50%,
-                                      #333333,
-                                      #333333 50%);
-  background-position: 0 0;
-  background-size: 200% 100%;
-  transition: all .2s ease-in-out;
+  background-color: #da1b60;
+  background-size: 100vw 100%;
+  transition: all .2s ease-in;
 }
 .sidenav-fixed a:hover {
-  background-position: 100% 0;
+  background-color: white;
+  color: #da1b60;
 }
 .sidenav-fixed > a > i {
   vertical-align: middle;
@@ -120,9 +115,9 @@ body {
   top: 0;
   left: 0;
   background: #ff8a00;
-  background: -moz-linear-gradient(left, #ff8a00 0%, #da1b60 100%);
-  background: -webkit-linear-gradient(left, #ff8a00 0%,#da1b60 100%);
-  background: linear-gradient(to right, #ff8a00 0%,#da1b60 100%);
+  background: -moz-linear-gradient(left, #ff8a00 20%, #da1b60 60%);
+  background: -webkit-linear-gradient(left, #ff8a00 20%,#da1b60 60%);
+  background: linear-gradient(to right, #ff8a00 20%,#da1b60 60%);
   z-index: 999;
 }
 .navbar .nav-link {
@@ -147,8 +142,8 @@ body {
   outline: 0;
 }
 .navbar .nav-link:hover {
-  background-color: #262626;
-  color: #f2f2f2;
+  background-color: white;
+  color: #da1b60;
 }
 .dropdown-content {
   background-color: #333333;
@@ -189,12 +184,9 @@ a.menu-icon {
 .navbar .text-input {
   font-family: inherit;
   max-width: 100%;
-  border: 2px solid #333;
+  border: 2px solid white;
   border-radius: 25px;
   padding: 15px;
-}
-.navbar .text-input:active {
-  border: 2px solid #262626;
 }
 @media all and (max-width: 600px) {
   .navbar .full {
@@ -240,9 +232,17 @@ select {
   width: 100%;
   height: 100%;
 }
-.countdown {
+.countdown-wrap {
+  max-width: 100%;
+  background: linear-gradient(to right, #ff8a00, #da1b60);
+  padding: 5px;
   border-radius: 25px;
-  border: 2px solid #1976d2;
+}
+.countdown {
+  background: white;
+  color: #222;
+  padding: 2rem;
+  border-radius: 25px;
 }
 .middle {
   vertical-align: middle;
