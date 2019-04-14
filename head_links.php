@@ -7,5 +7,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="materialize/css/materialize.css?<?php echo time(); ?>">
 <link rel="stylesheet" href="styles.css?<?php echo time(); ?>">
+<link rel="stylesheet" href="essentials.css?<?php echo time(); ?>">
 <script src="materialize/js/materialize.js"></script>
 <script src="main.js"></script>

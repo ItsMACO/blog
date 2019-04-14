@@ -19,7 +19,14 @@ if(isset($_POST['send'])) {
         $user_to = $row['id'];
         
         $sql_message = "INSERT INTO messages (user_to, user_from, text, time) VALUES ('$user_to', '$user', '$text', '$time')";
-        mysqli_query($con, $sql_message);
+
+        if (mysqli_query($con, $sql_message)) {
+            $link = mysqli_insert_id($con);
+        } else {
+            echo "Error: " . $sql_message . "<br>" . mysqli_error($con);
+        }
+
+        $sql_message_notification = "INSERT INTO notifications (user_to, type, link, time) VALUES ('$user_to', 'messages', '$link', '$time')";
         header('Location: index.php');
     } else {
         echo "<script>M.toast({html: 'User not found!'})</script>";

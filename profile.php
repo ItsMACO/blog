@@ -1,6 +1,6 @@
 <?php
-include 'sidebar_new.php';
 include_once 'db.php';
+include 'sidebar_new.php';
 if(!isset($_SESSION)) {
     session_start();
 }
@@ -46,6 +46,8 @@ if (mysqli_num_rows($result_profile) > 0) {
     $row = mysqli_fetch_assoc($result_top_cont);
     $top_cont = $row['id'];
 
+    //PROFILE PINS
+
     if($isAdmin == 1) {
         $admin_pin = "<i class='material-icons tooltipped' data-position='bottom' data-tooltip='Admin'>verified_user</i>";
     } else {
@@ -56,28 +58,30 @@ if (mysqli_num_rows($result_profile) > 0) {
     } else {
         $top_cont_pin = "";
     }
-        echo "<center><img src='$profile_pic' class='profile-picture'></center>";
+    //PROFILE PIC, USERNAME AND PRINT
+        echo "<center><img src='$profile_pic' width='200px' height='200px'></center>";
         echo "<div><h2>$username $admin_pin $top_cont_pin</h2></div>";
+    //CHOOSE WHAT THE USER CAN DO
     if ($user == $id) {
         echo "<a href='edit_userdata.php?uid=$id' name='edit_userdata' class='button button1'>EDIT USER DATA</a><br><br>";
     } else {
-        echo "<form action='profile.php?id=$id' method='post'>";
+        echo "<form action='profile.php?id=$id' id='follow_form' method='post'>";
         $sql_follow_already = "SELECT * FROM follows WHERE follow_from='$user' AND follow_to='$id'";
         $result_follow_already = mysqli_query($con, $sql_follow_already);
         if(mysqli_num_rows($result_follow_already) > 0) {
-            echo "<button type='submit' name='unfollow' class='button button2'>UNFOLLOW</button>&nbsp;";
+            echo "<button type='submit' id='unfollow' name='unfollow' class='button button2' onclick='updateDiv(\'#follow_form\')'>UNFOLLOW</button>&nbsp;";
+            if(isset($_POST['unfollow'])) {
+                mysqli_query($con, "DELETE FROM follows WHERE follow_from='$user' AND follow_to='$id'");
+            }
         } else {
-            echo "<button type='submit' name='follow' class='button button1'>FOLLOW</button>&nbsp;";
+            echo "<button type='submit' id='follow' name='follow' class='button button1' onclick='updateDiv(\'#follow_form\')'>FOLLOW</button>&nbsp;";
+            if(isset($_POST['follow'])) {
+                mysqli_query($con, "INSERT INTO follows (follow_from, follow_to) VALUES ('$user', '$id')");
+            }
         }
         echo "</form>";
-        if(isset($_POST['follow'])) {
-            mysqli_query($con, "INSERT INTO follows (follow_from, follow_to) VALUES ('$user', '$id')");
-            header("Refresh:0");
-        }
-        if(isset($_POST['unfollow'])) {
-            mysqli_query($con, "DELETE FROM follows WHERE follow_from='$user' AND follow_to='$id'");
-            header("Refresh:0");
-        }
+        ?>
+        <?php
         echo "<a href='#reportuser' name='report_user' class='modal-trigger button button3'>REPORT USER</a><br><br>";
     }
     echo "<div class='divider'></div>";
@@ -217,6 +221,12 @@ var elem = document.querySelector('#reportuser');
 var instance = M.Modal.init(elem, {
   accordion: false
 });
+function updateDiv(div)
+{ 
+    $( div ).load(window.location.href + div );
+}
+
 </script>
+<script src='follow.js'></script>
 </body>
 </html>

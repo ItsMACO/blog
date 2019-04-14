@@ -86,34 +86,7 @@ include 'head_links.php';
     }
 }
 
-$sql_messages = "SELECT * FROM messages WHERE (user_to='$user')";
-$result_messages = mysqli_query($con, $sql_messages);
-
-if(mysqli_num_rows($result_messages) > 0) {
-    while($row = mysqli_fetch_assoc($result_messages)) {
-        $message_id = $row['id'];
-        $message_text = $row['text'];
-        $time = $row['time'];
-
-        $new_message = "";
-        if($time>$notifytime) {
-            $new_message = "<p>New message: <br></p>";
-        }
-
-                $messages = "<div class='row'>
-                <div class='col s1'><i class='material-icons'>email</i></div>
-                $new_message
-                <div class='col s11'>
-                <h6 class='tiny-text break-long-words'>$message_text</h6>
-                </div>
-                </div>
-                <div class='divider'></div>";
-
-                echo $messages;
-    }
-}
-
-if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1 && mysqli_num_rows($result_messages) < 1) {
+if(mysqli_num_rows($result_comments) < 1 && mysqli_num_rows($result_mentions) < 1) {
     echo "<br>You have no new notifications!<br><br>";
 }
 ?>

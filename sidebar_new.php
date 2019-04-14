@@ -1,10 +1,6 @@
 <?php
 require 'online_log.php';
 include_once 'navbar.php';
-include_once 'chat_popup.php';
-if (!isset($_SESSION)) {
-    session_start();
-}
 if (isset($_SESSION['id'])) {
     $user = $_SESSION['id'];
 }
@@ -21,7 +17,7 @@ if(isset($_SESSION['id'])) {
     <div class="sidenav-fixed">
         <a href="index.php" class="sidenav-link right-align">Home <i class="material-icons">home</i></a>
         <a href="post.php" class="sidenav-link right-align">New Post <i class="material-icons">add</i></a>
-        <a href="message.php" class="sidenav-link right-align">New Message <i class="material-icons">add_circle</i></a>
+        <a href="message.php" class="sidenav-link right-align">New Message <i class="material-icons">message</i></a>
         <?php
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
             echo "<a href='admin_new.php' class='sidenav-link right-align'>Admin <i class='material-icons'>adb</i></a>";
@@ -68,7 +64,7 @@ if(isset($_SESSION['id'])) {
     <div class="sidenav-fixed-small">
         <a href="index.php" class="sidenav-link right-align"><i class="material-icons">home</i></a>
         <a href="post.php" class="sidenav-link right-align"><i class="material-icons">add</i></a>
-        <a href="message.php" class="sidenav-link right-align"><i class="material-icons">add_circle</i></a>
+        <a href="message.php" class="sidenav-link right-align"><i class="material-icons">message</i></a>
         <?php
         if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
             echo "<a href='admin_new.php' class='sidenav-link right-align'><i class='material-icons'>adb</i></a>";

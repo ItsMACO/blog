@@ -1,5 +1,4 @@
 <?php
-include 'sidebar_new.php';
 include_once 'db.php';
 if(isset($_GET['location'])) {
     $location = htmlspecialchars($_GET['location']);
@@ -20,15 +19,14 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
     header('Location:'.$location);
 } else {
     $username = strip_tags($_POST['username']);
-    $password = strip_tags($_POST['password']);
-
     $username = stripslashes($username);
-    $password = stripslashes($password);
-    
     $username = mysqli_real_escape_string($con, $username);
-    $password = mysqli_real_escape_string($con, $password);
+    if(isset($_POST['password'])) {
+        $password = strip_tags($_POST['password']);
+        $password = stripslashes($password);
+        $password = mysqli_real_escape_string($con, $password);
+    }
 
-    
     $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
     $query = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($query);
@@ -65,6 +63,7 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
         }
     }
 }
+include 'sidebar_new.php';
 ?>
 <!DOCTYPE html>
 <html>
