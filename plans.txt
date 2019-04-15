@@ -4,6 +4,7 @@ change comments design
 better changing user data
 add notification and navbar text when banned
 fix notifications bullshit
+fix small sidenav colours
 
 share post locally*
 user chat

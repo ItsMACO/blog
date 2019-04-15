@@ -18,7 +18,7 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
     }
     header('Location:'.$location);
 } else {
-    $username = strip_tags($_POST['username']);
+    $username = strip_tags($_POST['username'] ?? '');
     $username = stripslashes($username);
     $username = mysqli_real_escape_string($con, $username);
     if(isset($_POST['password'])) {
@@ -59,7 +59,7 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
 
             header('Location:'.$location);
         } else {
-            echo "<h6>Incorrect details!</h6>";
+            echo "<br><br><br><br>Incorrect details!";
         }
     }
 }

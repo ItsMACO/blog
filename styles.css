@@ -74,7 +74,7 @@ body {
   margin-left: 15px;
 }
 .sidenav-fixed-small {
-  background: #262626;
+  background: #da1b60;
   height: 100vh;
   top: 60px;
   left: 0;
@@ -84,21 +84,16 @@ body {
 }
 .sidenav-fixed-small a {
   font-size: 20px;
-  color: #e6e6e6;
+  color: #f2f2f2;
   display: block;
   padding: 0px 20px;
   line-height: 55px;
-  background-image: linear-gradient(to right,
-                                      #262626,
-                                      #262626 50%,
-                                      #333333,
-                                      #333333 50%);
-  background-position: 0 0;
-  background-size: 200% 100%;
+  background-color: #da1b60;
   transition: all .2s ease-in-out;
 }
 .sidenav-fixed-small a:hover {
-  background-position: 100% 0;
+  background-color: white;
+  color: #da1b60;
 }
 .sidenav-fixed-small > a > i {
   vertical-align: middle;
