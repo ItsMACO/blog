@@ -40,27 +40,6 @@ if(mysqli_num_rows($result_messages) > 0) {
                 <h6 class='break-long-words'><b>$message_from</b> says:</h6>
                 <h6 class='tiny-text break-long-words'>$message_text</h6>
                 <h6 class='tiny-text break-long-words'><i>$time</i></h6>
-                <script>
-                    $(document).ready(function() {
-                        $('#reply').submit(function(e) {
-                            e.preventDefault();
-                            $.ajax( {
-                                url: 'new_message.php',
-                                method: 'post',
-                                data: $('form').serialize(),
-                                dataType: 'text',
-                                success: function(strMessage) {
-                                    $('#reply_btn').text('SENT');
-                                    $('#reply')[0].reset();
-                                }
-                            });
-                        });
-                    });
-                </script>
-                <form action='' id='reply' method='post'>
-                    <input type='text' name='reply_text' placeholder='Reply...'>
-                    <button id='reply_btn' type='submit'>REPLY</button>
-                </form>
                 </div>
                 </div>
                 <div class='divider'></div>";
