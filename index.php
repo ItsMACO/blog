@@ -19,7 +19,7 @@ if(isset($_SESSION['id'])) {
 <div class="wrap">
 <div class="wrap-content">
 <?php
-include_once 'countdown.php';
+// include_once 'countdown.php';
 ?>
 <script>
 // Set the date we're counting down to
@@ -52,6 +52,7 @@ var x = setInterval(function() {
 }, 100);
 </script>
 <?php
+/*
 require_once 'nbbc.php';
 $bbcode = new BBCode;
 
@@ -65,7 +66,47 @@ if(!isset($_GET['order']) || $_GET['order'] == "new") {
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
 $posts = "";
+*/
+$sql = $pdo->prepare('SELECT * FROM posts ORDER BY id DESC');
+$sql->execute();
+$result = $sql->fetchAll();	
+foreach ($result as $row) {
+	$id = $row['id'];
+	$title = $row['title'];
+	$content = html_entity_decode($row['content']);
+	$date = $row['date'];
+	$date = date('d.m.Y h:i', $date);
+	$author = $row['author'];
+	$image = $row['image'];
+	$flair = $row['flair'];
+	
+	$sql_flair = $pdo->prepare("SELECT flairname FROM flairs WHERE flairid=?");
+	$sql_flair->execute([$flair]);
+	$result_flair = $sql_flair->fetch();
+		$flair = $result_flair['flairname'];
 
+	$sql_profile = $pdo->prepare("SELECT * FROM users WHERE userid=?");
+	$sql_profile->execute([$author]);
+	$result_profile = $sql_profile->fetch();
+		$userid = $result_profile['id'];
+		$username = $result_profile['username'];
+		$email = $result_profile['email'];´
+	
+	$posts .= "<div class='row'>
+            <div class='col s12 m8 l8'>
+            <h3 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h3><h6 class='flair'>$flair</h6>
+            <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
+            <h6 class='break-long-words'>" . substr($output, 0, 140) . "...</h6><br>
+            <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a>
+            <a href='?read_later=$id' class='button button2'>READ LATER</a>
+            </div>
+            <div class='col s12 m4 l4'><br><br><img src='$image' class='post-image'></div><br><br>
+            </div><br>";
+	echo $posts;
+}
+
+
+/*
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
@@ -128,6 +169,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     echo "There are no posts to display!";
 }
+*/
 ?>
 <!--DIV CONTAINER FLUID -->
 </div>
