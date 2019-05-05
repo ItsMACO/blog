@@ -1,5 +1,4 @@
 <?php
-require_once 'db.php';
 include 'sidebar_new.php';
 if (!isset($_SESSION)) {
     session_start();
@@ -53,9 +52,6 @@ var x = setInterval(function() {
 </script>
 <?php
 /*
-require_once 'nbbc.php';
-$bbcode = new BBCode;
-
 if(!isset($_GET['order']) || $_GET['order'] == "new") {
     $sql = "SELECT * FROM posts ORDER BY id DESC";
     echo "<a href='?order=top' class='button-small button2'>ORDER BY TOP POSTS</a><br><br><div class='divider'></div>";
@@ -64,12 +60,13 @@ if(!isset($_GET['order']) || $_GET['order'] == "new") {
     echo "<a href='?order=new' class='button-small button2'>ORDER BY NEW POSTS</a><br><br><div class='divider'></div>";
 }
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+*/
 
 $posts = "";
-*/
 $sql = $pdo->prepare('SELECT * FROM posts ORDER BY id DESC');
 $sql->execute();
 $result = $sql->fetchAll();	
+
 foreach ($result as $row) {
 	$id = $row['id'];
 	$title = $row['title'];
@@ -85,25 +82,26 @@ foreach ($result as $row) {
 	$result_flair = $sql_flair->fetch();
 		$flair = $result_flair['flairname'];
 
-	$sql_profile = $pdo->prepare("SELECT * FROM users WHERE userid=?");
+	$sql_profile = $pdo->prepare("SELECT * FROM users WHERE id=?");
 	$sql_profile->execute([$author]);
 	$result_profile = $sql_profile->fetch();
 		$userid = $result_profile['id'];
 		$username = $result_profile['username'];
-		$email = $result_profile['email'];´
+        $email = $result_profile['email'];
+        
 	
 	$posts .= "<div class='row'>
             <div class='col s12 m8 l8'>
             <h3 class='break-long-words'><a href='view_post.php?pid=$id'>$title</a></h3><h6 class='flair'>$flair</h6>
             <p>$date by <a href='profile.php?id=$userid'>$author</a></p>
-            <h6 class='break-long-words'>" . substr($output, 0, 140) . "...</h6><br>
+            <h6 class='break-long-words'>" . substr($content, 0, 140) . "...</h6><br>
             <a href='view_post.php?pid=$id' class='button button1'>READ MORE</a>
             <a href='?read_later=$id' class='button button2'>READ LATER</a>
             </div>
             <div class='col s12 m4 l4'><br><br><img src='$image' class='post-image'></div><br><br>
             </div><br>";
-	echo $posts;
 }
+echo $posts;
 
 
 /*
