@@ -1,12 +1,11 @@
 <?php
-include_once 'db.php';
+require_once 'db.php';
 if(isset($_GET['location'])) {
     $location = htmlspecialchars($_GET['location']);
 }
 if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin'])) {
     $username = strip_tags($_COOKIE['username']);
     $username = stripslashes($username);
-    $username = mysqli_real_escape_string($con, $username);
 
     $_SESSION['username'] = $username;
     setcookie("username", $username, time()+86400, "/","", 0);
@@ -20,16 +19,14 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
 } else {
     $username = strip_tags($_POST['username'] ?? '');
     $username = stripslashes($username);
-    $username = mysqli_real_escape_string($con, $username);
     if(isset($_POST['password'])) {
         $password = strip_tags($_POST['password']);
         $password = stripslashes($password);
-        $password = mysqli_real_escape_string($con, $password);
     }
 
-    $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-    $query = mysqli_query($con, $sql);
-    $row = mysqli_fetch_array($query);
+	$sql = $pdo->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+	$sql->execute([$username]);
+    $row = $sql->fetch(PDO::FETCH_ASSOC);
     $id = $row['id'];
     $db_password = $row['password'];
     $admin = $row['admin'];
@@ -63,7 +60,7 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['id']) && isset($_COOKIE['admin
         }
     }
 }
-include 'sidebar_new.php';
+include_once 'sidebar_new.php';
 ?>
 <!DOCTYPE html>
 <html>

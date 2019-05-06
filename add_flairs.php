@@ -17,13 +17,22 @@
     if(isset($_POST['set_flair'])) {
         $set_flair = strip_tags($_POST['set_flair']);
         $set_flair = mysqli_real_escape_string($con, $set_flair);
-        $sql_flair_exists = "SELECT * FROM flairs WHERE flairname='$set_flair'";
-        $result_flair_exists = mysqli_query($con, $sql_flair_exists);
-        if(mysqli_num_rows($result_flair_exists) > 0) {
+		
+        $sql_flair_exists = $pdo->prepare("SELECT * FROM flairs WHERE flairname=?");
+        $sql_flair_exists->execute([$set_flair]);
+		$result_flair_exists = $sql->fetchAll();
+		if($result_flair_exists) {
+			echo "This flair already exists!";
+		} else {
+			$sql_flair = $pdo->prepare("INSERT INTO flairs flairname VALUES ?")->execute([$set_flair]);
+		}
+		
+        /*if(mysqli_num_rows($result_flair_exists) > 0) {
             echo "This flair already exists!";
         } else {
             $sql_flair = "INSERT INTO flairs (flairname) VALUES ('$set_flair')";
             mysqli_query($con, $sql_flair);
         }
+		*/
     }
 ?>

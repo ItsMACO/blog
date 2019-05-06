@@ -63,9 +63,16 @@ $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 */
 
 $posts = "";
-$sql = $pdo->prepare('SELECT * FROM posts ORDER BY id DESC');
-$sql->execute();
-$result = $sql->fetchAll();	
+$sql = $pdo->prepare('SELECT * FROM posts ORDER BY ? DESC');
+if(!isset($_GET['order']) || $_GET['order'] == "new") {	
+	$sql->execute(['id']);
+	$result = $sql->fetchAll();	
+	echo "<a href='?order=top' class='button-small button2'>ORDER BY TOP POSTS</a><br><br><div class='divider'></div>";
+} else {
+	$sql->execute(['likes']);
+	$result = $sql->fetchAll();
+	echo "<a href='?order=new' class='button-small button2'>ORDER BY NEW POSTS</a><br><br><div class='divider'></div>";
+}
 
 foreach ($result as $row) {
 	$id = $row['id'];
