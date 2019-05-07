@@ -9,7 +9,7 @@
 ?>
 <div class='wrap-content'>
     <a href="#help-countdown" class="button-small button2 modal-trigger">HELP?</a><br><br>
-    <form action="admin.php" method="post" enctype="multipart/form-data">
+    <form action="admin_new.php" method="post" enctype="multipart/form-data">
         <input type="text" name="event" class='text-input' placeholder="Event name"><br><br>
         <input type="date" name="date" class="text-input"><br><br>
         <input type="time" name="time" class="text-input"><br><br>
@@ -23,17 +23,18 @@
             $event = strtoupper($_POST['event']);
             $date = $_POST['date'];
             $time = $_POST['time'];
-            $sql_add_countdown = "INSERT INTO countdowns (event, date, time) VALUES ('$event', '$date', '$time')";
-            mysqli_query($con, $sql_add_countdown);
+            $sql_add_countdown = $pdo->prepare("INSERT INTO countdowns (event, date, time) VALUES (?, ?, ?)");
+			$result_add_countdown = $sql_add_countdown->execute([$event, $date, $time]);
         }
         ?>
-    <form action='admin.php' method='post' enctype="multipart/form-data">
+    <form action='admin_new.php' method='post' enctype="multipart/form-data">
         <select name='active_countdown'>
             <?php
-            $sql_exist_countdown = "SELECT * FROM countdowns ORDER BY id DESC";
-            $result_exist_countdown = mysqli_query($con, $sql_exist_countdown);
-            if(mysqli_num_rows($result_exist_countdown) > 0) {
-                while($row = mysqli_fetch_assoc($result_exist_countdown)) {
+            $sql_exist_countdown = $pdo->prepare("SELECT * FROM countdowns ORDER BY id DESC");
+			$sql_exist_countdown->execute();
+            $result_exist_countdown = $sql_exist_countdown->fetchAll();
+            if($result_exist_countdown) {
+                foreach($result_exist_countdown as $row) {
                     $countdown_id = $row['id'];
                     $countdown_event = $row['event'];
                     $countdown_date = $row['date'];

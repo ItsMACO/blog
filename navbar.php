@@ -21,7 +21,7 @@ if(isset($_SESSION['id'])) {
         $user = $_SESSION['id'];
         $user_name = $_SESSION['username'];
         $sql_notify = $pdo->prepare("SELECT notifytime FROM users WHERE id=?");
-		$sql_notify->execute([$id]);
+		$sql_notify->execute([$user]);
         $result_notify = $sql_notify->fetch(PDO::FETCH_ASSOC);
         $notifytime = $result_notify['notifytime'];
 
@@ -67,17 +67,19 @@ if(isset($_SESSION['id'])) {
 <?php
         $user = $_SESSION['id'];
         $user_name = $_SESSION['username'];
-        $sql_notify = "SELECT notifytime FROM users WHERE id='$user'";
-        $result_notify = mysqli_query($con, $sql_notify);
-        $row = mysqli_fetch_assoc($result_notify);
-        $notifytime = $row['notifytime'];
+        $sql_notify = $pdo->prepare("SELECT notifytime FROM users WHERE id=?");
+		$sql_notify->execute([$user]);
+        $result_notify = $sql_notify->fetch(PDO::FETCH_ASSOC);
+        $notifytime = $result_notify['notifytime'];
 
-        $sql_comments = "SELECT * FROM comments WHERE (comment_to='$user') AND (time>$notifytime) AND NOT (comment_from='$user')";
-        $result_comments = mysqli_query($con, $sql_comments);
-        $sql_mentions = "SELECT * FROM mentions WHERE (username='$user_name') AND (time>$notifytime)";
-        $result_mentions = mysqli_query($con, $sql_mentions);
+        $sql_comments = $pdo->prepare("SELECT * FROM comments WHERE (comment_to=?) AND (time>?) AND NOT (comment_from=?)");
+        $sql_comments->execute([$user, $notifytime, $user]);
+		$result_comments = $sql_comments->fetchAll();
+        $sql_mentions = $pdo->prepare("SELECT * FROM mentions WHERE (username=?) AND (time>?)");
+		$sql_mentions->execute([$user_name, $notifytime]);
+        $result_mentions = $sql_mentions->fetchAll();
 
-        if(mysqli_num_rows($result_comments) > 0 || mysqli_num_rows($result_mentions) > 0) {
+        if($result_comments || $result_mentions) {
         ?>
         <i class="orange-custom material-icons">notifications_active</i></a>
         <?php } else { ?>

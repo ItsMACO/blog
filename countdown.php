@@ -1,12 +1,12 @@
 <?php
 require_once 'db.php';
-$sql_countdown = "SELECT * FROM countdowns WHERE active=1 LIMIT 1";
-$result_countdown = mysqli_query($con, $sql_countdown);
-if(mysqli_num_rows($result_countdown) > 0) {
-    $row = mysqli_fetch_assoc($result_countdown);
-    $event = $row['event'];
-    $date = $row['date'];
-    $time = $row['time'];
+$sql_countdown = $pdo->prepare("SELECT * FROM countdowns WHERE active=1 LIMIT 1");
+$sql_countdown->execute();
+$result_countdown = $sql_countdown->fetch(PDO::FETCH_ASSOC);
+if($result_countdown) {
+    $event = $result_countdown['event'];
+    $date = $result_countdown['date'];
+    $time = $result_countdown['time'];
     echo "<center><div class='countdown-wrap'>";
     echo "<div class='countdown'>";
     echo "<h5><b>".$event."</b></h5>";
